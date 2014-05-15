@@ -1,0 +1,47 @@
+#!/usr/bin/env php
+<?php
+
+require_once 'vendor/autoload.php';
+require_once 'includes/autoload.php';
+
+chdir(__DIR__);
+
+Localization::init();
+
+//Keep display errors on, when in CLI
+ini_set('display_errors', 'on');
+error_reporting(E_ALL);
+
+set_error_handler(function ($errno, $errstr, $errfile, $errline ) {
+	if (!(error_reporting() & $errno)) {
+		return;
+	}
+	throw new ErrorException($errstr, 0, $errno, $errfile, $errline);
+});
+
+Container::registerSingleton('DB');
+
+Container::registerSingleton('Environment\Arguments', function () use ($argv) {
+	return new Environment\Arguments($argv);
+});
+
+if (!isset($argv)) {
+	return;
+}
+
+$router = Container::dispense("Router");
+
+$result = $router->resolve(
+	$argv[1],
+	[
+		['do-jobs', Router::lazyLoad('CLIControllers\DoJobs')],
+		['install-currency', Router::lazyLoad('CLIControllers\InstallCurrency')],
+		['encrypt-config', Router::lazyLoad('CLIControllers\EncryptConfig')],
+		['decrypt-config', Router::lazyLoad('CLIControllers\DecryptConfig')],
+		['handle-command', Router::lazyLoad('CLIControllers\HandleCommand')],
+	]
+);
+
+
+
+

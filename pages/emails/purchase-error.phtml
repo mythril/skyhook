@@ -1,0 +1,109 @@
+<p>
+	<strong>
+		<?= $i18n->_('Ticket #') ?><?= $ticket->getId()?>
+	</strong>
+	<?= $i18n->_('encountered an error while processing this transaction.') ?>
+	<?= $i18n->_('Please see the attached error log for more details.') ?>
+</p>
+
+<table>
+	<tr>
+		<th align="right">
+			<?= $i18n->_('Ticket ID:') ?>
+		</th>
+		<td>
+			<?= $ticket->getId() ?>
+		</td>
+	</tr>
+	<tr>
+		<th align="right">
+			<?= $i18n->_('Purchase Time (in UTC):') ?>
+		</th>
+		<td>
+			<?= $html->escape($ticket->getInitiatedAt()->format('g:ia \o\n l jS F Y')) ?>
+		</td>
+	</tr>
+	<tr>
+		<th align="right">
+			<?= $i18n->_("Customer's Bitcoin Address:")?>
+		</th>
+		<td>
+			<?= $html->escape($ticket->getCustomerAddress()->get()) ?>
+		</td>
+	</tr>
+	<tr>
+		<th align="right">
+			<?= $i18n->_('Currency Inserted')?> (<?= 
+				$html->escape(
+					$ticket->getCurrency()
+				)
+			?>):
+		</th>
+		<td>
+			<?= $html->escape($ticket->getCurrencyAmount()->get()) ?>
+		</td>
+	</tr>
+	<tr>
+		<th align="right">
+			<?= $i18n->_('Bitcoin Price:')?> <?= 
+				$html->escape(
+					$ticket->getCurrency()
+				)
+			?>
+		</th>
+		<td>
+			<?= $html->escape($ticket->getBitcoinPrice()->get()) ?>
+		</td>
+	</tr>
+	<tr>
+		<th align="right">
+			<?= $i18n->_('Bitcoin Purchased:')?>
+		</th>
+		<td>
+			<?= $html->escape($ticket->getBitcoinAmount()->get()) ?>
+		</td>
+	</tr>
+	<tr>
+		<th align="right">
+			<?= $i18n->_('Transaction ID:')?>
+		</th>
+		<td>
+			<?= $html->escape($ticket->getTXID()) ?>
+		</td>
+	</tr>
+	<tr>
+		<th align="right">
+			<?= $i18n->_('Ticket Status:')?>
+		</th>
+		<td>
+			<?= $html->escape($ticket->getStatus()) ?>
+		</td>
+	</tr>
+	<tr>
+		<th align="right">
+			<?= $i18n->_('Ticket Finalized (in UTC):')?>
+		</th>
+		<td>
+			<? if ($ticket->getInitiatedAt() != null): ?>
+				<?= $html->escape($ticket->getFinalizedAt()->format('g:ia \o\n l jS F Y')) ?>
+			<? endif; ?>
+		</td>
+	</tr>
+	<tr>
+		<th align="right">
+			<?= $i18n->_('Blockchain.info Transaction Message:')?>
+		</th>
+		<td>
+			<?= $html->escape($ticket->getMessage()) ?>
+		</td>
+	</tr>
+	<tr>
+		<th align="right">
+			<?= $i18n->_('Transaction Notice:')?>
+		</th>
+		<td>
+			<?= $html->escape($ticket->getNotice()) ?>
+		</td>
+	</tr>
+</table>
+

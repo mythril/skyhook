@@ -1,0 +1,5 @@
+enc.json
+scanner/debug_log
+scanner/driver.pid
+scanner/input/
+vendor/*

@@ -1,0 +1,18 @@
+<p>
+	<strong>
+		<?= $i18n->_('Ticket #')?><?= $ticket->getId()?>
+	</strong>
+	<?= $i18n->_('was updated with an email address. Use this address to notify the customer as the transaction error is resolved.')?>
+</p>
+<p>
+	<?= $i18n->_('<strong>Note:</strong> This Skyhook machine does not automatically notify the customer of status changes.') ?>
+</p>
+<div>
+	<strong><?= $i18n->_("Customer's Email Address:") ?></strong> 
+	<a href="mailto:<?= $html->escape($ticket->getEmailToNotify()) ?>"><?= $html->escape($ticket->getEmailToNotify()) ?></a>
+</div>
+
+<p><?= $i18n->_('Error information reproduced below - technical information attached')?></p>
+<hr />
+
+<? include __DIR__ . '/purchase-error.phtml';

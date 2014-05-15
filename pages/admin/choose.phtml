@@ -1,0 +1,55 @@
+<?
+$title = 'Admin Login';
+$styles = ['/assets/jQuery/jquery.mobile.min.css'];
+include __DIR__ . '/../head.phtml';
+?>
+<div data-role="page">
+	<div data-role="header" data-position="fixed">
+		<h1>
+			<?= $i18n->_('System Preferences')?>
+		</h1>
+	</div>
+	<div data-role="content">
+		<div class="ui-body ui-body-e">
+			<p>
+				<?= $i18n->_('Continue booting up the system for normal operation.')?>
+			</p>
+			<a
+				href="/admin/boot"
+				data-role="button"
+				data-icon="arrow-r"
+				data-iconpos="right"
+				data-theme="a"
+				data-transition="slide"
+			>
+				<?= $i18n->_('Boot') ?>
+			</a>
+		</div>
+	</div>
+	<div data-role="content">
+		<div class="ui-body ui-body-b">
+			<p>
+				<?= $i18n->_('Change configuration settings') ?>
+			</p>
+			<a
+				href="/admin/login"
+				data-role="button"
+				data-icon="gear"
+				data-iconpos="right"
+				data-transition="slide"
+			>
+				<?= $i18n->_('Reconfigure') ?>
+			</a>
+		</div>
+	</div>
+	<div data-role="footer" data-position="fixed">
+		<h3><?= $i18n->_('Project Skyhook&trade; Bitcoin ATM') ?></h3>
+	</div>
+</div>
+<?
+$scripts = [
+	'/assets/gettext/Gettext.js',
+	'/assets/jQuery/jquery.min.js',
+	'/assets/jQuery/jquery.mobile.min.js',
+];
+include __DIR__ . '/../foot.phtml';

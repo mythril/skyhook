@@ -1,0 +1,194 @@
+<style type="text/css">
+	.unfinished{
+		display:none;
+	}
+</style>
+<?php
+
+$configSources = array_map(
+	function () {
+		return true;
+	},
+	array_flip(explode(',', $config['sources']))
+);
+
+$providerInput = function ($name, $selected = false) use ($html) {
+	$attr = $selected ? ' selected="selected"' : '';
+	$base = explode("\\", $name);
+	$base = array_pop($base);
+	?>
+	<option
+		value="<?= $html->escape($name) ?>"
+		<?= $attr ?>
+	>
+		<?= $html->escape($base) ?>
+	</option>
+	<?
+};
+
+$modifierInput = function ($n, $c) use ($html, $config) {
+	$modifier = $c;
+	$name = $html->escape($n);
+	$enabled =  (@$config['modifierEnabled'][$c]) ? ' checked="checked"' : '';
+	$class = $html->escape($c);
+	$base = explode("\\", $c);
+	$base = array_pop($base);
+	if ($enabled) {
+		$value = $html->escape($config['modifier'][$c]);
+	} else {
+		$value = '';
+	}
+	?>
+	<div class="ui-grid-b">
+		<div class="ui-block-a">
+			<input
+				type="checkbox"
+				data-mini="true"
+				data-theme="a"
+				<?= $enabled ?>
+				data-enable="modifier-<?= $base ?>"
+				name="modifierEnabled[<?= $class ?>]"
+				id="modifier-enabled-<?= $base ?>"
+				autocomplete="off"
+			/>
+			<label for="modifier-enabled-<?= $base ?>"><?= $name ?></label>
+		</div>
+		<div class="ui-block-b" style="width:66%;">
+			<input
+				type="number"
+				name="modifier[<?= $class ?>]"
+				id="modifier-<?= $base ?>"
+				value="<?= $value ?>"
+				autocomplete="off"
+			/>
+		</div>
+	</div>
+	<?
+};
+$sources = Config::getAvailablePricingProviders();
+$selectorChecked = function ($val, $configured) {
+	return ($val === $configured) ? ' checked="checked" ' : '';
+};
+?>
+<!-- Pricing Settings -->
+<div id="pricing-settings" data-role="collapsible" data-collapsed="true">
+	<h3>
+		<?= $i18n->_('Pricing Settings') ?>
+	</h3>
+	<div id="sources-methods-error">
+	</div>
+	<div class="ui-body ui-body-a">
+		<p class="unfinished">
+			<?= $i18n->_('Select pricing method:')?>
+		</p>
+		<div data-role="controlgroup" data-type="horizontal" class="unfinished">
+			<input
+				type="radio"
+				id="pricing-sources-single"
+				name="selector"
+				autocomplete="off"
+				<? /*
+				<?= $selectorChecked('single', $config['selector']) ?>
+				*/ ?>
+				checked="checked"
+				value="single"
+			/>
+			<label for="pricing-sources-single">
+				<?= $i18n->_('Single') ?>
+			</label>
+			<input
+				type="radio"
+				id="pricing-sources-highest"
+				name="selector"
+				autocomplete="off"
+				<? /*
+				<?= $selectorChecked('PricingProviders\Selectors\HighestPrice', $config['selector']) ?>
+				*/ ?>
+				value="PricingProviders\Selectors\HighestPrice"
+			/>
+			<label for="pricing-sources-highest">
+				<?= $i18n->_('Highest') ?>
+			</label>
+			<input
+				type="radio"
+				id="pricing-sources-lowest"
+				name="selector"
+				autocomplete="off"
+				<? /*
+				<?= $selectorChecked('PricingProviders\Selectors\LowestPrice', $config['selector']) ?>
+				*/ ?>
+				value="PricingProviders\Selectors\LowestPrice"
+			/>
+			<label for="pricing-sources-lowest">
+				<?= $i18n->_('Lowest') ?>
+			</label>
+		</div>
+		<p class="unfinished">
+			<?= $i18n->_('
+			<strong>Single</strong> if you only wish to consult one price source.<br>
+			<strong>Lowest</strong>/<strong>Highest</strong> if you would like
+			to consult multiple sources and select among them based on the
+			chosen criteria.
+			') ?>
+		</p>
+		<hr class="unfinished" />
+		<div id="single-source-wrap" data-role="fieldcontain">
+			<label for="single-source" class="select">
+				<?= $i18n->_('Source:')?>
+			</label>
+			<select
+				name="sources"
+				id="single-source"
+				data-native-menu="false"
+				data-theme="c"
+			>
+				<option disabled="disabled" selected="selected">
+					<?= $i18n->_('Choose Source:')?>
+				</option>
+				<? foreach($sources as $source => $real): ?>
+					<? $providerInput($source, isset($configSources[$source])); ?>
+				<? endforeach; ?>
+			</select>
+		</div>
+		<div id="multi-source-wrap" data-role="fieldcontain">
+			<label for="multi-source" class="select">
+				<?= $i18n->_('Sources:') ?>
+			</label>
+			<select
+				name="sources"
+				id="multi-source"
+				data-native-menu="false"
+				data-theme="c"
+				multiple="multiple"
+			>
+				<option disabled="disabled" selected="selected" data-placeholder="true">
+					<?= $i18n->_('Choose Sources:') ?>
+				</option>
+				<? foreach($sources as $source => $real): ?>
+					<? $providerInput($source, isset($configSources[$source])); ?>
+				<? endforeach; ?>
+			</select>
+		</div>
+		<div id="static-price-wrap" data-role="fieldcontain">
+			<label for="static-price">
+				<?= $i18n->_('Static Price:') ?>
+			</label>
+			<input
+				type="number"
+				name="staticPrice"
+				id="static-price"
+				autocomplete="off"
+				<?
+				if (isset($configSources['PricingProviders\StaticPrice'])) {
+					echo 'value="', $config['staticPrice'], '"';
+				}
+				?>
+				data-theme="c"
+			/>
+		</div>
+	</div>
+	<hr />
+	<? $modifierInput($i18n->_('Percentage Fee'), 'Pricing\Modifiers\PercentageFee'); ?>
+	<hr />
+	<? $modifierInput($i18n->_('Minimum Price'), 'Pricing\Modifiers\MinimumPrice'); ?>
+</div><!-- /Pricing Setting -->

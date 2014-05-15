@@ -1,0 +1,41 @@
+<?
+$title = 'Admin Login';
+$styles = ['/assets/jQuery/jquery.mobile.min.css'];
+include __DIR__ . '/../head.phtml';
+?>
+<div data-role="page">
+	<div data-role="header" data-position="fixed">
+		<h1>
+			<?= $i18n->_('System Preferences') ?>
+		</h1>
+	</div>
+	<div data-role="content">
+		<div class="ui-body ui-body-b">
+			<h2>
+				<?= $i18n->_('Configuration saved') ?>
+			</h2>
+			<p>
+				<?= $i18n->_('Redirecting to Start page in a few seconds...')?>
+			</p>
+			<a
+				href="/start"
+				data-role="button"
+				data-ajax="false"
+			>
+				<?= $i18n->_('Start Page') ?>
+			</a>
+		</div>
+	</div>
+	<div data-role="footer" data-position="fixed">
+		<h3>
+			<?= $i18n->_('Project Skyhook&trade; Bitcoin ATM') ?>
+		</h3>
+	</div>
+</div>
+<?
+$scripts = [
+	'/assets/gettext/Gettext.js',
+	'/assets/jQuery/jquery.min.js',
+	'/assets/jQuery/jquery.mobile.min.js',
+];
+include __DIR__ . '/../foot.phtml';

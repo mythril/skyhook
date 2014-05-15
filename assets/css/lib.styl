@@ -1,0 +1,392 @@
+pi()
+	return 3.14159265359
+
+clear-button()
+	&
+	&:hover
+		background none
+		bg-image none
+		bg-color transparent
+		box-shadow none
+		border-radius 0
+		border 0
+		outline 0
+		html.ie8 &
+		html.ie7 &
+			filter none
+
+fancy-stroke-val(c, w = 1, softness = 0)
+	stroke = s('%spx %spx %s %s', 0, 0, softness, c)
+	for x in -(w)..(w)
+		for y in -(w)..(w)
+			push(stroke, s('%spx %spx %s %s', x, y, softness, c))
+	return unquote(join(', ', stroke))
+
+fancy-stroke(c = contrast(@color), w = 1, softness = 0)
+	stroke = s('%spx %spx %s %s', 0, 0, softness, c)
+	for x in -(w)..(w)
+		for y in -(w)..(w)
+			push(stroke, s('%spx %spx %s %s', x, y, softness, c))
+	text-shadow unquote(join(', ', stroke))
+	html.ie7 &
+	html.ie8 &
+		filter unquote(s('progid:DXImageTransform.Microsoft.Glow(Color=#%s%s%s,Strength=%s)', hex(red(c)), hex(green(c)), hex(blue(c)), unit(w, ''))) //"
+		-ms-filter s('"progid:DXImageTransform.Microsoft.Glow(Color=#%s%s%s,Strength=%s)"', hex(red(c)), hex(green(c)), hex(blue(c)), unit(w, '')) //"
+
+opacity(o)
+	msO = round(o * 100)
+	filter s('alpha(opacity=%s)', msO)
+	-ms-filter s('"progid:DXImageTransform.Microsoft.Alpha(Opacity=%s)"', msO) //"
+	vendor('opacity', o)
+
+css-filter()
+	vendor('filter', arguments)
+
+plain-rotate(theta)
+	rads = theta * (pi() / 180)
+	ct = cos(rads)
+	st = sin(rads)
+	transform rotateZ((theta)deg)
+	html.ie7 &
+	html.ie8 &
+		filter s("progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand', M11=%s, M12=%s, M21=%s, M22=%s)", ct, -(st), st, ct) //"
+		-ms-filter s("progid:DXImageTransform.Microsoft.Matrix(SizingMethod='auto expand', M11=%s, M12=%s, M21=%s, M22=%s)", ct, -(st), st, ct) //"
+
+truncate(val, prec = 0)
+	unless prec < 0
+		return (floor(val * 10 * prec) / (prec * 10))
+	return (ceil(val * 10 * prec) / (prec * 10))
+
+outline(w = 1px, style = solid, color = green)
+	outline w style color
+
+hex(num)
+	return base-convert(round(num), 16)
+
+//convert to Microsofts filter format
+argb(color)
+	return s('#%s%s%s%s', hex(alpha(color) * 255), hex(red(color)), hex(green(color)), hex(blue(color)))
+
+normalize-brightness(val, scale, max = 255)
+	return ((val / max) * (scale / 1000))
+
+brightness-vector(color)
+	return normalize-brightness(red(color), 299) + normalize-brightness(green(color), 587) + normalize-brightness(blue(color), 114)
+
+//takes a sample and two colors (defaulting to black and white)
+//will select the color that contrasts most with the sample and return it
+contrast(sample, color1 = black, color2 = white)
+	sVec = brightness-vector(sample)
+	cVec1 = abs(sVec - brightness-vector(color1))
+	cVec2 = abs(sVec - brightness-vector(color2))
+	return (cVec1 >= cVec2) ? color1 : color2
+
+//takes a sample and two colors (defaulting to black and white)
+//will select the color that contrasts least with the sample and return it
+contrast-invert(sample, color1 = black, color2 = white)
+	sVec = brightness-vector(sample)
+	cVec1 = abs(sVec - brightness-vector(color1))
+	cVec2 = abs(sVec - brightness-vector(color2))
+	return (cVec1 < cVec2) ? color1 : color2
+
+darken-or-lighten(sample, amount)
+	sVec = brightness-vector(sample)
+	if sVec > 0.5
+		return darken(sample, amount)
+	else
+		return lighten(sample, amount)
+
+//because the !important keyword seems to trip up the parser
+important()
+	return s('%s !important', arguments)
+
+//apply a value accross vendor prefixes
+vendor-val(property, value)
+	{property} unquote('-webkit-' + value)
+	{property} unquote('-moz-' + value)
+	{property} unquote('-ms-' + value)
+	{property} unquote('-o-' + value)
+	{property} unquote(value)
+
+//apply a property accross vendor prefixes
+vendor(property, value)
+	-webkit-{property} value
+	-moz-{property} value
+	-ms-{property} value
+	-o-{property} value
+	{property} value
+
+animation()
+	vendor('animation', arguments)
+
+animation-iteration-count()
+	vendor('animation-iteration-count', arguments)
+
+transform-origin()
+	vendor('transform-origin', arguments)
+
+transform-style()
+	vendor('transform-style', arguments)
+
+transform()
+	vendor('transform', arguments)
+
+transition()
+	vendor('transition', arguments)
+
+//creates a linear gradient with start at the top and stop at the bottom
+ms-gradient(start, stop)
+	ieStart = argb(start)
+	ieStop = argb(stop)
+	filter s("progid:DXImageTransform.Microsoft.Gradient( startColorstr='%s', endColorstr='%s',GradientType=0 )", ieStart, ieStop) //"
+
+//creates a linear gradient with start at the top and stop at the bottom
+gradient-bg()
+	start = shift(arguments)
+	stop = shift(arguments)
+	if start is a 'color' and stop is a 'color'
+		mixed = mix(start, stop, 50)
+		background mixed
+		background -webkit-gradient(linear, left top, left bottom, color-stop(0%,start), color-stop(100%,stop))
+		vendor-val('background', s('linear-gradient(top, %s 0%, %s 100%)', start, stop))
+		ms-gradient(start, stop)
+	else if start == none
+		background-image none
+		filter none
+
+//creates a cross-browser background rgba() wrapper
+bg-rgba(color)
+	if color is a 'rgba'
+		background-color color
+		ms-gradient(color, color)
+	else if color == none
+		background-color none
+		filter none
+
+preserve-aspect-ratio()
+	width auto
+	height auto
+
+//quickly constrain (images for example) to the width and height of a parent element
+scale-to-parent(mw = 100%, mh = 100%)
+	max-width mw
+	max-height mh
+	preserve-aspect-ratio()
+
+text-rendering()
+	vendor('text-rendering', arguments)
+
+text-stroke(color = apply-alpha(contrast(@color), 50%))
+	text-shadow 1px 1px 0 color, 1px -1px 0 color, -1px 1px 0 color, -1px -1px 0 color, 1px 0 0 color, 0 1px 0 color, -1px 0 0 color, 0 -1px 0 color, 0 0 4px color
+
+border-radius()
+	vendor('border-radius', arguments)
+
+box-shadow()
+	vendor('box-shadow', arguments)
+
+box-sizing()
+	vendor('box-sizing', arguments)
+
+//so that we can easily apply alternate arithmetic if we choose
+font-size(pxls)
+	font-size pxls * 1px//(round(pxls / 13 * 1000) / 1000)%
+
+bold()
+	font-weight 700
+
+not-bold()
+	font-weight 400
+
+underline()
+	text-decoration underline
+
+no-underline()
+	text-decoration none
+
+italic()
+	font-style italic
+
+box-reset()
+	margin 0
+	padding 0
+	border 0
+
+uppercase()
+	text-transform uppercase
+
+lowercase()
+	text-transform lowercase
+
+hwaccel()
+	vendor('transform', translateZ(0))
+
+block-center(vert = 0)
+	margin vert auto
+
+path(image)
+	return unquote("url('../images/" + image + "')")
+
+bg(image)
+	if image == none
+		background-image none
+	else
+		background-image path(image)
+
+bg-image()
+	background-image arguments
+
+background-color()
+	if arguments is a 'color'
+		if alpha(arguments) < 1
+			bg-rgba(arguments)
+		else
+			background-color arguments
+	else
+		background-color arguments
+
+bg-color()
+	background-color arguments
+
+bg-repeat(rpt)
+	if rpt == x
+		background-repeat repeat-x
+	else if rpt == y
+		background-repeat repeat-y
+	else if rpt == both
+		background-repeat repeat
+	else
+		background-repeat no-repeat
+
+bg-pos()
+	background-position arguments
+
+bg-fixed()
+	background-attachment fixed
+
+bg-scroll()
+	background-attachment scroll
+
+bg-size()
+	vendor('background-size', arguments)
+
+bg-origin()
+	vendor('background-origin', arguments)
+
+bg-clip()
+	vendor('background-clip', arguments)
+
+cal-bg(img)
+	background-image unquote("url('../../components/com_events/images/" + img + "')")
+
+offset-from(loc)
+	if loc == self
+		position relative
+	if loc == ancestor
+		position absolute
+	if loc == auto
+		position static
+	if loc == window
+		position fixed
+
+offset-origin()
+	position relative
+
+remove()
+	display none
+
+clip-box()
+	overflow hidden
+
+hide(using = false)
+	unless using
+		visibility hidden
+	if using == using-opacity
+		opacity 0
+	if using == using-offset
+		offset-from(window)
+		left -100%
+		top -100%
+		width 1px
+		height 1px
+		clip-box()
+
+//will center an stn-sef menu in a given space
+center-menu()
+	offset-from(auto)
+	width auto
+
+	& .stn-horizontal-nav
+		offset-origin()
+		display table
+		block-center()
+
+	html.ie7 & .stn-horizontal-nav > ul > li
+		offset-origin()
+
+		& > ul
+			offset-from(ancestor)
+			top 100%
+			left 0
+
+	html.ie7 &
+		text-align center
+
+	html.ie7 &
+		display inline-block
+
+	html.ie7 &
+		display inline
+
+	html.ie7 & ul li a
+		display inline-block
+
+//apply to html (selector) to skeletonize the page.
+reveal()
+	*
+		background-image important(none)
+		background-color important(rgba(0, 0, 0, 0.05))
+		ms-gradient(rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05))
+		outline important(1px solid rgb(255, 0, 0))
+		outline important(1px solid rgba(255, 0, 0, 0.05))
+		color important(rgba(0, 0, 0, 0.5))
+
+	img
+	input
+		opacity important(0.5)
+
+clear-floating-children(using = false)
+	unless using
+		overflow hidden
+	if using == "using-overflow"
+		overflow hidden
+	if using == "using-after"
+		&:after
+			content ' '
+			display block
+			height 0
+			visibility hidden
+			clear both
+
+separate-margins(using = false)
+	unless using
+		overflow hidden
+	if using == "using-border"
+		border 1px solid transparent
+	if using == "using-padding"
+		padding 1px
+	if using == "using-overflow"
+		overflow hidden
+
+text-shadow()
+	vendor('text-shadow', arguments)
+
+apply-alpha(sample, alpha = 50%)
+	return rgba(red(sample), green(sample), blue(sample), alpha)
+
+text-outline(width = 1px, maxIter = 3, color = apply-alpha(contrast(@color), 50%))
+	val = '0 0 ' + width + ' ' + color
+	for i in 2 .. maxIter
+		val = val + ', 0 0 ' + width + ' ' + rgba(color)
+	text-shadow(unquote(val))
+

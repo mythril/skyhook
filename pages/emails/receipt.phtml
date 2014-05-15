@@ -1,0 +1,54 @@
+<p>
+	<?= $i18n->_('Thank you for using the Skyhook Bitcoin ATM! Please see your transaction details below.') ?>
+</p>
+<table style="border: 1px solid #000">
+	<tr>
+		<th style="font-weight:bold" align="right">
+			<?= $i18n->_('Transaction Number:')?>
+		</th>
+		<td>
+			<?= $html->escape($machine) ?>#<?= $ticket->getId() ?>
+		</td>
+	</tr>
+	<tr>
+		<th style="font-weight:bold" align="right">
+			<?= $i18n->_('Date:')?>
+		</th>
+		<td>
+			<?= $html->escape($ticket->getInitiatedAt()->format('g:ia \o\n l jS F Y')) ?>
+		</td>
+	</tr>
+	<tr>
+		<th style="font-weight:bold" align="right">
+			<?= $i18n->_('Transaction Value:')?>
+		</th>
+		<td>
+			$<?= $html->escape(bcadd($ticket->getCurrencyAmount()->get(), "0", 2)) ?>
+		</td>
+	</tr>
+	<tr>
+		<th style="font-weight:bold" align="right">
+			<?= $i18n->_('Bitcoin Amount:')?>
+		</th>
+		<td>
+			<?= $html->escape($ticket->getBitcoinAmount()->get()) ?> <?= $i18n->_('BTC') ?>
+		</td>
+	</tr>
+	<tr>
+		<th style="font-weight:bold" align="right">
+			<?= $i18n->_('Transaction Link:')?>
+		</th>
+		<td>
+			<a href="https://blockchain.info/tx/<?= $html->escape($ticket->getTXID()) ?>">
+				https://blockchain.info/tx/<?= $html->escape($ticket->getTXID()) ?>
+			</a>
+		</td>
+	</tr>
+</table>
+<p>
+<?= $i18n->_('Project Skyhook is an open-source, community powered project and you can help. 
+Have a comment or suggestion that can help us improve your user experience?
+Visit us at <a href="http://projectskyhook.com/feedback">
+		http://projectskyhook.com/feedback
+	</a> and contact us!') ?>
+</p>

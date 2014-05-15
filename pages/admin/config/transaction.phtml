@@ -1,0 +1,33 @@
+<?
+$transactions = $config['transactions'];
+?>
+<!-- Transaction Settings -->
+<div id="transaction-settings" data-role="collapsible" data-collapsed="true">
+	<h3>
+		<?= $i18n->_('Transaction Settings')?>
+	</h3>
+	<p>
+		<?= $i18n->_('Please set your ') ?><?= $currency ?><?= _(' limit per transaction below. Customers will see when a transaction is nearing this
+		limit.')?>
+	</p>
+	<div id="maximum-errors"></div>
+	<div data-role="fieldcontain">
+		<label for="maximum">
+			<?= $currency ?> <?= $i18n->_('Limit: </br><i>(0=disabled)</i>')?>
+		</label>
+		<input
+			type="number"
+			name="transactions[maximum]"
+			id="maximum"
+			min="0"
+			step="1"
+			autocomplete="off"
+			<?
+			if (isset($transactions['maximum'])) {
+				echo 'value="', $transactions['maximum'], '"';
+			}
+			?>
+			data-theme="c"
+		/>
+	</div>
+</div><!-- /Transaction -->

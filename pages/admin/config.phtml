@@ -1,0 +1,158 @@
+<?
+$title = 'System Configuration';
+$styles = ['/assets/jQuery/jquery.mobile.min.css'];
+include __DIR__ . '/../head.phtml';
+$simpleInput = function ($bound, $area) use ($html) {
+	return function ($label, $name, $type = 'text') use ($html, &$bound, $area) {
+		$val = '';
+		if (isset($bound[$name])) {
+			$val = $html->escape($bound[$name]);
+		}
+		?>
+		<div id="<?= $area ?>-<?= $name?>-error"></div>
+		<label for="<?= $area ?>-<?= $name ?>">
+			<?= $html->escape($label) ?>:
+		</label>
+		<div class="ui-grid-d">
+			<div class="ui-block-a">
+				<input
+					type="button"
+					class="qr-scanner"
+					data-icon="grid"
+					data-theme="e"
+					data-inline="true"
+					data-mini="true"
+					data-label="<?= $html->escape($label) ?>"
+					data-for="#<?= $area ?>-<?= $name ?>"
+					autocomplete="off"
+					value="QR"
+				/>
+			</div>
+			<div class="ui-block-e" style="width:80%">
+				<input
+					data-inline="true"
+					type="<?= $type ?>"
+					name="<?= $area ?>[<?= $name ?>]"
+					id="<?= $area ?>-<?= $name ?>"
+					autocomplete="off"
+					value="<?= $val ?>"
+				/>
+			</div>
+		</div>
+		<?
+	};
+};
+?>
+<div data-role="page" id="main">
+	<div data-role="header" data-position="fixed">
+		<h1>
+			<?= $i18n->_('System Preferences') ?>
+		</h1>
+	</div>
+	<div data-role="footer" data-position="fixed">
+		<h3>
+			<?= $i18n->_('Project Skyhook&trade; Bitcoin ATM') ?>
+		</h3>
+	</div>
+	<!--
+	<div data-role="navbar">
+		<ul>
+			<li>
+				<a href="/admin/config" data-theme="b">Account</a>
+			</li>
+			<li>
+				<a href="b.html" data-theme="a">Balances</a>
+			</li>
+		</ul>
+	</div>
+	-->
+	<div data-role="content">
+		<div class="ui-body ui-body-b" style="margin-bottom:33vh">
+			<h1 id="page_title">
+				<?= $i18n->_('Account Configuration')?>
+			</h1>
+			<h3>
+				<?= $i18n->_('This machine uses the Blockchain API for all transactions. A valid Blockchain User ID (GUID), Password, and Sending Bitcoin Address must be provided.')?>
+			</h3>
+			<div id="other-errors">
+				<div id="unknown-errors"></div>
+			</div>
+			<div data-role="collapsible">
+				<h3>
+					<?= $i18n->_('Is this secure?') ?>
+				</h3>
+				<p>
+					<?= $i18n->_('This data is encrypted.
+					<br />
+					Additionally, it&rsquo;s only accessed for Blockchain transactions,
+					which are secure.  When the device loses power or is shut down, 
+					all decryption keys are lost.')?>
+				</p>
+			</div>
+			<hr>
+			<form
+				id="form-config"
+				action="/admin/save"
+				method="POST"
+				data-ajax="false"
+				autocomplete="off"
+			>
+				<input type="hidden" name="old_password" value="<?= $html->escape($password) ?>" />
+				<? include __DIR__ . '/config/admin-password.phtml'; ?>
+				<? include __DIR__ . '/config/pricing.phtml'; ?>
+				<? include __DIR__ . '/config/wallet.phtml'; ?>
+				<? include __DIR__ . '/config/transaction.phtml'; ?>
+				<? include __DIR__ . '/config/email.phtml'; ?>
+				<? include __DIR__ . '/config/contact.phtml'; ?>
+				<? include __DIR__ . '/config/send-log.phtml'; ?>
+				<? include __DIR__ . '/config/language.phtml'; ?>
+				<? include __DIR__ . '/config/commands.phtml'; ?>
+				<a 
+					href="#"
+					id="config-exit"
+					data-role="button"
+					data-inline="true"
+					data-ajax="false"
+					data-theme="c"
+				>
+					<?= $i18n->_('Exit')?>
+				</a>
+				<input
+					type="submit"
+					value="<?= $i18n->_('Save')?>"
+					data-inline="true"
+					data-theme="b"
+				>
+			</form>
+			<span id="status"></span>
+		</div>
+	</div>
+<!-- /content -->
+</div>
+<!-- /page -->
+<?
+$scripts = [
+	'/assets/gettext/Gettext.js',
+	'/assets/jQuery/jquery.min.js',
+	'/assets/jQuery/jquery.mobile.min.js',
+	'/assets/jsqrcode/src/grid.js',
+	'/assets/jsqrcode/src/version.js',
+	'/assets/jsqrcode/src/detector.js',
+	'/assets/jsqrcode/src/formatinf.js',
+	'/assets/jsqrcode/src/errorlevel.js',
+	'/assets/jsqrcode/src/bitmat.js',
+	'/assets/jsqrcode/src/datablock.js',
+	'/assets/jsqrcode/src/bmparser.js',
+	'/assets/jsqrcode/src/datamask.js',
+	'/assets/jsqrcode/src/rsdecoder.js',
+	'/assets/jsqrcode/src/gf256poly.js',
+	'/assets/jsqrcode/src/gf256.js',
+	'/assets/jsqrcode/src/decoder.js',
+	'/assets/jsqrcode/src/qrcode.js',
+	'/assets/jsqrcode/src/findpat.js',
+	'/assets/jsqrcode/src/alignpat.js',
+	'/assets/jsqrcode/src/databr.js',
+	'/assets/js/admin/qr.js',
+	'/assets/js/admin/config.js',
+];
+include __DIR__ . '/../foot.phtml';

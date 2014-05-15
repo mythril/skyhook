@@ -1,0 +1,23 @@
+<?
+$email = $config['email'];
+$emailInput = $simpleInput($email, 'email');
+?>
+<!-- Email Setting -->
+<div id="email-settings" data-role="collapsible" data-collapsed="true">
+	<h3>
+		<?= $i18n->_('Email Settings') ?>
+	</h3>
+	<p>
+		<?= $i18n->_('<strong>Currently only gmail is supported</strong></br>
+		<i>An email address is required for sending customer receipts, receiving transaction logs and sending
+		transaction errors that need to be resolved manually.</i>
+		')?>
+	</p>
+	<? $emailInput($i18n->_('Email Address'), 'username') ?>
+	<? $emailInput($i18n->_('Email Password'), 'password', 'password') ?>
+	<p>
+		<strong><?= $i18n->_('Machine Name')?></strong>:
+		<?= $i18n->_('Name your machine (a unique Machine Name is recommended)') ?>
+	</p>
+	<? $emailInput($i18n->_('Machine Name'), 'machine') ?>
+</div><!-- /Email Setting -->

@@ -1,0 +1,80 @@
+<?
+$title = 'Admin Login';
+$styles = ['/assets/jQuery/jquery.mobile.min.css'];
+include __DIR__ . '/../head.phtml';
+$errorCodes = [
+	0 => '',
+	1 => 'Invalid password supplied.',
+];
+$errorMessage = $errorCodes[$errorCode];
+if (!isset($submitTo)) {
+	$submitTo = '/admin/config';
+}
+?>
+<div data-role="page">
+	<div data-role="header" data-position="fixed">
+		<h1>
+			<?= $i18n->_('System Preferences') ?>
+		</h1>
+	</div>
+	<div data-role="content">
+		<form action="<?= $html->escape($submitTo) ?>" method="POST" autocomplete="off" data-transition="flip" data-ajax="false" >
+			<div class="ui-body ui-body-b">
+				<h2>
+					<?= $i18n->_('Admin Login') ?>
+				</h2>
+				<? if (!empty($errorMessage)): ?>
+					<div class="ui-body-e">
+						<strong><?= $i18n->_('Error:') ?></strong> <?= $errorMessage ?>
+					</div>
+				<? endif; ?>
+				<div data-role="fieldcontain">
+					<label for="password">
+						<?= $i18n->_('Password:') ?>
+					</label>
+					<input
+						type="password"
+						name="password"
+						id="password"
+						value=""
+						data-clear-btn="true"
+					/>
+				</div>
+				<div class="ui-grid-a">
+					<div class="ui-block-a">
+						<a href="/"
+							data-role="button"
+							data-theme="c"
+							rel="external"
+							data-transition="fade"
+						>
+							<?= $i18n->_('Cancel') ?>
+						</a>
+					</div>
+					<div class="ui-block-b">
+						<input
+							type="submit"
+							value="<?= $i18n->_('Login') ?>"
+							data-theme="b"
+						/>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+	<div data-role="footer" data-position="fixed">
+		<h3>
+			<?= $i18n->_('Project Skyhook&trade; Bitcoin ATM') ?>
+		</h3>
+	</div>
+</div>
+<?
+$scripts = [
+	'/assets/gettext/Gettext.js',
+	'/assets/jQuery/jquery.min.js',
+	'/assets/jQuery/jquery.mobile.min.js',
+];
+if (isset($redirectOnTimeout) && $redirectOnTimeout) {
+	$scripts[] = '/assets/js/admin/redirect.js';
+}
+include __DIR__ . '/../foot.phtml';

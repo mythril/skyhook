@@ -1,0 +1,58 @@
+<?php
+$title = 'Project Skyhook&trade; Bitcoin ATM';
+$styles = [
+	'/assets/Messi/messi.css',
+	'/assets/css/skyhook.css',
+];
+$currencyMeta = $config->getCurrencyMeta();
+$classes = ['purchase'];
+include 'head.phtml';
+?>
+<button id="canceler">
+	&times;
+</button>
+<div id="help-panel">
+	<?= file_get_contents(Localization::path("help.html")); ?>
+	<a href="#" class="closer button">&times;</a>
+</div>
+<div class="purchase-content">
+	<div class="price">
+		<div class="crypto-amount">1 <?= $i18n->_('bitcoin') ?></div>
+		<div class="fiat-amount"><?= $currencyMeta->format($ticket->getBitcoinPrice(), true) ?></div>
+	</div>
+	<h1>
+		<?= $i18n->_('insert bills') ?>
+	</h1>
+	<div class="notice">
+		<span><?= $i18n->_('bitcoins will be sent to:') ?></span>
+		<div class="address"><?= $ticket->getCustomerAddress()->get() ?></div>
+	</div>
+	<div id="running-total">
+		<div id="low-balance">
+			<?= $i18n->_('Do Not Insert Bills Larger than') ?> <?= $currencyMeta->getSymbol() ?><span id="remainder"></span>
+		</div>
+		<div><span id="bills">0</span> <?= $currencyMeta->getISOCode() ?></div>
+		<div><span id="btc">0</span> <?= $i18n->_('BTC') ?></div>
+	</div>
+	<div class="button-wrapper">
+		<button id="buy" disabled="disabled">
+			<?= $i18n->_('buy bitcoins') ?>
+		</button>
+	</div>
+</div>
+<div id="footer">
+	<a href="" id="help" class="button">?</a>
+</div>
+<?php
+$scripts = [
+	'/assets/gettext/Gettext.js',
+	'/currency.js',
+	'/assets/jQuery/jquery.min.js',
+	'/assets/js/helper.js',
+	'/assets/js/Comet.js',
+	'/assets/Messi/messi.min.js',
+	'/assets/js/loading.js',
+	'/assets/js/HelpPanel.js',
+	'/assets/js/purchase.js',
+];
+include 'foot.phtml';

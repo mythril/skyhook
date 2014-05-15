@@ -1,0 +1,35 @@
+<!-- Transaction Download -->
+<div id="csv-log" data-role="collapsible" data-collapsed="true">
+	<h3>
+		<?= $i18n->_('Retrieve Transaction Log (CSV format)') ?>
+	</h3>
+	<div class="ui-grid-a">
+		<div class="ui-block-a" style="width:70%">
+			<label for="hourly">
+				<?= $i18n->_('Send Hourly Transaction Log:') ?>
+			</label>
+		</div>
+		<div class="ui-block-b" style="width:30%">
+			<select
+				name="transaction-cron"
+				id="hourly"
+				data-role="slider"
+				data-track-theme="c"
+				data-theme="a"
+				data-mini="true"
+			>
+				<option value="off"><?= $i18n->_('Off') ?></option>
+				<option
+					value="on"
+					<?= !empty($config['transaction-cron']) ? 'selected="selected"' : '' ?>
+				><?= $i18n->_('Hourly')?></option>
+			</select>
+		</div>
+	</div>
+	<button id="transaction-log">
+		<?= $i18n->_('Send transaction log (delta)')?>
+	</button>
+	<button id="complete-transaction-log">
+		<?= $i18n->_('Send complete transaction log')?>
+	</button>
+</div><!-- /Transaction Download -->

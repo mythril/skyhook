@@ -1,0 +1,41 @@
+<?
+if (!isset($metas)) {
+	$metas = [];
+}
+if (!isset($styles)) {
+	$styles = [];
+}
+if (!isset($contactInfo)) {
+	$contactInfo = '';
+}
+if (!isset($errorClass)) {
+	$errorClass = 'hidden';
+}
+?>
+<!DOCTYPE HTML>
+<html lang="en-US" <?= isset($classes) ? 'class="' . implode(' ', $classes) . '"' : ' '?>>
+<head>
+	<link rel="shortcut icon" href="/assets/favicon.ico" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta charset="UTF-8">
+	<link rel="gettext" type="application/x-po" href="<?= Localization::url('LC_MESSAGES/secondary.po') ?>">
+	<? foreach ($metas as $meta): ?>
+		<?= $meta ?>
+	<? endforeach; ?>
+	<? foreach ($styles as $href): ?>
+		<link rel="stylesheet" href="<?= $html->escape($href); ?>" />
+	<? endforeach; ?>
+	<style>
+		.hidden {
+			display: none !important;
+			visibility: hidden;
+		}
+	</style>
+	<title><?= $html->escape($title) ?></title>
+</head>
+<body>
+	<div id="errorPage" class="<?= $errorClass ?>">
+		<h1><?= $i18n->_('Network Unreachable') ?>:</h1>
+		<p><?= $i18n->_('If the problem persists, please contact the operator.') ?></p>
+		<div id="errorContact"><?= nl2br($html->escape($contactInfo)) ?></div>
+	</div>

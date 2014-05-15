@@ -1,0 +1,27 @@
+<?
+$locale = Localization::getLocale();
+?>
+<!-- Locale Settings -->
+<div id="locale-settings" data-role="collapsible" data-collapsed="true">
+	<h3>
+		<?= $i18n->_('Localization Settings')?>
+	</h3>
+	<div id="locale-errors"></div>
+	<div data-role="fieldcontain">
+		<label for="locale">
+			<?= $i18n->_('Localize for:')?>
+		</label>
+		<select name="locale" id="locale" data-theme="a">
+		<? foreach(Localization::getAvailableLocales() as $l => $v): ?>
+			<option
+				value="<?= $html->escape($l) ?>"
+				<? if ($locale === $l): ?>
+				selected="selected"
+				<? endif; ?>
+			>
+				<?= $html->escape($l) ?>
+			</option>
+		<? endforeach; ?>
+		</select>
+	</div>
+</div><!-- /Locale -->

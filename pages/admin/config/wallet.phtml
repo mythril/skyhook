@@ -1,0 +1,14 @@
+<?
+$wallet = $config['wallet'];
+$walletInput = $simpleInput($wallet, 'wallet');
+?>
+<!-- Blockchain -->
+<div id="wallet-settings" data-role="collapsible" data-collapsed="true">
+	<h3>
+		<?= $i18n->_('Blockchain Configuration') ?>
+	</h3>
+	<? $walletInput($i18n->_('Blockchain ID (GUID)'), 'id') ?>
+	<? $walletInput($i18n->_('Blockchain Password'), 'mainPass', 'password') ?>
+	<? $walletInput($i18n->_('Secondary Password (optional)'), 'secondPass', 'password') ?>
+	<? $walletInput($i18n->_('Sending Bitcoin Address'), 'fromAddress') ?>
+</div><!-- /Blockchain -->

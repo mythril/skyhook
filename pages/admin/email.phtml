@@ -1,0 +1,73 @@
+<?
+$title = 'Admin Login';
+$styles = ['/assets/jQuery/jquery.mobile.min.css'];
+include __DIR__ . '/../head.phtml';
+$errorCodes = [
+	0 => '',
+	1 => $i18n->_('Invalid password supplied.'),
+];
+$errorMessage = $errorCodes[$errorCode];
+if (!isset($submitTo)) {
+	$submitTo = '/admin/config';
+}
+?>
+<div data-role="page">
+	<div data-role="header" data-position="fixed">
+		<h1>
+			<?= $i18n->_('System Preferences') ?>
+		</h1>
+	</div>
+	<div data-role="content">
+		<form action="<?= $html->escape($submitTo) ?>" method="POST" autocomplete="off" data-transition="flip" data-ajax="false" >
+			<input type="hidden" name="alt" value="email" />
+			<div class="ui-body ui-body-b">
+				<h2>
+					<?= $i18n->_('Admin Login') ?>
+				</h2>
+				<p>
+					<strong style="color:red;">
+						<?= $i18n->_('A working email account is required.')?>
+					</strong>
+				</p>
+				<? if (!empty($errorMessage)): ?>
+					<div class="ui-body-e">
+						<strong><?= $i18n->_('Error:')?></strong> <?= $errorMessage ?>
+					</div>
+				<? endif; ?>
+				<div data-role="fieldcontain">
+					<label for="password">
+						<?= $i18n->_('Password:') ?>
+					</label>
+					<input
+						type="password"
+						name="password"
+						id="password"
+						value=""
+						data-clear-btn="true"
+					/>
+				</div>
+				<div>
+					<input
+						type="submit"
+						value="<?= $i18n->_('Login') ?>"
+						data-theme="b"
+					/>
+				</div>
+			</div>
+		</form>
+	</div>
+	<div data-role="footer" data-position="fixed">
+		<h3>
+			<?= $i18n->_('Skyhook Bitcoin ATM') ?>
+		</h3>
+	</div>
+</div>
+<?
+$scripts = [
+	'/assets/gettext/Gettext.js',
+	'/assets/jQuery/jquery.min.js',
+	'/assets/jQuery/jquery.mobile.min.js',
+	'/assets/js/Comet.js',
+	'/assets/js/checkbalance.js',
+];
+include __DIR__ . '/../foot.phtml';

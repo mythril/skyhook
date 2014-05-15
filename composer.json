@@ -1,0 +1,7 @@
+{
+	"require": {
+		"swiftmailer/swiftmailer": "v5.0.2",
+		"eloquent/pbkdf2-compat": "1.0.0",
+		"zf1/zend-translate": "1.12.3"
+	}
+}

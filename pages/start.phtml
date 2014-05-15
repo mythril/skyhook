@@ -1,0 +1,34 @@
+<?php
+$title = 'Project Skyhook';
+$styles = ['/assets/css/skyhook.css'];
+$classes = ['start'];
+include 'head.phtml';
+?>
+<style type="text/css">
+	html.start body{
+		background-image: url('<?= Localization::url('images/Bitcoin-Logo.png') ?>');
+	}
+</style>
+<div id="help-panel">
+	<?= file_get_contents(Localization::path("help.html")); ?>
+	<a href="#" class="closer button">&times;</a>
+</div>
+<div class="price">
+	<div class="crypto-amount">1 <?= $i18n->_('bitcoin') ?></div>
+	<div class="fiat-amount"><?= $i18n->_('...') ?></div>
+</div>
+<div id="footer">
+	<a href="" id="help" class="button">?</a>
+</div>
+<?php
+$scripts = [
+	'/assets/gettext/Gettext.js',
+	'/currency.js',
+	'/assets/jQuery/jquery.min.js',
+	'/assets/js/helper.js',
+	'/assets/js/Comet.js',
+	'/assets/js/HelpPanel.js',
+	'/assets/js/start.js',
+	'/assets/js/NetworkTest.js',
+];
+include 'foot.phtml';

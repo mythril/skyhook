@@ -1,0 +1,37 @@
+<?
+$contact = $config['contact'];
+$contactInput = $simpleInput($contact, 'contact');
+?>
+<style type="text/css">
+	#contact-information{
+		height:120px;
+	}
+</style>
+<!-- Contact Setting -->
+<div id="contact-settings" data-role="collapsible" data-collapsed="true">
+	<h3>
+		<?= $i18n->_('Contact Settings') ?>
+	</h3>
+	<p>
+		<?= $i18n->_('When a price cannot be acquired a page will render with this information on it. Most of the time this will likely be a network issue.')?>
+	</p>
+	<p>
+		<?= $i18n->_("This is the rough equivalent of an 'out of order' sign.")?>
+	</p>
+	<p>
+	<?= $i18n->_('Example:</br>
+	<i></br>
+	PROJECT SKYHOOK</br>
+	support@projectskyhook.com</br>
+	503-489-9998</br>
+	3519 NE 15TH AVE, STE 350</br>
+	PORTLAND, OR 97212</i>') ?>
+	</p>
+	<textarea
+		name="contact[information]"
+		id="contact-information"
+		autocomplete="off"
+	><?
+	echo $html->escape($contact['information']);
+	?></textarea>
+</div><!-- /Contact Setting -->
