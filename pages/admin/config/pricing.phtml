@@ -4,6 +4,8 @@
 	}
 </style>
 <?php
+$cfg = new Config();
+$currencyName = $cfg->getCurrencyCode();
 
 $configSources = array_map(
 	function () {
@@ -132,6 +134,14 @@ $selectorChecked = function ($val, $configured) {
 			') ?>
 		</p>
 		<hr class="unfinished" />
+		<div class="ui-grid-a">
+			<div class="ui-block-a">
+				National Currency:
+			</div>
+			<div class="ui-grid-b">
+				<strong><?= $currencyName ?></strong>
+			</div>
+		</div>
 		<div id="single-source-wrap" data-role="fieldcontain">
 			<label for="single-source" class="select">
 				<?= $i18n->_('Source:')?>
