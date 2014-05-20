@@ -23,13 +23,7 @@ class ConfigVerifier {
 		}
 		
 		try {
-			$balance = $cfg->getWalletProvider()->getBalance();
-			if (!is_numeric($balance->get())) {
-				$walletSettings[] = [
-					'id' => '#wallet-id-error',
-					'error' => $i18n->_('Unknown format encountered when attempmting to retreive balance:'). ' "' . $balance . '".',
-				];
-			}
+			$cfg->getWalletProvider()->verifyOwnership();
 		} catch (Exception $e) {
 			$walletSettings[] = [
 				'id' => '#wallet-id-error',

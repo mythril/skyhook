@@ -32,11 +32,10 @@ class Blockchain implements \WalletProvider {
 		$this->id = $options['id'];
 	}
 	
-	public function getBalance() {
+	public function verifyOwnership() {
 		$request = $this->baseURL() . 'address_balance?' . http_build_query([
 			'password' => $this->mainPass,
-			'address' => $this->fromAddress->get(),
-			'confirmations' => 1,
+			'address' => $this->fromAddress->get()
 		]);
 		
 		try {
@@ -51,7 +50,35 @@ class Blockchain implements \WalletProvider {
 			throw new Exception('Blockchain.info responded with: ' . $decoded['error']);
 		}
 		
-		$balance = Amount::fromSatoshis($decoded['balance']);
+		return true;
+	}
+	
+	public function getBalance($confirmations = 1) {
+		$request = 'https://blockchain.info/unspent?' . http_build_query([
+			'active' => $this->fromAddress->get()
+		]);
+		
+		try {
+			$get = SimpleHTTP::get($request);
+		} catch (Exception $e) {
+			throw new Exception("There was a network error while processing the request.");
+		}
+		
+		$decoded = JSON::decode($get);
+		$balance = new Amount('0');
+		
+		foreach ($decoded['unspent_outputs'] as $output) {
+			if (!empty($output['confirmations'])
+			&& $output['confirmations'] > $confirmations) {
+				$balance = $balance->add(Amount::fromSatoshis(
+					$output['value']
+				));
+			}
+		}
+		
+		if (isset($decoded['error'])) {
+			throw new Exception('Blockchain.info responded with: ' . $decoded['error']);
+		}
 		
 		return $balance;
 	}
