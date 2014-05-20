@@ -20,7 +20,7 @@
 			<?= $i18n->_('Purchase Time (in UTC):') ?>
 		</th>
 		<td>
-			<?= $html->escape($ticket->getInitiatedAt()->format('g:ia \o\n l jS F Y')) ?>
+			<?= $html->escape($ticket->getInitiatedAt()->format('g:ia \o\n l jS F Y e')) ?>
 		</td>
 	</tr>
 	<tr>
@@ -85,7 +85,7 @@
 		</th>
 		<td>
 			<? if ($ticket->getInitiatedAt() != null): ?>
-				<?= $html->escape($ticket->getFinalizedAt()->format('g:ia \o\n l jS F Y')) ?>
+				<?= $html->escape($ticket->getFinalizedAt()->format('g:ia \o\n l jS F Y e')) ?>
 			<? endif; ?>
 		</td>
 	</tr>
