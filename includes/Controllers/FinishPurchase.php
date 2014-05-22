@@ -8,11 +8,12 @@ use Config;
 use Template;
 use DB;
 use BitcoinAddress;
-use BillScanner;
 use Purchase;
 
 class FinishPurchase implements Controller {
+	use ScannerStopper;
 	public function execute(array $matches, $url, $rest) {
+		$this->stopScanner();
 		$addr = new BitcoinAddress($matches['address']);
 		$admin = AdminConfig::volatileLoad();
 		$cfg = $admin->getConfig();
@@ -39,12 +40,6 @@ class FinishPurchase implements Controller {
 			return false;
 		}
 		
-		$scanner = Container::dispense('BillScanner');
-		if ($scanner->isRunning()) {
-			$scanner->stop();
-		}
-		$scanner->start();
-
 		header('Cache-Control: no-cache, no-store, must-revalidate');
 		header('Pragma: no-cache');
 		header('Expires: 0');
