@@ -12,10 +12,6 @@ class Price implements Controller {
 		return 60 * $SECONDS;
 	}
 	
-	public function beforeSend($data) {
-		//TODO store price and timestamp for purchase ticket
-	}
-	
 	public function execute(array $matches, $url, $rest) {
 		$admin = AdminConfig::volatileLoad();
 		$pricingProvider = $admin->getConfig()->getPricingProvider();

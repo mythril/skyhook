@@ -75,7 +75,9 @@ $(function () {
 	
 	$('#canceler').on('click touchstart', confirmCancel);
 	
-	Comet.open('/billscan-balance/' + ticketId, function (data) {
+	var handlers = {};
+	
+	handlers.totalsUpdated = function (data) {
 		if (parseFloat(data.bills) > 0) {
 			$('#buy').removeAttr('disabled').prop('disabled', false);
 			$('#canceler').attr('disabled', 'disabled').prop('disabled', true);
@@ -84,6 +86,14 @@ $(function () {
 		
 		if (bills !== data.bills) {
 			updateTotal(data);
+		}
+	};
+	
+	Comet.open('/billscan-balance/' + ticketId, function (data) {
+		if (handlers[data.event]) {
+			handlers[data.event](data);
+		} else {
+			console.log(data);
 		}
 	});
 	

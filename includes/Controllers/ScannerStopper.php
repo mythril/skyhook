@@ -1,14 +1,12 @@
 <?php
 
 namespace Controllers;
-use BillScanner;
+use BillScannerDriver;
 
 trait ScannerStopper {
 	public function stopScanner() {
-		$scanner = new BillScanner();
-		if ($scanner->isRunning()) {
-			$scanner->stop();
-		}
+		$scanner = new BillScannerDriver();
+		$scanner->stop();
 	}
 }
 
