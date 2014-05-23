@@ -12,6 +12,7 @@ use Bill;
 use BillScannerDriver;
 use JobManager;
 use Localization;
+use JobHandlers\MachineStatusEmail;
 
 class BillScannerBalance implements Controller {
 	use Comet;
@@ -123,14 +124,6 @@ class BillScannerBalance implements Controller {
 			->truncate();
 	}
 	
-	private function reportError($msg) {
-		$i18n = Localization::getTranslator();
-		return $i18n->_('This is an automated message.') . "\n\n"
-			. sprintf($i18n->_('%s has encountered an error.'), $this->config->getMachineName()) . "\n\n"
-			. $i18n->_('Time: ') . date('g:ia \o\n l jS F Y e') . "\n\n"
-			. $i18n->_('Error Type: ' . $msg);
-	}
-	
 	private function statusHandler(array $statuses) {
 		$i18n = Localization::getTranslator();
 		$badStatuses = [
@@ -157,10 +150,10 @@ class BillScannerBalance implements Controller {
 		foreach ($badStatuses as $status => $details) {
 			if (array_key_exists($status, $statuses)
 			&& $statuses[$status] === $details['badWhen']) {
-				JobManager::enqueue(
+				MachineStatusEmail::reportError(
+					$this->config,
 					$this->db,
-					'MachineStatusEmail',
-					['body' => $this->reportError($details['body'])]
+					$details['body']
 				);
 			}
 		}

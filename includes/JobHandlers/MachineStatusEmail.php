@@ -10,8 +10,24 @@ use Swift_Mailer;
 use Swift_Message;
 use Swift_Attachment;
 use Localization;
+use Config;
+use DB;
+use JobManager;
 
 class MachineStatusEmail implements JobHandler {
+	public static function reportError(Config $cfg, DB $db, $msg) {
+		$i18n = Localization::getTranslator();
+		$body = $i18n->_('This is an automated message.') . "\n\n"
+			. sprintf($i18n->_('%s has encountered an error.'), $cfg->getMachineName()) . "\n\n"
+			. $i18n->_('Time: ') . date('g:ia \o\n l jS F Y e') . "\n\n"
+			. $i18n->_('Error Type: ' . $msg);
+		JobManager::enqueue(
+			$db,
+			'MachineStatusEmail',
+			['body' => $body]
+		);
+	}
+	
 	public function work(array $row) {
 		$cfg = Admin::volatileLoad()->getConfig();
 		$transport = Swift_SmtpTransport::newInstance(
