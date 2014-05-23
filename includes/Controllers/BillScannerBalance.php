@@ -10,6 +10,8 @@ use Container;
 use DB;
 use Bill;
 use BillScannerDriver;
+use JobManager;
+use Localization;
 
 class BillScannerBalance implements Controller {
 	use Comet;
@@ -121,6 +123,38 @@ class BillScannerBalance implements Controller {
 			->truncate();
 	}
 	
+	public function statusHandler(array $statuses) {
+		$i18n = Localization::getTranslator();
+		$badStatuses = [
+			'FULL' => [
+				'badWhen' => true,
+				'subject' => $i18n->_('Bill Stacker full.'),
+				'body' => $i18n->_('Bill stacker is full and cassette requires emptying.'),
+			],
+			'CASSETTE_PRESENT' => [
+				'badWhen' => false,
+				'subject' => $i18n->_('Cassette has been removed.'),
+				'body' => $i18n->_('Cassette has been removed.'),
+			],
+			'MAINTENANCE_NEEDED' => [
+				'badWhen' => true,
+				'subject' => $i18n->_('Maintenance is required.'),
+				'body' => $i18n->_('Bill stacker has signalled it requires maintenance.'),
+			]
+		];
+		
+		foreach ($badStatuses as $status => $details) {
+			if (array_key_exists($status, $statuses)
+			&& $statuses[$status] === $details['badWhen']) {
+				JobManager::enqueue(
+					$this->db,
+					'MachineStatusEmail',
+					$details
+				);
+			}
+		}
+	}
+	
 	public function execute(array $matches, $url, $rest) {
 		$this->purchase = Purchase::load(
 			$this->config,
@@ -143,6 +177,9 @@ class BillScannerBalance implements Controller {
 					'event' => 'stateChanged',
 					'state' => $desc
 				]);
+			})
+			->attachObserver('stateChanged', function ($statuses) {
+				$this->statusHandler($statuses);
 			})
 			->attachObserver('driverStopped', function () {
 				$this->send([
