@@ -123,23 +123,34 @@ class BillScannerBalance implements Controller {
 			->truncate();
 	}
 	
-	public function statusHandler(array $statuses) {
+	private function reportError($msg) {
+		$i18n = Localization::getTranslator();
+		return $i18n->_('This is an automated message.') . "\n\n"
+			. sprintf($i18n->_('%s has encountered an error.'), $this->config->getMachineName()) . "\n\n"
+			. $i18n->_('Time: ') . date('g:ia \o\n l jS F Y e') . "\n\n"
+			. $i18n->_('Error Type: ' . $msg);
+	}
+	
+	private function statusHandler(array $statuses) {
 		$i18n = Localization::getTranslator();
 		$badStatuses = [
 			'FULL' => [
 				'badWhen' => true,
-				'subject' => $i18n->_('Bill Stacker full.'),
-				'body' => $i18n->_('Bill stacker is full and cassette requires emptying.'),
+				'body' => $i18n->_(
+					'Bill stacker is full and cassette requires emptying.'
+				),
 			],
 			'CASSETTE_PRESENT' => [
 				'badWhen' => false,
-				'subject' => $i18n->_('Cassette has been removed.'),
-				'body' => $i18n->_('Cassette has been removed.'),
+				'body' => $i18n->_(
+					'Cassette has been removed.'
+				),
 			],
 			'MAINTENANCE_NEEDED' => [
 				'badWhen' => true,
-				'subject' => $i18n->_('Maintenance is required.'),
-				'body' => $i18n->_('Bill stacker has signalled it requires maintenance.'),
+				'body' => $i18n->_(
+					'Bill stacker has signalled it requires maintenance.'
+				),
 			]
 		];
 		
@@ -149,7 +160,7 @@ class BillScannerBalance implements Controller {
 				JobManager::enqueue(
 					$this->db,
 					'MachineStatusEmail',
-					$details
+					['body' => $this->reportError($details['body'])]
 				);
 			}
 		}

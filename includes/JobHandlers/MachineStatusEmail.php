@@ -9,6 +9,7 @@ use Swift_SmtpTransport;
 use Swift_Mailer;
 use Swift_Message;
 use Swift_Attachment;
+use Localization;
 
 class MachineStatusEmail implements JobHandler {
 	public function work(array $row) {
@@ -24,10 +25,10 @@ class MachineStatusEmail implements JobHandler {
 		
 		$from = [];
 		$from[$cfg->getEmailUsername()] = $cfg->getMachineName();
-		
-		$subject = $row['subject'];
-		
-		$message = Swift_Message::newInstance($cfg->getMachineName() . ': ' . $subject)
+		$i18n = Localization::getTranslator();
+		$message = Swift_Message::newInstance(
+				$cfg->getMachineName() . ': ' . $i18n->_('Error Report.')
+			)
 			->setFrom($from)
 			->setTo($cfg->getEmailUsername())
 			->setBody($row['body']);
