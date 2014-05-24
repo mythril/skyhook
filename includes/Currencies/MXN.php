@@ -13,6 +13,7 @@ class MXN implements FiatMeta {
 			3 => new Amount('100'),
 			4 => new Amount('200'),
 			5 => new Amount('500'),
+			6 => new Amount('1000'),
 		];
 	}
 }
