@@ -3,7 +3,7 @@
 namespace Currencies;
 use Amount;
 
-class AUD implements FiatMeta {
+class ARS implements FiatMeta {
 	use Common;
 	
 	public function getDenominations() {
