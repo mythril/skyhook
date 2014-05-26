@@ -48,12 +48,19 @@ foreach (array(
 	'Get' => &$_GET,
 	'Post' => &$_POST,
 	'Server' => &$_SERVER,
-	'PostFiles' => &$_FILES
+	'PostFiles' => &$_FILES,
+	'Cookie' => &$_COOKIE,
 ) as $class => $glbl) {
 	$c = "Environment\\" . $class;
 	Container::registerSingleton($c, function () use ($c, $glbl) {
 		return new $c($glbl);
 	});
+}
+
+$cookies = Container::dispense("Environment\\Cookie");
+
+if (isset($cookies['lang']) && Localization::localePresent($cookies['lang'])) {
+	Localization::setLocale($cookies['lang']);
 }
 
 Container::registerSingleton('Environment\RequestHeaders', function () {
@@ -85,7 +92,7 @@ $result = $router->resolve(
 			echo JSON::encode(['on' => !file_exists('command')]);
 			return true;
 		}],
-		['/currency.js', Router::lazyLoad('Controllers\CurrencyData')],
+		['/settings.js', Router::lazyLoad('Controllers\SettingsData')],
 		['/admin', Router::lazyLoad('Controllers\Admin')],
 		
 		//Checks the config before any other routes are resolved.

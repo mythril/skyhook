@@ -144,6 +144,7 @@ textarea {
 #footer #help:active {
   background-color: #fff;
 }
+#language-selector,
 #canceler {
   position: fixed;
   z-index: 2;
@@ -179,10 +180,12 @@ textarea {
   -o-transition: opacity 0.2s linear;
   transition: opacity 0.2s linear;
 }
+#language-selector:active,
 #canceler:active {
   color: #fff;
   background-color: #f7941e;
 }
+#language-selector:disabled,
 #canceler:disabled {
   filter: alpha(opacity=0);
   -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
@@ -191,6 +194,10 @@ textarea {
   -ms-opacity: 0;
   -o-opacity: 0;
   opacity: 0;
+}
+#language-selector img {
+  width: 50%;
+  height: 50%;
 }
 #help-panel {
   position: fixed;
@@ -763,6 +770,7 @@ html.receipt .receipt-content #email-receipt input[type=submit] {
 html.receipt .receipt-content #sent {
   padding: 10vh 0;
 }
+#languages,
 #errorPage {
   padding: 0 2vh;
   background-color: rgba(255,255,255,0.9);
@@ -775,12 +783,37 @@ html.receipt .receipt-content #sent {
   bottom: 0;
   margin: auto;
 }
+#languages h1,
 #errorPage h1 {
   font-size: 5vh;
 }
+#languages.notnet .network,
+#errorPage.notnet .network {
+  display: none;
+}
+#languages #errorContact,
 #errorPage #errorContact {
   padding: 1em 0;
   border-top: 2px solid #ccc;
+}
+#languages {
+  background-color: rgba(255,255,255,0.95);
+  filter: progid:DXImageTransform.Microsoft.Gradient( startColorstr='#f2ffffff', endColorstr='#f2ffffff',GradientType=0 );
+}
+#languages .language {
+  color: #000;
+  display: block;
+  text-align: left;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  -o-box-sizing: border-box;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 10px;
+}
+#languages .language img {
+  margin-right: 10px;
 }
 /* ==========================================================================
    Helper classes

@@ -4,22 +4,34 @@ class Localization {
 	private static $locale;
 	
 	private static $available = [];
+	private static $present = [];
 	
 	public static function localePresent($locale) {
-		return isset(self::$available[$locale]);
+		return isset(self::$present[$locale]);
 	}
 	
 	public static function getAvailableLocales() {
-		foreach (glob(getcwd() . '/locales/*', GLOB_ONLYDIR) as $l) {
-			self::$available[basename($l)] = true;
+		if (!empty(self::$available)) {
+			return self::$available;
+		}
+		foreach (glob(getcwd() . '/locales/*/meta.json') as $l) {
+			$tmp = JSON::decode(file_get_contents($l));
+			$name = basename(dirname($l));
+			$tmp['locale_name'] = $name;
+			self::$available[] = $tmp;
+			self::$present[$name] = $tmp;
 		}
 		return self::$available;
+	}
+	
+	public static function saveLocale($locale) {
+		self::setLocale($locale);
+		file_put_contents('locale', $locale);
 	}
 	
 	public static function setLocale($locale) {
 		if (self::localePresent($locale)) {
 			self::$locale = $locale;
-			file_put_contents('locale', $locale);
 		} else {
 			throw new Exception('Invalid locale.');
 		}
@@ -58,5 +70,9 @@ class Localization {
 	
 	public static function url($fn = '') {
 		return '/locales/' . self::$locale . '/' . ltrim($fn);
+	}
+	
+	public static function flagURL() {
+		return '/assets/flags/' . self::$present[self::$locale]['icon'] . '.png';
 	}
 }

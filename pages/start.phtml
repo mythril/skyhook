@@ -9,6 +9,9 @@ include 'head.phtml';
 		background-image: url('<?= Localization::url('images/Bitcoin-Logo.png') ?>');
 	}
 </style>
+<a href="#" id="language-selector" class="button">
+	<img src="<?= Localization::flagURL() ?>" alt="" />
+</a>
 <div id="help-panel">
 	<?= file_get_contents(Localization::path("help.html")); ?>
 	<a href="#" class="closer button">&times;</a>
@@ -22,8 +25,9 @@ include 'head.phtml';
 </div>
 <?php
 $scripts = [
+	'/assets/cookies/dist/cookies.min.js',
 	'/assets/gettext/Gettext.js',
-	'/currency.js',
+	'/settings.js',
 	'/assets/jQuery/jquery.min.js',
 	'/assets/js/helper.js',
 	'/assets/js/Comet.js',

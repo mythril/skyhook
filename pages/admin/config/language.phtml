@@ -11,15 +11,20 @@ $locale = Localization::getLocale();
 		<label for="locale">
 			<?= $i18n->_('Localize for:')?>
 		</label>
-		<select name="locale" id="locale" data-theme="a">
-		<? foreach(Localization::getAvailableLocales() as $l => $v): ?>
+		<select
+			name="locale"
+			id="locale"
+			data-theme="a"
+			data-native-menu="false"
+		>
+		<? foreach(Localization::getAvailableLocales() as $v): ?>
 			<option
-				value="<?= $html->escape($l) ?>"
-				<? if ($locale === $l): ?>
+				value="<?= $html->escape($v['locale_name']) ?>"
+				<? if ($locale === $v['locale_name']): ?>
 				selected="selected"
 				<? endif; ?>
 			>
-				<?= $html->escape($l) ?>
+				<?= $html->escape($v['label']) ?>
 			</option>
 		<? endforeach; ?>
 		</select>

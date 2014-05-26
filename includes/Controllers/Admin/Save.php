@@ -107,7 +107,7 @@ class Save implements Controller {
 		
 		try{
 			$admin->saveConfig($post['admin_password'], $cfg);
-			Localization::setLocale($post['locale']);
+			Localization::saveLocale($post['locale']);
 		} catch (Exception $e) {
 			$errors = $this->addErrors(
 				$errors,

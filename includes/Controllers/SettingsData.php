@@ -3,8 +3,9 @@
 namespace Controllers;
 use Admin as AdminConfig;
 use JSON;
+use Localization;
 
-class CurrencyData implements Controller {
+class SettingsData implements Controller {
 	public function execute(array $matches, $url, $rest) {
 		$meta = AdminConfig::volatileLoad()->getConfig()->getCurrencyMeta();
 		$denoms = [];
@@ -19,6 +20,7 @@ class CurrencyData implements Controller {
 			'code' => $meta->getISOCode(),
 			'denominations' => $denoms,
 		]) . ';';
+		echo 'var Languages = ' . JSON::encode(Localization::getAvailableLocales()) . ';';
 		return true;
 	}
 }
