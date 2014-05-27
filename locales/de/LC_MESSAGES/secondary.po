@@ -1,0 +1,83 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-05-06 04:18-0700\n"
+"PO-Revision-Date: 2014-05-23 10:16+0100\n"
+"Last-Translator: Christian Damen <jnb0x80@googlemail.com>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.4\n"
+
+msgid "Passwords must match."
+msgstr "Passwörter müssen übereinstimmen."
+
+msgid "A Blockchain wallet id is required."
+msgstr "Eine Blockchain Wallet wird benötigt."
+
+msgid "The main Blockchain password is required."
+msgstr "Das Hauptpasswort für Blockchain.info wird benötigt."
+
+msgid "Please choose a selection criteria."
+msgstr "Bitte wählen Sie ein Auswahlkriterium."
+
+msgid "At least one pricing source is required."
+msgstr "Es wird zumindest eine Kurs-Quelle benötigt."
+
+msgid "Unsaved changes, discard?"
+msgstr "Ungespeicherte Änderungen vorhanden, verwerfen ?"
+
+msgid "Do you need more time?"
+msgstr "Benötigen Sie mehr Zeit ?"
+
+msgid "More Time"
+msgstr "Mehr Zeit"
+
+msgid "Cancel the transaction?"
+msgstr "Transaktion abbrechen ?"
+
+msgid "Cancel:"
+msgstr "Abbrechen:"
+
+msgid "Cancel"
+msgstr "Abbrechen"
+
+msgid "Continue"
+msgstr "Fortsetzen"
+
+msgid "Processing"
+msgstr "Verarbeite"
+
+msgid "Is this your address?"
+msgstr "Ist dies ihre Adresse ?"
+
+msgid "Address Detected:"
+msgstr "Adresse festgestellt:"
+
+msgid "Yes"
+msgstr "Ja"
+
+msgid "No"
+msgstr "Nein"
+
+msgid "Invalid Email Address"
+msgstr "Ungültige Email-Adresse"
+
+msgid "Specified address appears invalid."
+msgstr "Festgelegte Adresse erscheint ungültig."
+
+msgid "Success"
+msgstr "Erfolg"
+
+msgid "Email address stored."
+msgstr "Email-Adresse gespeichert."
+
+msgid "Ok"
+msgstr "Ok"

@@ -1,0 +1,84 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-05-06 04:18-0700\n"
+"PO-Revision-Date: 2014-05-21 06:41-0300\n"
+"Last-Translator: Alessandro E. Minghetti <alesminghetti@gmail.com>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.6.5\n"
+"Language: en_US\n"
+
+msgid "Passwords must match."
+msgstr "Las contraseñas deben coincidir."
+
+msgid "A Blockchain wallet id is required."
+msgstr "Una ID de billetera de Blockchain es necesaria."
+
+msgid "The main Blockchain password is required."
+msgstr "La contraseña principal de Blockchain es requerida."
+
+msgid "Please choose a selection criteria."
+msgstr "Escoge una selección de criterio."
+
+msgid "At least one pricing source is required."
+msgstr "Se requiere al menos una fuente de precios."
+
+msgid "Unsaved changes, discard?"
+msgstr "Hay cambios sin guardar, descartar?"
+
+msgid "Do you need more time?"
+msgstr "Necesitas más tiempo?"
+
+msgid "More Time"
+msgstr "Más tiempo"
+
+msgid "Cancel the transaction?"
+msgstr "Cancelar la transacción?"
+
+msgid "Cancel:"
+msgstr "Cancelar:"
+
+msgid "Cancel"
+msgstr "Cancelar"
+
+msgid "Continue"
+msgstr "Continuar"
+
+msgid "Processing"
+msgstr "Procesando"
+
+msgid "Is this your address?"
+msgstr "Es esta tu dirección?"
+
+msgid "Address Detected:"
+msgstr "Dirección Detectada:"
+
+msgid "Yes"
+msgstr "Si"
+
+msgid "No"
+msgstr "No"
+
+msgid "Invalid Email Address"
+msgstr "Dirección de correo invalido."
+
+msgid "Specified address appears invalid."
+msgstr "La dirección especificada parece ser inválida. "
+
+msgid "Success"
+msgstr "Listo"
+
+msgid "Email address stored."
+msgstr "Dirección de correo almacenada."
+
+msgid "Ok"
+msgstr "Ok"
