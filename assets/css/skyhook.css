@@ -127,6 +127,11 @@ textarea {
   left: -0.2em;
   margin: 0;
   padding: 0;
+  display: block;
+  width: 1.2em;
+  line-height: 1.4;
+  text-align: center;
+  background-color: #5e87b0;
   -webkit-border-radius: 0;
   -moz-border-radius: 0;
   -ms-border-radius: 0;
@@ -135,11 +140,6 @@ textarea {
   border-right: 1px solid #000;
   border-top: 1px solid #000;
   border-top-right-radius: 0.5em;
-  display: block;
-  width: 1.2em;
-  line-height: 1.4;
-  text-align: center;
-  background-color: #5e87b0;
 }
 #footer #help:active {
   background-color: #fff;
@@ -194,6 +194,12 @@ textarea {
   -ms-opacity: 0;
   -o-opacity: 0;
   opacity: 0;
+}
+#language-selector {
+  background-color: #5e87b0;
+}
+#language-selector:active {
+  background-color: #fff;
 }
 #language-selector img {
   width: 50%;
@@ -603,6 +609,12 @@ html.purchase .purchase-content #buy {
   right: 5px;
   width: 10vh;
   height: 10vh;
+  background-image: url('/assets/images/settings.png');
+  -webkit-background-size: contain;
+  -moz-background-size: contain;
+  -ms-background-size: contain;
+  -o-background-size: contain;
+  background-size: contain;
 }
 html.error .button-wrapper .button,
 html.error .button-wrapper button {
@@ -814,6 +826,10 @@ html.receipt .receipt-content #sent {
 }
 #languages .language img {
   margin-right: 10px;
+}
+#languages .language::-moz-focus-inner {
+  outline: 0 solid #008000;
+  border: 0;
 }
 /* ==========================================================================
    Helper classes
