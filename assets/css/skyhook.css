@@ -120,7 +120,8 @@ textarea {
   -o-background-size: 270px;
   background-size: 270px;
 }
-#footer #help {
+#footer #help,
+#admin-secret {
   position: absolute;
   font-size: 68px;
   bottom: -0.2em;
@@ -141,8 +142,39 @@ textarea {
   border-top: 1px solid #000;
   border-top-right-radius: 0.5em;
 }
-#footer #help:active {
+#footer #help:active,
+#admin-secret:active {
   background-color: #fff;
+}
+#admin-secret {
+  right: -0.2em;
+  left: auto;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  -ms-border-radius: 0;
+  -o-border-radius: 0;
+  border-radius: 0;
+  border-left: 1px solid #000;
+  border-top: 1px solid #000;
+  border-top-left-radius: 0.5em;
+}
+#admin-secret img {
+  -webkit-filter: brightness(2) drop-shadow(1px 1px 1px #000);
+  -moz-filter: brightness(2) drop-shadow(1px 1px 1px #000);
+  -ms-filter: brightness(2) drop-shadow(1px 1px 1px #000);
+  -o-filter: brightness(2) drop-shadow(1px 1px 1px #000);
+  filter: brightness(2) drop-shadow(1px 1px 1px #000);
+  max-width: 50%;
+  max-height: 50%;
+  width: auto;
+  height: auto;
+}
+#admin-secret:active img {
+  -webkit-filter: brightness(1) drop-shadow(1px 1px 1px #000);
+  -moz-filter: brightness(1) drop-shadow(1px 1px 1px #000);
+  -ms-filter: brightness(1) drop-shadow(1px 1px 1px #000);
+  -o-filter: brightness(1) drop-shadow(1px 1px 1px #000);
+  filter: brightness(1) drop-shadow(1px 1px 1px #000);
 }
 #language-selector,
 #canceler {
@@ -602,19 +634,6 @@ html.purchase .purchase-content #buy {
 }
 .address {
   font-family: monospace;
-}
-#admin-secret {
-  position: absolute;
-  bottom: 5px;
-  right: 5px;
-  width: 10vh;
-  height: 10vh;
-  background-image: url('/assets/images/settings.png');
-  -webkit-background-size: contain;
-  -moz-background-size: contain;
-  -ms-background-size: contain;
-  -o-background-size: contain;
-  background-size: contain;
 }
 html.error .button-wrapper .button,
 html.error .button-wrapper button {

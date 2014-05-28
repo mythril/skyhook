@@ -3,7 +3,11 @@ var HelpPanel = {onOpen: function () {}, onClose: function () {}};
 $(function () {
 	var hPanel = $('#help-panel');
 	var closeBtn = $('#help-panel > .closer');
-	var adminSecret = $('#admin-secret');
+	//<img src="/assets/images/settings.png" />
+	var adminSecret = $('<a href="#">&#x2699;</a>')
+		.attr('id', 'admin-secret')
+		.addClass('button')
+		.appendTo(hPanel);
 	
 	function activateHelpSection(target) {
 		$('.help-section').removeClass('active');
