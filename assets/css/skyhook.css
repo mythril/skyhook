@@ -1,4 +1,5 @@
 @import url("/assets/fonts/stylesheet.css");
+@import url("/assets/font-awesome/css/font-awesome.min.css");
 /*
  * HTML5 Boilerplate
  *
@@ -158,23 +159,8 @@ textarea {
   border-top: 1px solid #000;
   border-top-left-radius: 0.5em;
 }
-#admin-secret img {
-  -webkit-filter: brightness(2) drop-shadow(1px 1px 1px #000);
-  -moz-filter: brightness(2) drop-shadow(1px 1px 1px #000);
-  -ms-filter: brightness(2) drop-shadow(1px 1px 1px #000);
-  -o-filter: brightness(2) drop-shadow(1px 1px 1px #000);
-  filter: brightness(2) drop-shadow(1px 1px 1px #000);
-  max-width: 50%;
-  max-height: 50%;
-  width: auto;
-  height: auto;
-}
-#admin-secret:active img {
-  -webkit-filter: brightness(1) drop-shadow(1px 1px 1px #000);
-  -moz-filter: brightness(1) drop-shadow(1px 1px 1px #000);
-  -ms-filter: brightness(1) drop-shadow(1px 1px 1px #000);
-  -o-filter: brightness(1) drop-shadow(1px 1px 1px #000);
-  filter: brightness(1) drop-shadow(1px 1px 1px #000);
+#admin-secret span {
+  font-size: 45.33333333333333px;
 }
 #language-selector,
 #canceler {

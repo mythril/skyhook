@@ -4,9 +4,10 @@ $(function () {
 	var hPanel = $('#help-panel');
 	var closeBtn = $('#help-panel > .closer');
 	//<img src="/assets/images/settings.png" />
-	var adminSecret = $('<a href="#">&#x2699;</a>')
+	var adminSecret = $('<a href="#"></a>')
 		.attr('id', 'admin-secret')
 		.addClass('button')
+		.append($('<span class="fa fa-gear"></span>'))
 		.appendTo(hPanel);
 	
 	function activateHelpSection(target) {
