@@ -58,7 +58,7 @@ $(function () {
 	});
 	
 	adminSecret
-		.on('mousedown touchstart', function () {
+		.on('mousedown touchstart', '*', function () {
 			window.location.replace('/admin/login?redirect=1');
 		});
 	
