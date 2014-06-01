@@ -48,6 +48,26 @@ class LinuxSerial implements Serial {
 			}
 		});
 		$this->setDevice($device);
+		$result = $this->cmd('stty -F %s -icanon min 0 time 0', $device);
+		if ($result['exitStatus'] != 0) {
+			throw new Exception('-icanon could not be set.');
+		}
+		foreach ([
+			'-icrnl',
+			'-opost',
+			'-isig',
+			'-iexten',
+			'-echo',
+			'-echoe',
+			'-echok',
+			'-echoctl',
+			'-echoke',
+		] as $option) {
+			$result = $this->cmd('stty -F %s %s', [$device, $option]);
+			if ($result['exitStatus'] != 0) {
+				throw new Exception($option . ' could not be set.');
+			}
+		}
 	}
 	
 	private function deviceExists($device) {
@@ -121,8 +141,6 @@ class LinuxSerial implements Serial {
 	}
 
 	public function setParity($parity) {
-		$parOpts = [];
-		
 		switch ($parity) {
 		case self::PARITY_NONE:
 			$parOpts = ['-parenb'];
@@ -161,6 +179,11 @@ class LinuxSerial implements Serial {
 		}
 		$this->byteSize = $size;
 		$result = $this->cmd('stty -F %s cs%s', [$this->device, $this->byteSize]);
+		
+		if ($result['exitStatus'] != 0) {
+			throw new Exception('Unable to set byte size: ' . $result['stderr']);
+		}
+		
 		return $this;
 	}
 
@@ -248,7 +271,8 @@ class LinuxSerial implements Serial {
 		$buffer = [];
 		$this->block();
 		while ($this->hasDataAvailable()) {
-			$buffer[] = $this->readBytes(1)[0];
+			$byte = $this->readBytes(1)[0];
+			$buffer[] = $byte;
 		}
 		$this->unblock();
 		return $buffer;
@@ -260,7 +284,7 @@ class LinuxSerial implements Serial {
 		}
 		$buffer = [];
 		while ($number > 0) {
-			$char = fgetc($this->handle);
+			$char = fread($this->handle, 1);
 			
 			if ($char !== false) {
 				$buffer[] = ord($char);
@@ -301,7 +325,7 @@ class LinuxSerial implements Serial {
 		$write = [];
 		$except = [];
 
-		return stream_select($read, $write, $except, 0);
+		return !!stream_select($read, $write, $except, 0);
 	}
 
 	public function isOpen() {

@@ -28,9 +28,13 @@ class ScannerDriver implements Controller {
 			->attachObserver('tick', function () {
 				pcntl_signal_dispatch();
 			})
-			->attachObserver('billInserted', function ($desc) use ($currencyMeta) {
+			->attachObserver('billInserted', function ($desc) use ($currencyMeta, $scanner) {
 				$denoms = $currencyMeta->getDenominations();
-				echo 'Bill Inserted: ', $currencyMeta->format($denoms[$desc['billIndex']]), ' (', $currencyMeta->getISOCode(), ")\n";
+				if ($desc['billIndex'] === 4) {
+					$scanner->setBillRejected(true);
+					echo "-=[ REJECTING BILL FROM CLI-DRIVER ]=-\n";
+				}
+				echo 'Bill Inserted(' . $desc['billIndex'] . '): ', $currencyMeta->format($denoms[$desc['billIndex']]), ' (', $currencyMeta->getISOCode(), ")\n";
 			})
 			->attachObserver('stateChanged', function ($desc) use (&$oldState) {
 				foreach ($desc as $state => $value) {

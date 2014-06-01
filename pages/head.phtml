@@ -35,7 +35,9 @@ if (!isset($errorClass)) {
 </head>
 <body>
 	<div id="errorPage" class="<?= $errorClass ?>">
-		<h1><?= $i18n->_('Network Unreachable') ?>:</h1>
-		<p><?= $i18n->_('If the problem persists, please contact the operator.') ?></p>
+		<div class="network">
+			<h1><?= $i18n->_('Network Unreachable') ?>:</h1>
+			<p><?= $i18n->_('If the problem persists, please contact the operator.') ?></p>
+		</div>
 		<div id="errorContact"><?= nl2br($html->escape($contactInfo)) ?></div>
 	</div>

@@ -778,6 +778,9 @@ html.receipt .receipt-content #sent {
 #errorPage h1 {
   font-size: 5vh;
 }
+#errorPage.notnet .network {
+  display: none;
+}
 #errorPage #errorContact {
   padding: 1em 0;
   border-top: 2px solid #ccc;

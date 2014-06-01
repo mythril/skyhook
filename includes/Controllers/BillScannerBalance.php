@@ -27,7 +27,7 @@ class BillScannerBalance implements Controller {
 	private $threshhold;
 	private $denoms;
 	private $driver;
-	private $largestBill;
+	private $largest;
 	private $config;
 	
 	public function __construct(DB $db, BillScannerDriver $driver) {
@@ -171,8 +171,19 @@ class BillScannerBalance implements Controller {
 		$this->maxFiat = $this->getWalletBalance();
 		
 		$this->send($this->getTotals());
-		
+		$lastTime = time();
+		$oldState = [];
 		$this->driver
+			->attachObserver('tick', function () use (&$lastTime) {
+				$time = time();
+				if (($lastTime + 2) <= $time) {
+					$lastTime = $time;
+					$this->send(['event' => 'tick']);
+					if (connection_aborted()) {
+						$this->driver->stop();
+					}
+				}
+			})
 			->attachObserver('billInserted', function ($desc) {
 				$this->billInsertedHandler($desc['billIndex']);
 			})
@@ -191,7 +202,6 @@ class BillScannerBalance implements Controller {
 				]);
 			})
 			->run();
-		
 		$this->end();
 		return true;
 	}

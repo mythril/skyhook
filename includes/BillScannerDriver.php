@@ -9,6 +9,7 @@ class BillScannerDriver implements Observable {
 	private $acceptableBills = 0x7F;
 	private $billRejected = false;
 	private $shouldExit = false;
+	private $lockFile;
 	private static $QUIT_FN = '/tmp_disk/scanner_quit';
 	
 	private function nthBill($index) {
@@ -49,7 +50,7 @@ class BillScannerDriver implements Observable {
 		return $sum === $bytes[count($bytes) - 1];
 	}
 	
-	public function binout($bytes) {
+	private function binout($bytes) {
 		$result = '';
 		for ($i = 0; $i < count($bytes); $i += 1) {
 			$result .= str_pad(sprintf('%x', $bytes[$i]), 2, '0', STR_PAD_LEFT);
@@ -132,7 +133,7 @@ class BillScannerDriver implements Observable {
 	
 	private $lastTime;
 	
-	public function pause() {
+	private function pause() {
 		usleep(0.1 * 1000000);
 	}
 	
@@ -192,12 +193,12 @@ class BillScannerDriver implements Observable {
 			$msg[2] = 0x10 | $ackBit;
 			$ackBit = ($ackBit === 0) ? 1 : 0;
 			
-			if ($escrowed) {
-				$msg[4] = 0x20;
+			if ($escrowed && !$returnBill) {
+				$msg[4] |= 0x20;
 			}
 			
-			if ($returnBill) {
-				$msg[4] = 0x40;
+			if ($escrowed && $returnBill) {
+				$msg[4] |= 0x40;
 				$returnBill = false;
 			}
 			
@@ -211,6 +212,13 @@ class BillScannerDriver implements Observable {
 			if (count($out) === 0) {
 				continue;
 			}
+			
+			if (!$this->isResponseValid($out)) {
+				error_log('Invalid response: ' . $this->binout($out));
+				$this->notifyObservers('invalidResponse', ['bytes' => $out]);
+				continue;
+			}
+			
 			Debug::log($this->binout($out));
 			Debug::log("Extracting Status");
 			$status = $this->getStatus($out);
