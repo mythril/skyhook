@@ -48,6 +48,13 @@ $(function () {
 		};
 	}
 	
+	(function preload() {
+		$.each(Languages, function (k, lang) {
+			var img = new Image();
+			img.src = '/assets/flags/' + lang.icon + '.png';
+		});
+	}());
+	
 	function buildSelector() {
 		if (selector) {
 			return;
