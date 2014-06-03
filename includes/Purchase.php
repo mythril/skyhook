@@ -242,7 +242,7 @@ class Purchase {
 	
 	private $bitcoinAmount;
 	
-	public function setBitcoinAmount(Amount $amt) {
+	private function setBitcoinAmount(Amount $amt) {
 		$this->bitcoinAmount = $amt;
 		return $this;
 	}
