@@ -1,0 +1,85 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Skyhook-fr Secondary.po\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-05-06 04:18-0700\n"
+"PO-Revision-Date: 2014-06-03 14:39+0100\n"
+"Last-Translator: Mathieu Bocquillon <bocorama@gmail.com>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.6.5\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Language: fr_FR\n"
+
+msgid "Passwords must match."
+msgstr "Les mots de passe doivent correspondre"
+
+msgid "A Blockchain wallet id is required."
+msgstr "Un portefeuille Blockchain.info valide est nécessaire."
+
+msgid "The main Blockchain password is required."
+msgstr "Le mot de passe principal de Blockchain.info est nécessaire."
+
+msgid "Please choose a selection criteria."
+msgstr "Veuillez choisir un critère de sélection."
+
+msgid "At least one pricing source is required."
+msgstr "Au moins une source de prix est nécessaire"
+
+msgid "Unsaved changes, discard?"
+msgstr "Changements non sauvegardés, abandonner ?"
+
+msgid "Do you need more time?"
+msgstr "Avez-vous besoin de plus de temps ?"
+
+msgid "More Time"
+msgstr "Plus de temps"
+
+msgid "Cancel the transaction?"
+msgstr "Annuler la transaction ?"
+
+msgid "Cancel:"
+msgstr "Annuler :"
+
+msgid "Cancel"
+msgstr "Annuler"
+
+msgid "Continue"
+msgstr "Continuer"
+
+msgid "Processing"
+msgstr "Traitement"
+
+msgid "Is this your address?"
+msgstr "Est-ce votre adresse ?"
+
+msgid "Address Detected:"
+msgstr "Adresse détectée :"
+
+msgid "Yes"
+msgstr "Oui"
+
+msgid "No"
+msgstr "Non"
+
+msgid "Invalid Email Address"
+msgstr "Adresse Email invalide"
+
+msgid "Specified address appears invalid."
+msgstr "L'adresse spécifiée semble invalide."
+
+msgid "Success"
+msgstr "Réussi"
+
+msgid "Email address stored."
+msgstr "Adresse Email enregistrée."
+
+msgid "Ok"
+msgstr "Ok"
