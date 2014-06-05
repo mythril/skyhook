@@ -93,6 +93,7 @@ $result = $router->resolve(
 			return true;
 		}],
 		['/settings.js', Router::lazyLoad('Controllers\SettingsData')],
+		['/test-price$', Router::lazyLoad('Controllers\Ajax\TestPrice')],
 		['/admin', Router::lazyLoad('Controllers\Admin')],
 		
 		//Checks the config before any other routes are resolved.
