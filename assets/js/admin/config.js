@@ -153,11 +153,16 @@ $(document).one('pageshow', function () {
 	}
 	
 	var pastErrors = [];
-	function reportInvalid(invalid) {
+	
+	function clearErrorMessages() {
 		$.each(pastErrors, function (k, v) {
 			v.remove();
 		});
 		pastErrors = [];
+	}
+	
+	function reportInvalid(invalid) {
+		clearErrorMessages();
 		var first;
 		var topMost = document.body.scrollHeight;
 		$.each(invalid, function (section, errors) {
@@ -182,8 +187,58 @@ $(document).one('pageshow', function () {
 		}
 	}
 	
+	function getPricingConfig() {
+		return configForm.serialize();
+	}
+	
+	function networkError () {
+		reportInvalid({
+			'#pricing-settings':[
+				{
+					'id': '#sources-methods-error',
+					'error': _('Network error, please try again')
+				}
+			]
+		});
+	}
+	
+	function testPrice(e) {
+		clearErrorMessages();
+		if (e.preventDefault) {
+			e.preventDefault();
+		}
+		var errors = validators['#pricing-settings']();
+		if (errors) {
+			reportInvalid({'#pricing-settings': errors});
+			return;
+		}
+		$.ajax(
+			'/test-price',
+			{
+				cache: false,
+				type: 'POST',
+				dataType: 'json',
+				data: getPricingConfig(),
+				error: networkError
+			}
+		).done(function (data) {
+			if (data.errors['#pricing-settings'].length > 0) {
+				reportInvalid(data.errors);
+			}
+			if (data.price !== null
+			&& data.errors['#pricing-settings'].length === 0) {
+				$('#price-result').text(data.price).removeClass('hidden');
+			} else {
+				$('#price-result').addClass('hidden');
+			}
+		}).fail(networkError);
+	}
+	
+	$('#test-price').on('click touchstart', testPrice);
+	
 	function save(e) {
 		e.preventDefault();
+		clearErrorMessages();
 		var invalid = getInvalidFields();
 		if (invalid) {
 			reportInvalid(invalid);
