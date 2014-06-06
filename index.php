@@ -7,6 +7,10 @@ require_once 'includes/autoload.php';
 ini_set('display_errors', 'on');
 error_reporting(E_ALL);
 
+if (trim(file_get_contents('/etc/timezone')) !== '') {
+	date_default_timezone_set(trim(file_get_contents('/etc/timezone')));
+}
+
 Localization::init();
 
 set_error_handler(function ($errno, $errstr, $errfile, $errline ) {
