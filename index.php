@@ -7,10 +7,6 @@ require_once 'includes/autoload.php';
 ini_set('display_errors', 'on');
 error_reporting(E_ALL);
 
-if (trim(file_get_contents('/etc/timezone')) !== '') {
-	date_default_timezone_set(trim(file_get_contents('/etc/timezone')));
-}
-
 Localization::init();
 
 set_error_handler(function ($errno, $errstr, $errfile, $errline ) {
@@ -46,6 +42,7 @@ Container::registerSingleton('Environment\Session', function () {
 		$regenerator
 	);
 });
+
 
 // Register Environment Singletons
 foreach (array(
@@ -84,7 +81,11 @@ foreach (array(
 	});
 }
 
-Container::registerSingleton('DB');
+Container::registerSingleton('DB', function () {
+	return new DB(new DateTimeZone(trim(file_get_contents('/etc/timezone'))));
+});
+
+date_default_timezone_set(trim(file_get_contents('/etc/timezone')));
 
 $router = Container::dispense("Router");
 $server = Container::dispense('Environment\Server');

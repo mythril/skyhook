@@ -59,12 +59,3 @@ class TransactionCSV {
 }
 
 
-/*
-Example usage:
-*/
-/*
-$t = new TransactionCSV(new DB(include "cfg.php"));
-echo "CSV Saved as: ", $t->save(), "\n";
-//*/
-
-

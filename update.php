@@ -2,7 +2,9 @@
 
 require_once __DIR__ . '/includes/autoload.php';
 
-$db = new DB();
+$db = new DB(
+	new DateTimeZone(trim(file_get_contents('/etc/timezone')))
+);
 
 $stmt = $db->query("SHOW COLUMNS FROM `purchases`;");
 
