@@ -10,11 +10,11 @@ $(function () {
 	}
 	
 	function bind() {
-		$(document.body).on('click', goToAccountPage);
+		$(document.body).on('touchstart click', goToAccountPage);
 	}
 	
 	function unbind() {
-		$(document.body).off('click', goToAccountPage);
+		$(document.body).off('touchstart click', goToAccountPage);
 	}
 	
 	bind();
