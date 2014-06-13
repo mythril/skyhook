@@ -34,8 +34,11 @@ $simpleInput = function ($bound, $area) use ($html) {
 					type="<?= $type ?>"
 					name="<?= $area ?>[<?= $name ?>]"
 					id="<?= $area ?>-<?= $name ?>"
-					autocomplete="off"
 					value="<?= $val ?>"
+					autocomplete="off"
+					spellcheck="false"
+					autocorrect="off"
+					autocapitalize="off"
 				/>
 			</div>
 		</div>

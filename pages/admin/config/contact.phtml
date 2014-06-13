@@ -31,6 +31,9 @@ $contactInput = $simpleInput($contact, 'contact');
 		name="contact[information]"
 		id="contact-information"
 		autocomplete="off"
+		spellcheck="false"
+		autocorrect="off"
+		autocapitalize="off"
 	><?
 	echo $html->escape($contact['information']);
 	?></textarea>

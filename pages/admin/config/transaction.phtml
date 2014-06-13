@@ -22,6 +22,9 @@ $transactions = $config['transactions'];
 			min="0"
 			step="1"
 			autocomplete="off"
+			spellcheck="false"
+			autocorrect="off"
+			autocapitalize="off"
 			<?
 			if (isset($transactions['maximum'])) {
 				echo 'value="', $transactions['maximum'], '"';

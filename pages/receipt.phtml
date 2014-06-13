@@ -33,7 +33,15 @@ include 'head.phtml';
 		>
 			<input type="hidden" name="ticket" value="<?= $purchase->getId() ?>" />
 			<div>
-				<input type="email" name="email" id="email" />
+				<input
+					type="email"
+					name="email"
+					id="email"
+					autocomplete="off"
+					spellcheck="false"
+					autocorrect="off"
+					autocapitalize="off"
+				/>
 			</div>
 			<div class="button-wrapper">
 				<input type="submit" value="<?= $i18n->_('email me a receipt') ?>" />
