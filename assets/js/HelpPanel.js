@@ -42,25 +42,25 @@ $(function () {
 		resetTimeout();
 	}
 	
-	hPanel.on('click focus blur touchstart touchend change', resetTimeout);
+	hPanel.on('click focus blur touchstart mousedown touchend change', resetTimeout);
 	
-	closeBtn.on('click', close);
+	closeBtn.on(CLICK, close);
 	
-	helpNav.on('click', 'a', function (e) {
+	helpNav.on(CLICK, 'a', function (e) {
 		e.preventDefault();
 		var target = $($(this).attr('href'));
 		activateHelpSection(target);
 	});
 	
-	$('#help-content').on('click', 'a.back', function (e) {
+	$('#help-content').on(CLICK, 'a.back', function (e) {
 		e.preventDefault();
 		activateHelpSection(helpNav);
 	});
 	
 	adminSecret
-		.on('mousedown touchstart', function () {
+		.on(CLICK, function () {
 			window.location.replace('/admin/login?redirect=1');
 		});
 	
-	new MBP.fastButton(document.getElementById('help'), open);
+	$('#help').on(CLICK, open);
 });

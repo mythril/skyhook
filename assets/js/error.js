@@ -6,7 +6,7 @@ $(function () {
 	var ticketId = $('#ticket').val();
 	var inFlight = false;
 	
-	save.on('click', function (e) {
+	save.on(CLICK, function (e) {
 		e.preventDefault();
 		if (!inFlight) {
 			inFlight = true;
