@@ -10,11 +10,11 @@ $(function () {
 	}
 	
 	function bind() {
-		$(document.body).on('touchstart click', goToAccountPage);
+		$(document.body).on('touchstart mousedown', goToAccountPage);
 	}
 	
 	function unbind() {
-		$(document.body).off('touchstart click', goToAccountPage);
+		$(document.body).off('touchstart mousedown', goToAccountPage);
 	}
 	
 	bind();
@@ -59,14 +59,21 @@ $(function () {
 		if (selector) {
 			return;
 		}
-		var root = $('<div id="languages"></div>');
+		var root = $('<div id="languages"><h1>Language Selector</h1></div>');
+		$('<a href="#" class="button closer">&times;</a>')
+			.on('touchstart mousedown', function (e) {
+				e.preventDefault();
+				e.stopPropagation();
+				root.hide();
+			})
+			.appendTo(root);
 		$.each(Languages, function (k, lang) {
 			$(template(lang))
-				.on('click', selectLanguage(lang))
+				.on('touchstart mousedown', selectLanguage(lang))
 				.appendTo(root);
 		});
 		root
-			.on('click', function (e) {
+			.on('touchstart mousedown', function (e) {
 				e.preventDefault();
 				e.stopPropagation();
 			})
@@ -81,5 +88,5 @@ $(function () {
 		selector.show();
 	}
 	
-	$('#language-selector').on('click', showLanguageSelector);
+	$('#language-selector').on('touchstart mousedown', showLanguageSelector);
 });
