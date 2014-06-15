@@ -10,10 +10,14 @@ class DB extends PDO {
 		$seconds = $tz->getOffset(new DateTime("now", new DateTimeZone('UTC')));
 		$hrs = round($seconds / 60 / 60);
 		$mins = round((abs($seconds) - (abs($hrs) * 60 * 60)) / 60);
-		if (strlen(strval($mins)) < 2) {
-			$mins = '0' . $mins;
+		$strmins = strval($mins);
+		if ($hrs > 0) {
+			$hrs = '+' . $hrs;
 		}
-		$this->exec("SET time_zone = '{$hrs}:{$mins}';");
+		if (strlen($strmins) < 2) {
+			$strmins = '0' . $strmins;
+		}
+		$this->exec("SET time_zone = '{$hrs}:{$strmins}';");
 	}
 }
 
