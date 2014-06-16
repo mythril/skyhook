@@ -32,6 +32,7 @@ class EmailReceipt implements JobHandler {
 		$body = new BufferedTemplate('emails/receipt');
 		$body = $body->getBuffer([
 			'machine' => $cfg->getMachineName(),
+			'config' => $cfg,
 			'ticket' => Purchase::load($cfg, $db, $ticketId)
 		]);
 		
