@@ -816,12 +816,12 @@ html.receipt .receipt-content #sent {
   border-top: 2px solid #ccc;
 }
 #languages {
-  padding-top: 7vh;
+  padding-top: 10vh;
   background-color: rgba(255,255,255,0.95);
   filter: progid:DXImageTransform.Microsoft.Gradient( startColorstr='#f2ffffff', endColorstr='#f2ffffff',GradientType=0 );
 }
 #languages .language {
-  color: #000;
+  color: #555;
   display: block;
   text-align: left;
   -webkit-box-sizing: border-box;
@@ -849,7 +849,7 @@ html.receipt .receipt-content #sent {
   top: 0;
   left: 0;
   right: 0;
-  background-color: #000;
+  background-color: #555;
   color: #fff;
   display: block;
   width: 100%;
