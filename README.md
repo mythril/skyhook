@@ -1,4 +1,4 @@
-# Project Skyhook v.0.60
+# Project Skyhook v.0.67
 
 Stay Tuned, it's only getting better! We'll have an update on our custom tablet launcher app soon.
 
