@@ -11,7 +11,7 @@ class DB extends PDO {
 		$hrs = round($seconds / 60 / 60);
 		$mins = round((abs($seconds) - (abs($hrs) * 60 * 60)) / 60);
 		$strmins = strval($mins);
-		if ($hrs > 0) {
+		if ($seconds >= 0) {
 			$hrs = '+' . $hrs;
 		}
 		if (strlen($strmins) < 2) {
