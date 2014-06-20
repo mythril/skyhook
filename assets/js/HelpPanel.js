@@ -44,23 +44,23 @@ $(function () {
 	
 	hPanel.on('click focus blur touchstart mousedown touchend change', resetTimeout);
 	
-	closeBtn.on(CLICK, close);
+	closeBtn.on('touchstart mousedown', close);
 	
-	helpNav.on(CLICK, 'a', function (e) {
+	helpNav.on('touchstart mousedown', 'a', function (e) {
 		e.preventDefault();
 		var target = $($(this).attr('href'));
 		activateHelpSection(target);
 	});
 	
-	$('#help-content').on(CLICK, 'a.back', function (e) {
+	$('#help-content').on('touchstart mousedown', 'a.back', function (e) {
 		e.preventDefault();
 		activateHelpSection(helpNav);
 	});
 	
 	adminSecret
-		.on(CLICK, function () {
+		.on('touchstart mousedown', function () {
 			window.location.replace('/admin/login?redirect=1');
 		});
 	
-	$('#help').on(CLICK, open);
+	$('#help').on('touchstart mousedown', open);
 });
