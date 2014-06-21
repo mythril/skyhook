@@ -8,86 +8,86 @@ msgstr ""
 "Project-Id-Version: Skyhook Project\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-05-06 04:18-0700\n"
-"PO-Revision-Date: 2014-06-13 14:16-0800\n"
-"Last-Translator: Jon Hannis <jon@projectskyhook.com>\n"
+"PO-Revision-Date: 2014-05-08 01:18-0800\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Skyhook <lucas.m.green@gmail.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.6.5\n"
-"Language: en\n"
+"X-Generator: Poedit 1.5.4\n"
+"Language: English\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
 #: pages/admin/choose.phtml:9 pages/admin/login.phtml:17
 #: pages/admin/minimum-balance.phtml:17 pages/admin/email.phtml:17
 #: pages/admin/config.phtml:49 pages/admin/saved.phtml:9
 msgid "System Preferences"
-msgstr "Préférences Système"
+msgstr ""
 
 #: pages/admin/choose.phtml:15
 msgid "Continue booting up the system for normal operation."
-msgstr "Continuer le démarrage du système pour un fonctionnement normal."
+msgstr ""
 
 #: pages/admin/choose.phtml:25
 msgid "Boot"
-msgstr "Fonctionnement Normal"
+msgstr ""
 
 #: pages/admin/choose.phtml:32
 msgid "Change configuration settings"
-msgstr "Modifier les paramètres de configuration"
+msgstr ""
 
 #: pages/admin/choose.phtml:41
 msgid "Reconfigure"
-msgstr "Reconfigurer"
+msgstr ""
 
 #: pages/admin/choose.phtml:46 pages/admin/login.phtml:67
 #: pages/admin/config.phtml:54 pages/admin/saved.phtml:31
 msgid "Project Skyhook&trade; Bitcoin ATM"
-msgstr "Project Skyhook&trade; Bitcoin ATM"
+msgstr ""
 
 #: pages/admin/login.phtml:24 pages/admin/minimum-balance.phtml:25
 #: pages/admin/email.phtml:25
 msgid "Admin Login"
-msgstr "Admin Connexion"
+msgstr ""
 
 #: pages/admin/login.phtml:28 pages/admin/minimum-balance.phtml:37
 #: pages/admin/email.phtml:34
 msgid "Error:"
-msgstr "Erreur:"
+msgstr ""
 
 #: pages/admin/login.phtml:33 pages/admin/minimum-balance.phtml:42
 #: pages/admin/email.phtml:39
 msgid "Password:"
-msgstr "Mot de passe:"
+msgstr ""
 
 #: pages/admin/login.phtml:51
 msgid "Cancel"
-msgstr "Annuler"
+msgstr ""
 
 #: pages/admin/login.phtml:57 pages/admin/minimum-balance.phtml:55
 #: pages/admin/email.phtml:52
 msgid "Login"
-msgstr "Connexion"
+msgstr ""
 
 #: pages/admin/minimum-balance.phtml:29
 msgid "Insufficient funds, please contact the operator."
-msgstr "L'insuffisance des fonds, s'il vous plaît contactez l'opérateur."
+msgstr ""
 
 #: pages/admin/minimum-balance.phtml:64 pages/admin/email.phtml:61
 msgid "Skyhook Bitcoin ATM"
-msgstr "Skyhook Bitcoin ATM"
+msgstr ""
 
 #: pages/admin/email.phtml:7
 msgid "Invalid password supplied."
-msgstr "Mot de passe invalide fourni."
+msgstr ""
 
 #: pages/admin/email.phtml:29
 msgid "A working email account is required."
-msgstr "Un compte de courriel de travail est nécessaire."
+msgstr ""
 
 #: pages/admin/config.phtml:72
 msgid "Account Configuration"
-msgstr "Configuration du Compte"
+msgstr ""
 
 #: pages/admin/config.phtml:75
 msgid ""
@@ -95,13 +95,10 @@ msgid ""
 "Blockchain User ID (GUID), Password, and Sending Bitcoin Address must be "
 "provided."
 msgstr ""
-"Cette machine utilise l'API Blockchain pour toutes les transactions. Un "
-"Blockchain ID utilisateur valide, mot de passe, et envoi Bitcoin adresse "
-"doit être fournie."
 
 #: pages/admin/config.phtml:82
 msgid "Is this secure?"
-msgstr "Est-ce sécurisé?"
+msgstr ""
 
 #: pages/admin/config.phtml:85
 msgid ""
@@ -112,40 +109,34 @@ msgid ""
 "\t\t\t\t\twhich are secure.  When the device loses power or is shut down, \n"
 "\t\t\t\t\tall decryption keys are lost."
 msgstr ""
-"Ces données sont cryptées.\n"
-"\t\t\t\t\t<br />\n"
-"\t\t\t\t\tEn outre, la seule accessible pour les transactions Blockchain, \n"
-"\t\t\t\t\tqui sont protégés. Lorsque l'appareil tombe en panne ou est "
-"arrêté, \n"
-"\t\t\t\t\ttoutes les clés de décryptage sont perdus."
 
 #: pages/admin/config.phtml:117
 msgid "Exit"
-msgstr "Sortie"
+msgstr ""
 
 #: pages/admin/config.phtml:121
 msgid "Save"
-msgstr "Sauver"
+msgstr ""
 
 #: pages/admin/config/admin-password.phtml:6
 msgid "Password Settings"
-msgstr "Paramètres Mot de Passe"
+msgstr ""
 
 #: pages/admin/config/admin-password.phtml:9
 msgid "Set or Change Operator Password:"
-msgstr "Définir ou changer d'opérateur mot de passe:"
+msgstr ""
 
 #: pages/admin/config/admin-password.phtml:18
 msgid "Confirm New Password:"
-msgstr "Confirmer le nouveau mot de passe:"
+msgstr ""
 
 #: pages/admin/config/transaction.phtml:7
 msgid "Transaction Settings"
-msgstr "Paramètres de transaction"
+msgstr ""
 
 #: pages/admin/config/transaction.phtml:10
 msgid "Please set your "
-msgstr "S'il vous plaît configurer votre"
+msgstr ""
 
 #: pages/admin/config/transaction.phtml:10
 msgid ""
@@ -153,17 +144,14 @@ msgid ""
 "nearing this\n"
 "\t\tlimit."
 msgstr ""
-"limite par transaction. Les clients verront quand une opération est en "
-"voie \n"
-"\t\tde cette limite."
 
 #: pages/admin/config/transaction.phtml:16
 msgid "Limit: </br><i>(0=disabled)</i>"
-msgstr "Limite: </br><i>(0=désactivé)</i>"
+msgstr ""
 
 #: pages/admin/config/email.phtml:8
 msgid "Email Settings"
-msgstr "Paramètres E-mail"
+msgstr ""
 
 #: pages/admin/config/email.phtml:11
 msgid ""
@@ -173,75 +161,68 @@ msgid ""
 "\t\ttransaction errors that need to be resolved manually.</i>\n"
 "\t\t"
 msgstr ""
-"<strong>Actuellement, seulement gmail est soutenu</strong></br>\n"
-"\t\t<i>Une adresse e-mail est nécessaire pour envoyer les reçus des clients, "
-"recevoir des journaux de transactions et l'envoi\n"
-"\t\tles erreurs de transaction qui doivent être résolus manuellement.</i>\n"
-"\t\t"
 
 #: pages/admin/config/email.phtml:16 pages/error.phtml:21
 msgid "Email Address"
-msgstr "Adresse e-mail"
+msgstr ""
 
 #: pages/admin/config/email.phtml:17
 msgid "Email Password"
-msgstr "Email Mot de Passe"
+msgstr ""
 
 #: pages/admin/config/email.phtml:19 pages/admin/config/email.phtml:22
 msgid "Machine Name"
-msgstr "Nom de la Machine"
+msgstr ""
 
 #: pages/admin/config/email.phtml:20
 msgid "Name your machine (a unique Machine Name is recommended)"
-msgstr "Nom de votre machine (un nom unique de la machine est recommandé)"
+msgstr ""
 
 #: pages/admin/config/wallet.phtml:8
 msgid "Blockchain Configuration"
-msgstr "Configuration Blockchain"
+msgstr ""
 
 #: pages/admin/config/wallet.phtml:10
 msgid "Blockchain ID (GUID)"
-msgstr "Blockchain ID (GUID)"
+msgstr ""
 
 #: pages/admin/config/wallet.phtml:11
 msgid "Blockchain Password"
-msgstr "Blockchain Mot de Passe"
+msgstr ""
 
 #: pages/admin/config/wallet.phtml:12
 msgid "Secondary Password (optional)"
-msgstr "Secondaire Mot de Passe (en option)"
+msgstr ""
 
 #: pages/admin/config/wallet.phtml:13
 msgid "Sending Bitcoin Address"
-msgstr "Envoi Bitcoin Adresse"
+msgstr ""
 
 #: pages/admin/config/commands.phtml:7
 msgid "Restart Machine"
-msgstr "Redémarrage"
+msgstr ""
 
 #: pages/admin/config/commands.phtml:13
 msgid "Restart Services"
-msgstr "Redémarrer les services"
+msgstr ""
 
 #: pages/admin/config/commands.phtml:20
 msgid "Crash Browser"
-msgstr "navigateur accident"
+msgstr ""
 
 #: pages/admin/config/contact.phtml:13
 msgid "Contact Settings"
-msgstr "Paramètres de l'opérateur"
+msgstr ""
 
 #: pages/admin/config/contact.phtml:16
 msgid ""
 "When a price cannot be acquired a page will render with this information on "
 "it. Most of the time this will likely be a network issue."
 msgstr ""
-"Quand un prix qui ne peut être acquise une page rendra cette information à "
-"ce sujet. La plupart du temps ce sera probablement un problème de réseau."
 
 #: pages/admin/config/contact.phtml:19
 msgid "This is the rough equivalent of an 'out of order' sign."
-msgstr "C'est l'équivalent approximatif d'un signe 'de l'ordre'."
+msgstr ""
 
 #: pages/admin/config/contact.phtml:22
 msgid ""
@@ -253,33 +234,26 @@ msgid ""
 "\t3519 NE 15TH AVE, STE 350</br>\n"
 "\tPORTLAND, OR 97212</i>"
 msgstr ""
-"Exemple:</br>\n"
-"\t<i></br>\n"
-"\tPROJECT SKYHOOK</br>\n"
-"\tsupport@projectskyhook.com</br>\n"
-"\t503-489-9998</br>\n"
-"\t3519 NE 15TH AVE, STE 350</br>\n"
-"\tPORTLAND, OR 97212</i>"
 
 #: pages/admin/config/pricing.phtml:76
 msgid "Pricing Settings"
-msgstr "Paramètres de Tarification"
+msgstr ""
 
 #: pages/admin/config/pricing.phtml:82
 msgid "Select pricing method:"
-msgstr "Sélectionnez Prix"
+msgstr ""
 
 #: pages/admin/config/pricing.phtml:97
 msgid "Single"
-msgstr "Unique"
+msgstr ""
 
 #: pages/admin/config/pricing.phtml:110
 msgid "Highest"
-msgstr "le plus haut"
+msgstr ""
 
 #: pages/admin/config/pricing.phtml:123
 msgid "Lowest"
-msgstr "le plus bas"
+msgstr ""
 
 #: pages/admin/config/pricing.phtml:127
 msgid ""
@@ -291,77 +265,70 @@ msgid ""
 "\t\t\tchosen criteria.\n"
 "\t\t\t"
 msgstr ""
-"\n"
-"\t\t\t<strong>Single</strong> if you only wish to consult one price source."
-"<br>\n"
-"\t\t\t<strong>Lowest</strong>/<strong>Highest</strong> if you would like\n"
-"\t\t\tto consult multiple sources and select among them based on the\n"
-"\t\t\tchosen criteria.\n"
-"\t\t\t"
 
 #: pages/admin/config/pricing.phtml:137
 msgid "Source:"
-msgstr "Source:"
+msgstr ""
 
 #: pages/admin/config/pricing.phtml:146
 msgid "Choose Source:"
-msgstr "Choisir la Source:"
+msgstr ""
 
 #: pages/admin/config/pricing.phtml:155
 msgid "Sources:"
-msgstr "Sources:"
+msgstr ""
 
 #: pages/admin/config/pricing.phtml:165
 msgid "Choose Sources:"
-msgstr "Choisir la Sources:"
+msgstr ""
 
 #: pages/admin/config/pricing.phtml:174
 msgid "Static Price:"
-msgstr "Prix ​​Statique:"
+msgstr ""
 
 #: pages/admin/config/pricing.phtml:191
 msgid "Percentage Fee"
-msgstr "Pourcentage"
+msgstr ""
 
 #: pages/admin/config/pricing.phtml:193
 msgid "Minimum Price"
-msgstr "Prix Minimum"
+msgstr ""
 
 #: pages/admin/config/send-log.phtml:4
 msgid "Retrieve Transaction Log (CSV format)"
-msgstr "Récupérer Transaction Log (format CSV)"
+msgstr ""
 
 #: pages/admin/config/send-log.phtml:9
 msgid "Send Hourly Transaction Log:"
-msgstr "Envoyer Horaire Transaction Log:"
+msgstr ""
 
 #: pages/admin/config/send-log.phtml:21
 msgid "Off"
-msgstr "De"
+msgstr ""
 
 #: pages/admin/config/send-log.phtml:25
 msgid "Hourly"
-msgstr "Horaires"
+msgstr ""
 
 #: pages/admin/config/send-log.phtml:30
 msgid "Send transaction log (delta)"
-msgstr "Envoyer Transaction Log (delta)"
+msgstr ""
 
 #: pages/admin/config/send-log.phtml:33
 msgid "Send complete transaction log"
-msgstr "Envoyer Complet Transaction Log"
+msgstr ""
 
 #: pages/admin/saved.phtml:15
 msgid "Configuration saved"
-msgstr "Configuration Sauvegardée"
+msgstr ""
 
 #: pages/admin/saved.phtml:18
 msgid "Redirecting to Start page in a few seconds..."
-msgstr "Redirection vers la page Démarrer"
+msgstr ""
 
 #: pages/admin/saved.phtml:25
 msgid "Start Page"
-msgstr "page de démarrage"
+msgstr ""
 
 #: pages/purchase.phtml:20 pages/account.phtml:18 pages/start.phtml:12
 msgid "bitcoin"
@@ -369,146 +336,143 @@ msgstr "bitcoin"
 
 #: pages/purchase.phtml:24
 msgid "insert bills"
-msgstr "insérer monnaie"
+msgstr ""
 
 #: pages/purchase.phtml:27
 msgid "bitcoins will be sent to:"
-msgstr "bitcoins seront envoyés à:"
+msgstr ""
 
 #: pages/purchase.phtml:32
 msgid "Do Not Insert Bills Larger than"
-msgstr "Aucune monnaie plus grande que"
+msgstr ""
 
 #: pages/purchase.phtml:35 pages/receipt.phtml:23
 #: pages/emails/receipt.phtml:34
 msgid "BTC"
-msgstr "BTC"
+msgstr ""
 
 #: pages/purchase.phtml:39
 msgid "buy bitcoins"
-msgstr "acheter bitcoins"
+msgstr ""
 
 #: pages/account.phtml:19 pages/start.phtml:13
 msgid "..."
-msgstr "..."
+msgstr ""
 
 #: pages/receipt.phtml:17
 msgid "transaction complete"
-msgstr "transaction complète"
+msgstr ""
 
 #: pages/receipt.phtml:20
 msgid "Bitcoin Address:"
-msgstr "Bitcoin Adresse:"
+msgstr ""
 
 #: pages/receipt.phtml:22
 msgid "has been sent:"
-msgstr "a été envoyé:"
+msgstr ""
 
 #: pages/receipt.phtml:24
 msgid "for the price of:"
-msgstr "pour le prix de:"
+msgstr ""
 
 #: pages/receipt.phtml:39
 msgid "email me a receipt"
-msgstr "envoyez-moi un reçu"
+msgstr ""
 
 #: pages/receipt.phtml:43
 msgid "Invalid Email"
-msgstr "Courriel invalide"
+msgstr ""
 
 #: pages/receipt.phtml:49
 msgid "Email Sent"
-msgstr "courriel a été envoyé"
+msgstr ""
 
 #: pages/receipt.phtml:55
 msgid "done"
-msgstr "fini"
+msgstr ""
 
 #: pages/emails/purchase-error.phtml:3
 #: pages/emails/purchase-error-email-provided.phtml:3
 msgid "Ticket #"
-msgstr "Billet #"
+msgstr ""
 
 #: pages/emails/purchase-error.phtml:5
 msgid "encountered an error while processing this transaction."
-msgstr "rencontré une erreur lors du traitement de cette transaction."
+msgstr ""
 
 #: pages/emails/purchase-error.phtml:6
 msgid "Please see the attached error log for more details."
 msgstr ""
-"S'il vous plaît voir le journal d'erreur ci-joint pour plus de détails."
 
 #: pages/emails/purchase-error.phtml:12
 msgid "Ticket ID:"
-msgstr "Billet ID:"
+msgstr ""
 
 #: pages/emails/purchase-error.phtml:20
 msgid "Purchase Time (in UTC):"
-msgstr "Achetez Time:"
+msgstr ""
 
 #: pages/emails/purchase-error.phtml:28
 msgid "Customer's Bitcoin Address:"
-msgstr "Bitcoin Adresse:"
+msgstr ""
 
 #: pages/emails/purchase-error.phtml:36
 msgid "Currency Inserted"
-msgstr "Monnaie Insérée"
+msgstr ""
 
 #: pages/emails/purchase-error.phtml:48
 msgid "Bitcoin Price:"
-msgstr "Bitcoin Price:"
+msgstr ""
 
 #: pages/emails/purchase-error.phtml:60
 msgid "Bitcoin Purchased:"
-msgstr "Bitcoin Acheté:"
+msgstr ""
 
 #: pages/emails/purchase-error.phtml:68
 msgid "Transaction ID:"
-msgstr "Transaction ID:"
+msgstr ""
 
 #: pages/emails/purchase-error.phtml:76
 msgid "Ticket Status:"
-msgstr "Statut de Billets:"
+msgstr ""
 
 #: pages/emails/purchase-error.phtml:84
 msgid "Ticket Finalized (in UTC):"
-msgstr "Billet Finalisé:"
+msgstr ""
 
 #: pages/emails/purchase-error.phtml:94
 msgid "Blockchain.info Transaction Message:"
-msgstr "Blockchain.info Transaction Message:"
+msgstr ""
 
 #: pages/emails/purchase-error.phtml:102
 msgid "Transaction Notice:"
-msgstr "Avis de Transaction:"
+msgstr ""
 
 #: pages/emails/receipt.phtml:2
 msgid ""
 "Thank you for using the Skyhook Bitcoin ATM! Please see your transaction "
 "details below."
 msgstr ""
-"Merci d'utiliser le Skyhook Bitcoin ATM! S'il vous plaît voir les détails ci-"
-"dessous votre transaction."
 
 #: pages/emails/receipt.phtml:7
 msgid "Transaction Number:"
-msgstr "Numéro de Transaction:"
+msgstr ""
 
 #: pages/emails/receipt.phtml:15
 msgid "Date:"
-msgstr "Date:"
+msgstr ""
 
 #: pages/emails/receipt.phtml:23
 msgid "Transaction Value:"
-msgstr "Valeur de la Transaction:"
+msgstr ""
 
 #: pages/emails/receipt.phtml:31
 msgid "Bitcoin Amount:"
-msgstr "Montant Bitcoin:"
+msgstr ""
 
 #: pages/emails/receipt.phtml:39
 msgid "Transaction Link:"
-msgstr "Transaction Lien:"
+msgstr ""
 
 #: pages/emails/receipt.phtml:49
 msgid ""
@@ -519,169 +483,152 @@ msgid ""
 "\t\thttp://projectskyhook.com/feedback\n"
 "\t</a> and contact us!"
 msgstr ""
-"Vous avez un commentaire ou une suggestion qui peut nous aider à améliorer "
-"votre expérience utilisateur? \n"
-" Visitez-nous à <a href=\"http://projectskyhook.com/feedback\"> \n"
-" \t \t http://projectskyhook.com/feedback \n"
-" \t </a> et contactez-nous!"
 
 #: pages/emails/purchase-error-email-provided.phtml:5
 msgid ""
 "was updated with an email address. Use this address to notify the customer "
 "as the transaction error is resolved."
 msgstr ""
-"a été mis à jour avec une adresse e-mail. Utilisez cette adresse pour aviser "
-"le client que l'erreur de transaction est résolu."
 
 #: pages/emails/purchase-error-email-provided.phtml:8
 msgid ""
 "<strong>Note:</strong> This Skyhook machine does not automatically notify "
 "the customer of status changes."
 msgstr ""
-"<strong> Remarque: </ strong> Cette machine Skyhook n'avise pas "
-"automatiquement le client des changements d'état."
 
 #: pages/emails/purchase-error-email-provided.phtml:11
 msgid "Customer's Email Address:"
-msgstr "L'adresse électronique du client:"
+msgstr ""
 
 #: pages/emails/purchase-error-email-provided.phtml:15
 msgid "Error information reproduced below - technical information attached"
 msgstr ""
-"Informations d'erreur reproduite ci-dessous - l'information technique ci-"
-"jointe"
 
 #: pages/error.phtml:19
 msgid "A trans&shy;act&shy;ion error has occured"
-msgstr "Une erreur s'est produite transaction"
+msgstr ""
 
 #: pages/error.phtml:26
 msgid "notify me"
-msgstr "informez-moi"
+msgstr ""
 
 #: pages/error.phtml:29
 msgid "no thanks"
-msgstr "non merci"
+msgstr ""
 
 #: pages/error.phtml:33
 msgid ""
 "This transaction has been logged and the operator notified for manual "
 "processing."
 msgstr ""
-"Cette transaction a été enregistré et l'opérateur notifié pour un traitement "
-"manuel."
 
 #: pages/error.phtml:36
 msgid ""
 "Please enter your email address so that the operator may notify you when "
 "this issue is resolved."
 msgstr ""
-"S'il vous plaît, entrez votre adresse e-mail afin que l'opérateur puisse "
-"vous informer de ce problème est résolu."
 
 #: pages/head.phtml:37
 msgid "Network Unreachable"
-msgstr "Réseau Inaccessible"
+msgstr ""
 
 #: pages/head.phtml:38
 msgid "If the problem persists, please contact the operator."
-msgstr "Si le problème persiste, s'il vous plaît contactez l'opérateur."
+msgstr ""
 
 #: includes/CSVMailer.php:25 includes/HeartBeatMailer.php:12
 msgid ": Transaction Log"
-msgstr ": Journal des transactions"
+msgstr ""
 
 #: includes/CSVMailer.php:28
 msgid "See attached for transaction log."
-msgstr "Voir ci-joint pour le journal des transactions."
+msgstr ""
 
 #: includes/HeartBeatMailer.php:15
 msgid "There have been no transactions since the last email."
-msgstr "Il n'y a pas eu de transactions depuis le dernier e-mail."
+msgstr ""
 
 #: includes/ConfigValidator.php:17
 msgid "A choice must be made between Single\\Highest\\Lowest"
-msgstr "A choice must be made between Single\\Highest\\Lowest"
+msgstr ""
 
 #: includes/ConfigValidator.php:24
 msgid "If Single is chosen, exactly 1 pricing source must be chosen."
-msgstr "If Single is chosen, exactly 1 pricing source must be chosen."
+msgstr ""
 
 #: includes/ConfigValidator.php:31
 msgid "At least one pricing source must be chosen."
-msgstr "Au moins une source de prix doit être choisi."
+msgstr ""
 
 #: includes/ConfigValidator.php:43
 msgid "Unrecognized pricing source:"
-msgstr "Source de prix non reconnu:"
+msgstr ""
 
 #: includes/ConfigValidator.php:52
 msgid "When using static price a value is required."
-msgstr "Lors de l'utilisation de prix statique une valeur est requise."
+msgstr ""
 
 #: includes/ConfigValidator.php:57
 msgid "Static price value must be numeric."
-msgstr "Valeur statiques de prix doit être numérique."
+msgstr ""
 
 #: includes/ConfigValidator.php:69
 msgid "Unrecognized pricing modifier:"
-msgstr "Non reconnu prix modificateur:"
+msgstr ""
 
 #: includes/ConfigValidator.php:75
 msgid "Value must be numeric for:"
-msgstr "La valeur doit être numérique pour:"
+msgstr ""
 
 #: includes/ConfigValidator.php:88
 msgid "A valid Blockchain.info wallet id is required."
-msgstr "Un Blockchain.info portefeuille Identifiant valide est nécessaire."
+msgstr ""
 
 #: includes/ConfigValidator.php:95
 msgid "Your respective Blockchain.info password is required."
-msgstr "Votre mot de passe Blockchain.info respectif est nécessaire."
+msgstr ""
 
 #: includes/ConfigValidator.php:102
 msgid ""
 "An address controlled by your Blockchain.info wallet is required to send "
 "from."
 msgstr ""
-"Une adresse contrôlé par votre portefeuille Blockchain.info est nécessaire "
-"pour envoyer de."
 
 #: includes/ConfigValidator.php:107
 msgid "A valid Bitcoin address is required."
-msgstr "Une adresse Bitcoin valide est nécessaire."
+msgstr ""
 
 #: includes/ConfigValidator.php:117
 msgid "A valid email address is required."
-msgstr "Une adresse électronique valide est requise."
+msgstr ""
 
 #: includes/ConfigValidator.php:122
 msgid "Email address entered is not valid."
-msgstr "Adresse e-mail saisie n'est pas valide."
+msgstr ""
 
 #: includes/ConfigValidator.php:129
 msgid "Email password is required."
-msgstr "Email mot de passe est nécessaire."
+msgstr ""
 
 #: includes/ConfigValidator.php:138
 msgid "Minimum password length is 5 characters."
-msgstr "Longueur de mot de passe minimale est de 5 caractères."
+msgstr ""
 
 #: includes/ConfigValidator.php:145
 msgid "Admin passwords must match"
-msgstr "Les mots de passe d'administrateur doivent correspondre"
+msgstr ""
 
 #: includes/ConfigValidator.php:155
 msgid "Maximum transaction value must be a positive integer."
-msgstr "Valeur maximale de la transaction doit être un entier positif."
+msgstr ""
 
 #: includes/ConfigVerifier.php:14
 msgid "Unknown format encountered:"
-msgstr "Format inconnu rencontré:"
+msgstr ""
 
 #: includes/ConfigVerifier.php:29
 msgid "Unknown format encountered when attempmting to retreive balance:"
-msgstr "Format inconnu rencontré lors attempmting pour récupérer l'équilibre:"
+msgstr ""
 
 msgid "Device Commands"
-msgstr "Les commandes de l'appareil"
+msgstr ""
