@@ -328,7 +328,7 @@ $(document).one('pageshow', function () {
 							if (data.on) {
 								loading('hide');
 								clearInterval(interval);
-								window.location.replace('/');
+								window.location.replace('/start');
 							}
 						}
 					});
