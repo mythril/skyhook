@@ -16,5 +16,5 @@ CREATE TABLE IF NOT EXISTS `jobs` (
 	PRIMARY KEY `this_id` (`id`),
 	KEY `created_at_ind` (`created_at`),
 	KEY `status_ind` (`status`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=0;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=0;
 

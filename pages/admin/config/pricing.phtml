@@ -63,6 +63,9 @@ $modifierInput = function ($n, $c) use ($html, $config) {
 				id="modifier-<?= $base ?>"
 				value="<?= $value ?>"
 				autocomplete="off"
+				spellcheck="false"
+				autocorrect="off"
+				autocapitalize="off"
 			/>
 		</div>
 	</div>
@@ -202,4 +205,8 @@ $selectorChecked = function ($val, $configured) {
 	<? $modifierInput($i18n->_('Percentage Fee'), 'Pricing\Modifiers\PercentageFee'); ?>
 	<hr />
 	<? $modifierInput($i18n->_('Minimum Price'), 'Pricing\Modifiers\MinimumPrice'); ?>
+	<hr />
+	<div class="ui-body ui-body-e hidden" id="price-result">
+	</div>
+	<button id="test-price" data-theme="a">Test Pricing Settings</button>
 </div><!-- /Pricing Setting -->

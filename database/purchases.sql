@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS `purchases` (
 	`bitcoin_price` DECIMAL(16, 4) NOT NULL,
 
 -- The amount of Bitcoin that can be purchased in relation to the amount of currency entered
-	`bitcoin_amount` DECIMAL(8, 8) NOT NULL DEFAULT 0.0000,
+	`bitcoin_amount` DECIMAL(16, 8) NOT NULL DEFAULT 0.0000,
 
 -- The Bitcoin network TXID that establishes the transaction has happened
 	`txid` VARCHAR(64) NULL DEFAULT NULL,
@@ -42,5 +42,5 @@ CREATE TABLE IF NOT EXISTS `purchases` (
 	`email_to_notify` TEXT NULL DEFAULT NULL,
 
 	PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10001 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=10001 DEFAULT CHARSET=utf8;
 

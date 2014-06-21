@@ -3,7 +3,7 @@
 use Environment\Post;
 
 class ConfigValidator {
-	public function getErrors(Post $post) {
+	public function getPricingErrors(Post $post) {
 		$i18n = Localization::getTranslator();
 		if (isset($post['sources'])) {
 			$sources = explode(',', $post['sources']);
@@ -78,7 +78,11 @@ class ConfigValidator {
 				}
 			}
 		}
-		
+		return $pricingSettings;
+	}
+	
+	public function getErrors(Post $post) {
+		$i18n = Localization::getTranslator();
 		//TODO: implement range checking on modifier values, and static pricing
 		
 		$walletSettings = [];
@@ -184,7 +188,7 @@ class ConfigValidator {
 		}
 		
 		if (!empty($pricingSettings)) {
-			$errors['#pricing-settings'] = $pricingSettings;
+			$errors['#pricing-settings'] = self::getPricingErrors($post);
 		}
 		
 		if (!empty($walletSettings)) {

@@ -36,10 +36,10 @@ class FinalizePurchase implements Controller {
 		}
 		
 		if ($ticket->getStatus() !== Purchase::PENDING) {
-			echo JSON::encode(['redirect' => '/start']);
 			header('Cache-Control: no-cache, no-store, must-revalidate');
 			header('Pragma: no-cache');
 			header('Expires: 0');
+			echo JSON::encode(['redirect' => '/start']);
 			return true;
 		}
 		

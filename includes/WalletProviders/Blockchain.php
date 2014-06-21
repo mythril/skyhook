@@ -69,7 +69,7 @@ class Blockchain implements \WalletProvider {
 		
 		foreach ($decoded['unspent_outputs'] as $output) {
 			if (!empty($output['confirmations'])
-			&& $output['confirmations'] > $confirmations) {
+			&& $output['confirmations'] >= $confirmations) {
 				$balance = $balance->add(Amount::fromSatoshis(
 					$output['value']
 				));

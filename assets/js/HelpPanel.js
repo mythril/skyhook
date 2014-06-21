@@ -3,7 +3,12 @@ var HelpPanel = {onOpen: function () {}, onClose: function () {}};
 $(function () {
 	var hPanel = $('#help-panel');
 	var closeBtn = $('#help-panel > .closer');
-	var adminSecret = $('#admin-secret');
+	//<img src="/assets/images/settings.png" />
+	var adminSecret = $('<a href="#"></a>')
+		.attr('id', 'admin-secret')
+		.addClass('button')
+		.append($('<span class="fa fa-gear"></span>'))
+		.appendTo(hPanel);
 	
 	function activateHelpSection(target) {
 		$('.help-section').removeClass('active');
@@ -37,25 +42,25 @@ $(function () {
 		resetTimeout();
 	}
 	
-	hPanel.on('click focus blur touchstart touchend change', resetTimeout);
+	hPanel.on('click focus blur touchstart mousedown touchend change', resetTimeout);
 	
-	closeBtn.on('click', close);
+	closeBtn.on('touchstart mousedown', close);
 	
-	helpNav.on('click', 'a', function (e) {
+	helpNav.on('touchstart mousedown', 'a', function (e) {
 		e.preventDefault();
 		var target = $($(this).attr('href'));
 		activateHelpSection(target);
 	});
 	
-	$('#help-content').on('click', 'a.back', function (e) {
+	$('#help-content').on('touchstart mousedown', 'a.back', function (e) {
 		e.preventDefault();
 		activateHelpSection(helpNav);
 	});
 	
 	adminSecret
-		.on('mousedown touchstart', function () {
+		.on('touchstart mousedown', function () {
 			window.location.replace('/admin/login?redirect=1');
 		});
 	
-	new MBP.fastButton(document.getElementById('help'), open);
+	$('#help').on('touchstart mousedown', open);
 });

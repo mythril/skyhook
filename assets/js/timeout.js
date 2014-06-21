@@ -50,5 +50,5 @@ $(function () {
 		timer = window.setTimeout(startOverWhenIdle, 90*1000);
 	}
 	resetTimer();
-	$(document.body).on('click focus blur tap touchstart', resetTimer);
+	$(document.body).on('click focus blur tap touchstart mousedown', resetTimer);
 });

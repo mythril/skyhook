@@ -43,17 +43,25 @@ Container::registerSingleton('Environment\Session', function () {
 	);
 });
 
+
 // Register Environment Singletons
 foreach (array(
 	'Get' => &$_GET,
 	'Post' => &$_POST,
 	'Server' => &$_SERVER,
-	'PostFiles' => &$_FILES
+	'PostFiles' => &$_FILES,
+	'Cookie' => &$_COOKIE,
 ) as $class => $glbl) {
 	$c = "Environment\\" . $class;
 	Container::registerSingleton($c, function () use ($c, $glbl) {
 		return new $c($glbl);
 	});
+}
+
+$cookies = Container::dispense("Environment\\Cookie");
+
+if (isset($cookies['lang']) && Localization::localePresent($cookies['lang'])) {
+	Localization::setLocale($cookies['lang']);
 }
 
 Container::registerSingleton('Environment\RequestHeaders', function () {
@@ -73,7 +81,11 @@ foreach (array(
 	});
 }
 
-Container::registerSingleton('DB');
+Container::registerSingleton('DB', function () {
+	return new DB(new DateTimeZone(trim(file_get_contents('/etc/timezone'))));
+});
+
+date_default_timezone_set(trim(file_get_contents('/etc/timezone')));
 
 $router = Container::dispense("Router");
 $server = Container::dispense('Environment\Server');
@@ -85,7 +97,8 @@ $result = $router->resolve(
 			echo JSON::encode(['on' => !file_exists('command')]);
 			return true;
 		}],
-		['/currency.js', Router::lazyLoad('Controllers\CurrencyData')],
+		['/settings.js', Router::lazyLoad('Controllers\SettingsData')],
+		['/test-price$', Router::lazyLoad('Controllers\Ajax\TestPrice')],
 		['/admin', Router::lazyLoad('Controllers\Admin')],
 		
 		//Checks the config before any other routes are resolved.
@@ -110,7 +123,12 @@ $result = $router->resolve(
 		['/start$', Router::lazyLoad('Controllers\Start')],
 		['/account$', Router::lazyLoad('Controllers\Account')],
 		['/purchase/:address$', Router::lazyLoad('Controllers\StartPurchase')],
-		['', Router::lazyLoad('Controllers\Start')],
+		['/?$', Router::lazyLoad('Controllers\Start')],
+		['', function () {
+			header('HTTP/1.1 404 Not Found.');
+			echo '404 Not Found.';
+			return true;
+		}]
 	]
 );
 

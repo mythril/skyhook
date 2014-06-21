@@ -49,7 +49,7 @@ class BillLogCSV {
 	
 	public static function test() {
 		require_once __DIR__ . '/autoload.php';
-		$b = new BillLogCSV(new DB());
+		$b = new BillLogCSV(Container::dispense('DB'));
 		echo "CSV Saved as: ", $b->save(19), "\n";
 	}
 }

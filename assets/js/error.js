@@ -6,7 +6,7 @@ $(function () {
 	var ticketId = $('#ticket').val();
 	var inFlight = false;
 	
-	save.on('click', function (e) {
+	save.on(CLICK, function (e) {
 		e.preventDefault();
 		if (!inFlight) {
 			inFlight = true;
@@ -22,7 +22,7 @@ $(function () {
 					} else {
 						title = _('Success');
 						message = _('Email address stored.');
-						url = '/';
+						url = '/start';
 						if (/\?insufficient\=1/.test(window.location.href)) {
 							url = '/admin/minimum-balance';
 							debugger;

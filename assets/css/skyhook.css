@@ -1,4 +1,5 @@
 @import url("/assets/fonts/stylesheet.css");
+@import url("/assets/font-awesome/css/font-awesome.min.css");
 /*
  * HTML5 Boilerplate
  *
@@ -27,11 +28,6 @@ body {
   font-size: 5vh;
   line-height: 1.4;
   color: #555;
-  -webkit-text-shadow: 1px 1px 0px #fff;
-  -moz-text-shadow: 1px 1px 0px #fff;
-  -ms-text-shadow: 1px 1px 0px #fff;
-  -o-text-shadow: 1px 1px 0px #fff;
-  text-shadow: 1px 1px 0px #fff;
 }
 html.start body {
   background-image: url('/assets/images/Bitcoin-Logo.png');
@@ -120,13 +116,19 @@ textarea {
   -o-background-size: 270px;
   background-size: 270px;
 }
-#footer #help {
+#footer #help,
+#admin-secret {
   position: absolute;
   font-size: 68px;
   bottom: -0.2em;
   left: -0.2em;
   margin: 0;
   padding: 0;
+  display: block;
+  width: 1.2em;
+  line-height: 1.4;
+  text-align: center;
+  background-color: #5e87b0;
   -webkit-border-radius: 0;
   -moz-border-radius: 0;
   -ms-border-radius: 0;
@@ -135,15 +137,27 @@ textarea {
   border-right: 1px solid #000;
   border-top: 1px solid #000;
   border-top-right-radius: 0.5em;
-  display: block;
-  width: 1.2em;
-  line-height: 1.4;
-  text-align: center;
-  background-color: #5e87b0;
 }
-#footer #help:active {
+#footer #help:active,
+#admin-secret:active {
   background-color: #fff;
 }
+#admin-secret {
+  right: -0.2em;
+  left: auto;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  -ms-border-radius: 0;
+  -o-border-radius: 0;
+  border-radius: 0;
+  border-left: 1px solid #000;
+  border-top: 1px solid #000;
+  border-top-left-radius: 0.5em;
+}
+#admin-secret span {
+  font-size: 45.33333333333333px;
+}
+#language-selector,
 #canceler {
   position: fixed;
   z-index: 2;
@@ -179,10 +193,12 @@ textarea {
   -o-transition: opacity 0.2s linear;
   transition: opacity 0.2s linear;
 }
+#language-selector:active,
 #canceler:active {
   color: #fff;
   background-color: #f7941e;
 }
+#language-selector:disabled,
 #canceler:disabled {
   filter: alpha(opacity=0);
   -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
@@ -191,6 +207,43 @@ textarea {
   -ms-opacity: 0;
   -o-opacity: 0;
   opacity: 0;
+}
+#language-selector {
+  font-family: Ubuntu, sans-serif;
+  background-color: #5e87b0;
+  -webkit-transition: all 0.2s linear;
+  -moz-transition: all 0.2s linear;
+  -ms-transition: all 0.2s linear;
+  -o-transition: all 0.2s linear;
+  transition: all 0.2s linear;
+}
+#language-selector:active {
+  background-color: #fff;
+}
+#language-selector img {
+  width: 50%;
+  height: 50%;
+}
+#help-panel .closer,
+#languages .closer {
+  position: absolute;
+  font-size: 68px;
+  bottom: -0.2em;
+  left: -0.2em;
+  margin: 0;
+  padding: 0;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  -ms-border-radius: 0;
+  -o-border-radius: 0;
+  border-radius: 0;
+  border-right: 1px solid #000;
+  border-top: 1px solid #000;
+  border-top-right-radius: 0.5em;
+  display: block;
+  width: 1.2em;
+  line-height: 1.4;
+  text-align: center;
 }
 #help-panel {
   position: fixed;
@@ -210,26 +263,6 @@ textarea {
 }
 #help-panel.visible {
   top: 0%;
-}
-#help-panel .closer {
-  position: absolute;
-  font-size: 68px;
-  bottom: -0.2em;
-  left: -0.2em;
-  margin: 0;
-  padding: 0;
-  -webkit-border-radius: 0;
-  -moz-border-radius: 0;
-  -ms-border-radius: 0;
-  -o-border-radius: 0;
-  border-radius: 0;
-  border-right: 1px solid #000;
-  border-top: 1px solid #000;
-  border-top-right-radius: 0.5em;
-  display: block;
-  width: 1.2em;
-  line-height: 1.4;
-  text-align: center;
 }
 #help-panel .help-section {
   position: absolute;
@@ -590,13 +623,6 @@ html.purchase .purchase-content #buy {
 .address {
   font-family: monospace;
 }
-#admin-secret {
-  position: absolute;
-  bottom: 5px;
-  right: 5px;
-  width: 10vh;
-  height: 10vh;
-}
 html.error .button-wrapper .button,
 html.error .button-wrapper button {
   background-color: #5e87b0;
@@ -763,6 +789,7 @@ html.receipt .receipt-content #email-receipt input[type=submit] {
 html.receipt .receipt-content #sent {
   padding: 10vh 0;
 }
+#languages,
 #errorPage {
   padding: 0 2vh;
   background-color: rgba(255,255,255,0.9);
@@ -775,15 +802,59 @@ html.receipt .receipt-content #sent {
   bottom: 0;
   margin: auto;
 }
+#languages h1,
 #errorPage h1 {
   font-size: 5vh;
 }
+#languages.notnet .network,
 #errorPage.notnet .network {
   display: none;
 }
+#languages #errorContact,
 #errorPage #errorContact {
   padding: 1em 0;
   border-top: 2px solid #ccc;
+}
+#languages {
+  padding-top: 10vh;
+  background-color: rgba(255,255,255,0.95);
+  filter: progid:DXImageTransform.Microsoft.Gradient( startColorstr='#f2ffffff', endColorstr='#f2ffffff',GradientType=0 );
+}
+#languages .language {
+  color: #555;
+  display: block;
+  text-align: left;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  -o-box-sizing: border-box;
+  box-sizing: border-box;
+  text-decoration: none;
+  width: 100%;
+  padding: 10px;
+}
+#languages .language img {
+  margin-right: 10px;
+}
+#languages .language:active,
+#languages .language::-moz-focus-inner {
+  background-color: rgba(0,0,0,0);
+  filter: progid:DXImageTransform.Microsoft.Gradient( startColorstr='#00000000', endColorstr='#00000000',GradientType=0 );
+  outline: 0 solid #008000;
+  border: 0;
+}
+#languages h1 {
+  position: absolute;
+  margin: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: #555;
+  color: #fff;
+  display: block;
+  width: 100%;
+  font-weight: 700;
+  text-align: center;
 }
 /* ==========================================================================
    Helper classes

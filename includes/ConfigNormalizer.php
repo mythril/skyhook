@@ -2,34 +2,11 @@
 use Environment\Post;
 
 class ConfigNormalizer {
-	public static function normalize(Post $post) {
+	
+	public static function normalizePricingSettings(Post $post) {
 		$config = Container::dispense('Config');
-		$normalized = [
-			'email' => [
-				'username' => @$post['email']['username'],
-				'password' => @$post['email']['password'],
-				'machine' => @$post['email']['machine'],
-			],
-			'walletProvider' => ['provider' => 'WalletProviders\Blockchain'],
-			'pricingProvider' => [],
-			'contact' => ['information' => @$post['contact']['information']],
-			'transaction-cron' => false,
-			'transactions' => [
-				'maximum' => @$post['transactions']['maximum'],
-			],
-		];
-		if (empty($normalized['email']['machine'])) {
-			$normalized['email']['machine'] = 'Project Skyhook 00';
-		}
-		
-		$normalized['transaction-cron'] = ($post['transaction-cron'] === "on");
-		
-		$blockchain = &$normalized['walletProvider'];
-		$blockchain['id'] = @$post['wallet']['id'];
-		$blockchain['mainPass'] = @$post['wallet']['mainPass'];
-		$blockchain['secondPass'] = @$post['wallet']['secondPass'];
-		$blockchain['fromAddress'] = @$post['wallet']['fromAddress'];
 		$pricing = [];
+		
 		$filtered = function ($available, $chosen) use (&$post) {
 			return array_fill_keys(
 				array_filter(
@@ -41,6 +18,7 @@ class ConfigNormalizer {
 				true
 			);
 		};
+		
 		$roughSources = $filtered(
 			$config->getAvailablePricingProviders(),
 			explode(',', @$post['sources'])
@@ -96,7 +74,38 @@ class ConfigNormalizer {
 			];
 		}
 		
-		$normalized['pricingProvider'] = $pricing;
+		return $pricing;
+	}
+	
+	public static function normalize(Post $post) {
+		$config = Container::dispense('Config');
+		$normalized = [
+			'email' => [
+				'username' => @$post['email']['username'],
+				'password' => @$post['email']['password'],
+				'machine' => @$post['email']['machine'],
+			],
+			'walletProvider' => ['provider' => 'WalletProviders\Blockchain'],
+			'pricingProvider' => [],
+			'contact' => ['information' => @$post['contact']['information']],
+			'transaction-cron' => false,
+			'transactions' => [
+				'maximum' => @$post['transactions']['maximum'],
+			],
+		];
+		if (empty($normalized['email']['machine'])) {
+			$normalized['email']['machine'] = 'Project Skyhook 00';
+		}
+		
+		$normalized['transaction-cron'] = ($post['transaction-cron'] === "on");
+		
+		$blockchain = &$normalized['walletProvider'];
+		$blockchain['id'] = @$post['wallet']['id'];
+		$blockchain['mainPass'] = @$post['wallet']['mainPass'];
+		$blockchain['secondPass'] = @$post['wallet']['secondPass'];
+		$blockchain['fromAddress'] = @$post['wallet']['fromAddress'];
+		
+		$normalized['pricingProvider'] = self::normalizePricingSettings($post);
 		return $normalized;
 	}
 	

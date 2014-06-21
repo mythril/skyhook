@@ -1,0 +1,12 @@
+[submodule "assets/jsqrcode"]
+	path = assets/jsqrcode
+	url = https://github.com/LazarSoft/jsqrcode
+[submodule "assets/Messi"]
+	path = assets/Messi
+	url = https://github.com/marcosesperon/Messi.git
+[submodule "assets/cookies"]
+	path = assets/cookies
+	url = https://github.com/ScottHamper/Cookies.git
+[submodule "assets/font-awesome"]
+	path = assets/font-awesome
+	url = https://github.com/FortAwesome/Font-Awesome.git

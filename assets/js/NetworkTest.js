@@ -40,7 +40,7 @@
 			});
 		}
 		
-		errorPage.on('click touchstart mousedown', function (e) {
+		errorPage.on(CLICK, function (e) {
 			e.stopPropagation();
 		});
 		

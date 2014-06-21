@@ -7,7 +7,7 @@ $transactions = $config['transactions'];
 		<?= $i18n->_('Transaction Settings')?>
 	</h3>
 	<p>
-		<?= $i18n->_('Please set your ') ?><?= $currency ?><?= _(' limit per transaction below. Customers will see when a transaction is nearing this
+		<?= $i18n->_('Please set your ') ?><?= $currency ?><?= $i18n->_(' limit per transaction below. Customers will see when a transaction is nearing this
 		limit.')?>
 	</p>
 	<div id="maximum-errors"></div>
@@ -22,6 +22,9 @@ $transactions = $config['transactions'];
 			min="0"
 			step="1"
 			autocomplete="off"
+			spellcheck="false"
+			autocorrect="off"
+			autocapitalize="off"
 			<?
 			if (isset($transactions['maximum'])) {
 				echo 'value="', $transactions['maximum'], '"';

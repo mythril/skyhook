@@ -11,7 +11,7 @@ var Loading = {};
 		.appendTo(widget);
 	
 	wrapper.on(
-		'submit click mousedown mouseup touchstart touchend',
+		'click submit mousedown mouseup touchstart touchend',
 		function (e) {
 			e.stopPropagation();
 		}

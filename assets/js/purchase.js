@@ -73,7 +73,7 @@ $(function () {
 		);
 	}
 	
-	$('#canceler').on('click touchstart', confirmCancel);
+	$('#canceler').on(CLICK, confirmCancel);
 	
 	var handlers = {};
 	
@@ -182,7 +182,7 @@ $(function () {
 	});
 	
 	function purchase(e) {
-		$('#buy').off('click', purchase);
+		$('#buy').off(CLICK, purchase);
 		Loading.text(_('Processing'));
 		Loading.show();
 		$.getJSON('/finalize/' + ticketId)
@@ -203,10 +203,10 @@ $(function () {
 					window.location.replace('/error/' + ticketId + extra);
 					return;
 				}
-				$('#buy').on('click', purchase);
+				$('#buy').on(CLICK, purchase);
 				Loading.hide();
 			});
 		e.preventDefault();
 	}
-	$('#buy').on('click', purchase);
+	$('#buy').on(CLICK, purchase);
 });

@@ -15,11 +15,24 @@ include 'head.phtml';
 	<a href="#" class="closer button">&times;</a>
 </div>
 <div class="error-content">
-	<input type="hidden" name="ticket" id="ticket" value="<?= $ticket ?>" />
+	<input
+		type="hidden"
+		name="ticket"
+		id="ticket"
+		value="<?= $ticket ?>"
+	/>
 	<h1><?= $i18n->_('A trans&shy;act&shy;ion error has occured') ?></h1>
 	<div class="inputgroup">
 		<label for="email"><?= $i18n->_('Email Address') ?>:</label>
-		<input type="email" name="name" id="email" />
+		<input
+			type="email"
+			name="name"
+			id="email"
+			autocomplete="off"
+			spellcheck="false"
+			autocorrect="off"
+			autocapitalize="off"
+		/>
 	</div>
 	<div class="button-wrapper">
 		<button id="save">
