@@ -123,6 +123,7 @@ $result = $router->resolve(
 		['/start$', Router::lazyLoad('Controllers\Start')],
 		['/account$', Router::lazyLoad('Controllers\Account')],
 		['/purchase/:address$', Router::lazyLoad('Controllers\StartPurchase')],
+		['/bust$', Router::lazyLoad('Controllers\CacheBust')],
 		['/?$', Router::lazyLoad('Controllers\Start')],
 		['', function () {
 			header('HTTP/1.1 404 Not Found.');
