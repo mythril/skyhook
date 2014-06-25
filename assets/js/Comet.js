@@ -29,9 +29,11 @@ var Comet = (function () {
 	self.open = open;
 	
 	function close(url) {
+          if (iframes[url]) {
 		iframes[url].remove();
-		iframes[url] = undefined;
-		connections[url] = undefined;
+		delete iframes[url];
+		delete connections[url];
+          }
 	}
 	
 	self.close = close;
