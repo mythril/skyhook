@@ -1,0 +1,270 @@
+body {
+  font-family: "HelveticaNeue-Light", Helvetica, sans-serif;
+  background-color: white;
+  width:100%;
+  height:100%;
+  display:block;
+  margin:0;
+  padding:0;
+}
+
+#START-PAGE, #QRSCAN-PAGE, #DEPOSIT-PAGE, #RECEIPT-PAGE, #ERROR-PAGE {
+  display:none;
+  position: absolute;
+  left:0;
+  top:0;
+  width:100%;
+  height:100%;
+  text-align:center;
+}
+
+#START-PAGE #btn-buy-bitcoin {
+  width: 55%;
+  margin-top: 125px;
+}
+
+#START-PAGE .bitcoin-logo {
+  margin-top:125px;
+  margin-bottom:30px;
+}
+
+#START-PAGE .bitcoin-atm {
+  color:#555;
+  font-size: 56px;
+}
+
+#QRSCAN-PAGE .video-box {
+  border-bottom:1px solid #666;
+  background-color:#ccc;
+  text-align:center;
+  overflow:hidden;
+  background-image: url(./media/qrcodebg.png);
+  padding:120px;
+}
+
+#QRSCAN-PAGE #video {
+  /* Flip horizontally -- feels more natural when trying to get QR scanned */
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
+  width:100%;
+}
+
+#QRSCAN-PAGE .instructions {
+  font-size: 42px;
+  line-height: 125%;
+  color:#666;
+  margin:30px 0;
+}
+
+#DEPOSIT-PAGE .instructions {
+  color:#fff;
+  font-size:72px;
+  padding-bottom:10px;
+  padding-top:40px;
+  background-color:#F7941E;
+  text-shadow: -2px -2px 0 rgba(0,0,0,0.15);
+}
+
+#DEPOSIT-PAGE .low-funds-warning, #DEPOSIT-PAGE .no-funds-error {
+  display:none;
+  background-color:#E61919;
+  color:#fff;
+  font-size: 22px;
+  padding: 10px 0;
+}
+
+#DEPOSIT-PAGE .totals-box {
+  width:100%;
+  padding:35px 0;
+  background-color:#ddd;
+  border-top:1px solid #555;
+  border-bottom:1px solid #555;
+}
+
+#DEPOSIT-PAGE .cash-deposited-label {
+  font-size:42px;
+  color:green;
+}
+
+#DEPOSIT-PAGE .cash-deposited {
+  font-size:56px;
+}
+
+#DEPOSIT-PAGE .divider {
+  font-size:64px;
+  font-weight:bold;
+  color:#4585C4;
+  margin:10px;
+}
+
+#DEPOSIT-PAGE .bitcoin-purchased-label {
+  font-size:42px;
+  color:#E68819;
+}
+
+#DEPOSIT-PAGE .bitcoin-purchased {
+  font-size:56px;
+}
+
+#DEPOSIT-PAGE .bitcoin-sent-to-label {
+  font-size:36px;
+  margin-top:30px;
+  margin-bottom:5px;
+  color:#777;
+}
+
+#DEPOSIT-PAGE .bitcoin-sent-to {
+  font-size:24px;
+  font-family:monospace;
+  margin-bottom:40px;
+  font-weight:bold;
+}
+
+#RECEIPT-PAGE .thanks {
+  color:#fff;
+  font-size:72px;
+  padding-bottom:10px;
+  padding-top:100px;
+  background-color:#F7941E;
+  text-shadow: -2px -2px 0 rgba(0,0,0,0.15);
+}
+
+#RECEIPT-PAGE .bitcoin-sent {
+  font-size:56px;
+  margin-top:80px;
+}
+
+#RECEIPT-PAGE .bitcoin-sent-to {
+  font-size:24px;
+  font-family:monospace;
+  font-weight:bold;
+  margin-bottom:150px;
+}
+
+#RECEIPT-PAGE .bitcoin-sent-to-label {
+  font-size:36px;
+  padding:30px 0 35px 0;
+}
+
+#ERROR-PAGE {
+  background-color:#efefef;
+}
+
+#ERROR-PAGE .header {
+  font-size: 32px;
+  background-color: #D43333;
+  padding: 50px 0 10px 0;
+  color:#fff;
+}
+
+#ERROR-PAGE .info, #ERROR-PAGE .instructions {
+  padding:40px;
+  font-size: 36px;
+  text-align:left;
+  line-height:150%;
+  color:#555;
+}
+
+#ERROR-PAGE .email-address-label {
+  font-size:24px;
+  color:#555;
+  font-weight:bold;
+}
+
+#ERROR-PAGE .email-address INPUT {
+  width:80%;
+  font-size:200%;
+  padding:10px;
+}
+
+#ERROR-PAGE .email-address INPUT.invalid {
+  background-color:yellow;
+}
+
+#ERROR-PAGE #btn-error-done {
+  margin-top: 20px;
+}
+
+.btn-large-success, .btn-large-fail, .btn-large-info {
+  text-align:center;
+  font-family:"HelveticaNeue-Light",Helvetica,sans-serif;
+  font-size:36px;
+  color: #fff;
+  margin:0 auto;
+  width:45%;
+  border:1px solid #ccc;
+  padding:16px 0 20px 0;
+  border-radius:16px;
+  text-shadow: -1px -1px 0 rgba(0,0,0,0.25);
+  border-color: rgba(0,0,0,0.1) rgba(0,0,0,0.1) rgba(0,0,0,0.25);
+}
+
+.btn-large-success {
+  background-color:#51a351;
+  background-image: -webkit-linear-gradient(top,#66D966,#397539);
+  background-image: -moz-linear-gradient(top,#66D966,#397539);
+}
+
+.btn-large-fail {
+  background-color:#bd362f;
+  background-image: -webkit-linear-gradient(top,#ee5f5b,#bd362f);
+  background-image: -moz-linear-gradient(top,#ee5f5b,#bd362f);  
+}
+
+.btn-large-info {
+  background-color:#bd362f;
+  background-image: -webkit-linear-gradient(top,#6598F7,#1A61BD);
+  background-image: -moz-linear-gradient(top,#6598F7,#1A61BD);
+}
+
+
+
+#bitcoin-price-box {
+  position:absolute;
+  bottom:0px;
+  width:100%;
+  text-align:center;
+  background-color: #F7941E;
+  font-size:32px;
+  color:#59350B;
+}
+
+#bitcoin-price-box-in {
+  padding: 12px 0 15px 0;
+}
+
+#qr-canvas, iframe {
+  visibility:hidden;
+  position:absolute;
+}
+
+
+#loading-widget-outer {
+  position:absolute;
+  left:0;
+  top:0;
+  width:100%;
+  height:100%;
+  z-index:100;
+  background-image: -webkit-linear-gradient(top,rgba(200,200,200,0.9),rgba(200,200,200,0.9));
+  background-image: -moz-linear-gradient(top,rgba(200,200,200,0.9),rgba(200,200,200,0.9));
+}
+
+#loading-widget {
+  position:relative;
+  width:450px;
+  margin:auto auto;
+  top: 25%;
+  background-image: url(./media/loading-spinner.gif);
+  background-position: 165px 50px;
+  background-repeat:no-repeat;
+  text-align:center;
+  padding-top: 200px;
+  padding-bottom: 40px;
+  font-size:50px;
+  color:#666;
+  background-color:#fff;
+  border-radius:40px;
+}
+
+
