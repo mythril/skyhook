@@ -6,8 +6,6 @@
 
 <script src="/assets/jQuery/jquery.min.js"></script>
 <script src="/assets/js/Comet.js"></script>
-<script src="/assets/Messi/messi.min.js"></script>
-<link rel="stylesheet" href="/assets/Messi/messi.min.css" />
 
 <!-- QR Code Reader -- Maybe browserify this? -->
 <script type="text/javascript" src="/assets/jsqrcode/src/grid.js"></script>
@@ -93,7 +91,14 @@
 </div>
 
 
-<!-- modular blocks used on multiple pages -->
+<div id="NETWORK-ERROR-PAGE">
+  <div class="header">Network Unreachable</div>
+  <div class="instructions">If the problem persists, please contact the operator.</div>
+  <div class="contact-info">TODO: Operator Info Here.<br />More Operator info here.</div>
+</div>
+
+
+<!-- modular blocks re-used on multiple pages -->
 <div style="display:none">
 
   <div id="bitcoin-price-box">
@@ -101,6 +106,7 @@
       Currently <span id="bitcoin-price">$---.--</span> per Bitcoin
     </div>
   </div>
+
 
 </div>
 

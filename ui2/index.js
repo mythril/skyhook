@@ -14,21 +14,58 @@ function timeoutAction() {
 }
 
 // Handles inactivity timeouts and triggers a callback
-var PageTimeout = (function(func){
+var IdleTimeout = (function(func){
   var timeoutId = 0;
-  var countdown = 0;
+  var interval = 0;
   var action = func;
 
   return {
     start : function(seconds) {
-      PageTimeout.cancel();
+      IdleTimeout.stop();
       timeoutId = window.setTimeout(action, seconds * 1000); 
-      countdown = seconds;
+      interval = seconds;
     },
-    restart : function() { PageTimeout.start(countdown); },
-    cancel : function() { window.clearTimeout(timeoutId) }
-  }
+    restart : function() { IdleTimeout.start(interval); },
+    stop : function() { window.clearTimeout(timeoutId) }
+  };
 })(timeoutAction);
+
+
+var NetworkMonitor = (function() {
+  var INTERVAL = 60;
+  var timeoutId = 0;
+
+  function testNetwork() {
+    $.ajax('/nettest', { dataType: 'json', cache: false, timeout: 5*1000 })
+      .fail(function() {
+        if (!PageManager.isCurrentPage(PageIds.NETWORKERROR)) {
+          PageManager.viewPage(PageIds.NETWORKERROR);
+        }
+      })
+      .done(function(data) {
+        if (data.error) {
+          if (!PageManager.isCurrentPage(PageIds.NETWORKERROR)) {
+            PageManager.viewPage(PageIds.NETWORKERROR);
+          }
+        } else {
+          if (PageManager.isCurrentPage(PageIds.NETWORKERROR)) {
+            PageManager.viewPage(PageIds.START);
+          }
+        }
+      })
+      .always(function() {
+        NetworkMonitor.start();
+      });
+  }
+
+  return {
+    start : function() {
+      NetworkMonitor.stop();
+      timeoutId = window.setTimeout(testNetwork, INTERVAL * 1000);
+    },
+    stop : function() { window.clearTimeout(timeoutId) }
+  };
+})();
 
 
 var PageIds = {
@@ -36,7 +73,8 @@ var PageIds = {
   "QRSCAN" : "QRSCAN-PAGE",
   "DEPOSIT" : "DEPOSIT-PAGE",
   "RECEIPT" : "RECEIPT-PAGE",
-  "ERROR" : "ERROR-PAGE"
+  "ERROR" : "ERROR-PAGE",
+  "NETWORKERROR" : "NETWORK-ERROR-PAGE"
 };
 
 // Simple clientside page manager. 
@@ -113,11 +151,17 @@ PageManager.addPage( PageIds.START,
       $('#bitcoin-price').text("$" + price);
     });
     $("#" + PageIds.START)[0].appendChild($("#bitcoin-price-box")[0]);
+    NetworkMonitor.start();
+
+    // Force network connections to re-establish every 5 minutes
+    // Sometimes the Comet price times out.. this takes care of that.
+    IdleTimeout.start(300);
   },
 
   function EXIT(context) {
     Comet.closeAll();
-    PageTimeout.cancel();
+    IdleTimeout.stop();
+    NetworkMonitor.stop();
   }
 );
  
@@ -134,7 +178,7 @@ PageManager.addPage( PageIds.QRSCAN,
     qrcode.callback = function(address) {
       console.log("address: " + address);
       context.stopScanning();
-      PageTimeout.restart();
+      IdleTimeout.restart();
 
       // Addresses are sometimes encoded with protocols and arguments. Need to strip them.
       // [bitcoin:[//]]<ADDRESS>[?param=value1][&param=value2]
@@ -208,7 +252,8 @@ PageManager.addPage( PageIds.QRSCAN,
     });
     $("#" + PageIds.QRSCAN)[0].appendChild($("#bitcoin-price-box")[0]);
 
-    PageTimeout.start(60);
+    IdleTimeout.start(60);
+    NetworkMonitor.start();
 
     function getMedia(constraints, success, error) {
       (navigator.getUserMedia || 
@@ -253,8 +298,10 @@ PageManager.addPage( PageIds.QRSCAN,
   
   function EXIT(context) {
     Comet.closeAll();
-    PageTimeout.cancel();
+    IdleTimeout.stop();
+    NetworkMonitor.stop();
     context.stopScanning();
+
     var video = $("#video")[0];
     if (video && video.pause) {
       console.log("Pausing video");
@@ -263,8 +310,8 @@ PageManager.addPage( PageIds.QRSCAN,
         console.log("Stopping video");
         context.stream.stop();
         context.stream = null;
-        video.src = "";
       }
+      video.src = "";
     }
   }
 );
@@ -312,7 +359,9 @@ PageManager.addPage( PageIds.DEPOSIT,
         // Money inserted. Remove CANCEL and clear the timeout.
         $("#btn-buy-cancel").hide();
         $("#btn-send-bitcoin").show();
-        PageTimeout.cancel();
+
+        // Disable the idle timeout once bills are inserted
+        IdleTimeout.stop();
       }
       
       if (context.bills != data.bills) {
@@ -359,7 +408,7 @@ PageManager.addPage( PageIds.DEPOSIT,
     context.ticketId = context.extra["ticketId"];
     context.price = context.extra["price"];
    
-    PageTimeout.start(60);
+    IdleTimeout.start(60);
 
     $("#" + PageIds.DEPOSIT)[0].appendChild($("#bitcoin-price-box")[0]);
     $('#bitcoin-price').text(context.price);
@@ -376,7 +425,7 @@ PageManager.addPage( PageIds.DEPOSIT,
 
   function EXIT(context) {
     Comet.closeAll();
-    PageTimeout.cancel();
+    IdleTimeout.stop();
     Loading.hide();
     SkyhookUtils.disableBillAcceptor();
   }
@@ -407,11 +456,11 @@ PageManager.addPage( PageIds.RECEIPT,
     $("#bitcoin-sent-amount").text(context.btc);
     $(".bitcoin-sent-to").text(context.address);
 
-    PageTimeout.start(10);
+    IdleTimeout.start(10);
   },
 
   function EXIT(context) {
-    PageTimeout.cancel();
+    IdleTimeout.stop();
   }
 );
 
@@ -423,7 +472,7 @@ PageManager.addPage( PageIds.ERROR,
 
     $("#btn-error-done").on("click", function() {
       $.Watermark.HideAll();
-      PageTimeout.restart();
+      IdleTimeout.restart();
       var emailField = $("#email-address");
 
       if (emailField.val() != "") {
@@ -460,7 +509,7 @@ PageManager.addPage( PageIds.ERROR,
       return PageManager.viewPage(PageIds.START);
     }   
 
-    PageTimeout.start(60);
+    IdleTimeout.start(60);
 
     $.Watermark.HideAll();
     $("#email-address").val("");  // Clear existing info
@@ -469,6 +518,13 @@ PageManager.addPage( PageIds.ERROR,
 
   function EXIT(context) {
     Loading.hide();
-    PageTimeout.cancel();
+    IdleTimeout.stop();
   }
+);
+
+/* Network Error Page */
+PageManager.addPage( PageIds.NETWORKERROR,
+  function INIT(context) { },
+  function ENTER(context) { NetworkMonitor.start() },
+  function EXIT(context) { NetworkMonitor.stop() }
 );

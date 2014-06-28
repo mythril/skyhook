@@ -8,7 +8,7 @@ body {
   padding:0;
 }
 
-#START-PAGE, #QRSCAN-PAGE, #DEPOSIT-PAGE, #RECEIPT-PAGE, #ERROR-PAGE {
+#START-PAGE, #QRSCAN-PAGE, #DEPOSIT-PAGE, #RECEIPT-PAGE, #ERROR-PAGE, #NETWORK-ERROR-PAGE {
   display:none;
   position: absolute;
   left:0;
@@ -185,6 +185,26 @@ body {
   margin-top: 20px;
 }
 
+#NETWORK-ERROR-PAGE .header {
+  font-size: 32px;
+  background-color: #D43333;
+  padding: 50px 0 10px 0;
+  color:#fff;
+}
+
+#NETWORK-ERROR-PAGE .instructions {
+  font-size:36px;
+  text-align:left;
+  padding:40px;
+  color:#555;
+}
+
+#NETWORK-ERROR-PAGE .contact-info {
+  font-size:18px;
+  padding-left:60px;
+  text-align:left;
+}
+
 .btn-large-success, .btn-large-fail, .btn-large-info {
   text-align:center;
   font-family:"HelveticaNeue-Light",Helvetica,sans-serif;
@@ -217,8 +237,6 @@ body {
   background-image: -moz-linear-gradient(top,#6598F7,#1A61BD);
 }
 
-
-
 #bitcoin-price-box {
   position:absolute;
   bottom:0px;
@@ -237,7 +255,6 @@ body {
   visibility:hidden;
   position:absolute;
 }
-
 
 #loading-widget-outer {
   position:absolute;
