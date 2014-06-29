@@ -12,6 +12,7 @@ class AddressUtility {
 	const BITCOIN_ADDRESS_VERSION = "00";
 	const LITECOIN_ADDRESS_VERSION = "30";
 	const DOGECOIN_ADDRESS_VERSION = "48";
+	const P2SH_ADDRESS_VERSION = '05';
 	/*
 	 * Address utility functions by theymos
 	 * Via http://www.bitcoin.org/smf/index.php?topic=1844.0

@@ -11,6 +11,9 @@ class JSON {
 		return json_encode($value, $options);
 	}
 	
+	private static function preserveBigInts($json) {
+		return preg_replace('/:\s*(\d{14,})/u', ': "${1}"', $json);
+	}
 	
 	public static function decode(
 		$json,

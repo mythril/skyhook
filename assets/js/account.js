@@ -48,17 +48,27 @@ $(function () {
 			);
 		}
 		
+		//this does not validate the address
+		function getBitcoinAddress(url) {
+			//remove scheme and double slashes
+			url = url.replace(/bitcoin:(\/\/)?/, '');
+			//remove query
+			return url.split('?')[0];
+		}
+		
 		function decodeResult(data) {
 			if (data === 'error decoding QR Code') {
 				return;
 			}
 			var l = data.length;
+			var addr = '';
 			if (/bitcoin:/.test(data) || (l >= 27 && l <= 34)) {
 				suspended = true;
-				$.getJSON('/validate/' + data.replace(/\/\//, ''))
+				addr = getBitcoinAddress(data);
+				$.getJSON('/validate/' + addr)
 					.done(function (result) {
 						if (result.valid) {
-							confirmAddr(data.replace(/bitcoin:(\/\/)?/, '').split('?')[0]);
+							confirmAddr(addr);
 						}
 					});
 			}
