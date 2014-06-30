@@ -69,6 +69,8 @@ $(function () {
 					.done(function (result) {
 						if (result.valid) {
 							confirmAddr(addr);
+						} else {
+							suspended = false;
 						}
 					});
 			}
