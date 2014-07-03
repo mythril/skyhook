@@ -116,6 +116,7 @@ $result = $router->resolve(
 		['/price$', Router::lazyLoad('Controllers\Price')],
 		['/billscan-balance/:ticket$', Router::lazyLoad('Controllers\BillScannerBalance')],
 		['/email-receipt', Router::lazyLoad('Controllers\EmailReceipt')],
+		['/start-purchase/:address$', Router::lazyLoad('Controllers\Ajax\StartPurchase')],
 		
 		//Checks the known connectivity before any other routes are resolved.
 		['', Container::dispense('Controllers\ConnectivityChecker')],
