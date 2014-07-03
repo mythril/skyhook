@@ -8,6 +8,7 @@ $currencyMeta = $config->getCurrencyMeta();
 $classes = ['purchase'];
 include 'head.phtml';
 ?>
+<!-- data["<?= $ticket->getId() ?>","<?= $currencyMeta->format($ticket->getBitcoinPrice(), true) ?>"] -->
 <button id="canceler">
 	&times;
 </button>
