@@ -7,7 +7,8 @@ use Localization;
 
 class SettingsData implements Controller {
 	public function execute(array $matches, $url, $rest) {
-		$meta = AdminConfig::volatileLoad()->getConfig()->getCurrencyMeta();
+		$cfg = AdminConfig::volatileLoad()->getConfig();
+		$meta = $cfg->getCurrencyMeta();
 		$denoms = [];
 		
 		foreach ($meta->getDenominations() as $denom) {
@@ -17,6 +18,7 @@ class SettingsData implements Controller {
 		header('Content-Type: application/javascript');
 		echo 'var CurrencyData = ' . JSON::encode([
 			'symbol' => $meta->getSymbol(),
+			'contactInfo' => $cfg->getContactInformation(),
 			'code' => $meta->getISOCode(),
 			'denominations' => $denoms,
 		]) . ';';
