@@ -184,8 +184,8 @@ class BillScannerDriver implements Observable {
 		
 		$ackBit = 0;
 		$escrowed = false;
-		$oldCred = false;
 		$returnBill = false;
+		$oldBill = false;
 		$statusText = '';
 		while (true) {
 			$this->notifyObservers('tick', []);
@@ -234,10 +234,16 @@ class BillScannerDriver implements Observable {
 			
 			$billIndex = ($out[5] & 0x38) >> 3;
 			
-			if ($billIndex !== $oldCred && $billIndex !== 0) {
-				Debug::log("Notifying billInserted");
-				$this->notifyObservers('billInserted', ['billIndex' => $billIndex]);
-				$oldCred = $billIndex;
+			if ($billIndex !== 0 && $oldBill !== $billIndex) {
+				$oldBill = $billIndex;
+				if (ord($out[3]) & 0x10) {
+					Debug::log("Notifying billInserted");
+					$this->notifyObservers('billInserted', ['billIndex' => $billIndex]);
+				}
+			}
+			
+			if ($status['IDLING'] === true) {
+				$oldBill = false;
 			}
 			
 			$returnBill = $this->isBillRejected();
