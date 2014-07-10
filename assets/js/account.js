@@ -56,7 +56,9 @@ $(function () {
 			return url.split('?')[0];
 		}
 		
+		var capturing = false;
 		function decodeResult(data) {
+			capturing = false;
 			if (data === 'error decoding QR Code') {
 				return;
 			}
@@ -123,25 +125,24 @@ $(function () {
 		var ctx = canvas.getContext('2d');
 		
 		function capture() {
+			if (capturing || suspended) {
+				return;
+			}
 			try {
-				ctx.drawImage(video, 0, 0, width, height);
-				var data = canvas.toDataURL('image/png');
-				qrcode.decode(data);
+				ctx.drawImage(video, 0, 0, width, height, 0, 0, width, height);
+				capturing = true;
+				qrcode.decode();
 			} catch (e) {
-				if (e.name == "NS_ERROR_NOT_AVAILABLE") {
-					//setTimeout(capture, 1);
-				} else {
-					throw e;
-				}
+				capturing = false;
 			}
 		}
 		
 		var requestAnimationFrame = (function rafMemo() {
-			var raf = /*window.requestAnimationFrame ||
+			var raf = window.requestAnimationFrame ||
 				window.mozRequestAnimationFrame ||
-				window.webkitRequestAnimationFrame ||*/
+				window.webkitRequestAnimationFrame ||
 				function raf(cb) {
-					window.setTimeout(cb, 500);
+					window.setTimeout(cb, 10);
 				};
 			return raf;
 		}());
