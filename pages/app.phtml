@@ -1,122 +1,52 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta name="viewport" content="width=device-width, user-scalable=no">
-<title>Project Skyhook&trade; Bitcoin ATM</title>
-
-<script src="/assets/jQuery/jquery.min.js"></script>
-<script src="/assets/js/Comet.js"></script>
-
-<!-- QR Code Reader -- Maybe browserify this? -->
-<script type="text/javascript" src="/assets/jsqrcode/src/grid.js"></script>
-<script type="text/javascript" src="/assets/jsqrcode/src/version.js"></script>
-<script type="text/javascript" src="/assets/jsqrcode/src/detector.js"></script>
-<script type="text/javascript" src="/assets/jsqrcode/src/formatinf.js"></script>
-<script type="text/javascript" src="/assets/jsqrcode/src/errorlevel.js"></script>
-<script type="text/javascript" src="/assets/jsqrcode/src/bitmat.js"></script>
-<script type="text/javascript" src="/assets/jsqrcode/src/datablock.js"></script>
-<script type="text/javascript" src="/assets/jsqrcode/src/bmparser.js"></script>
-<script type="text/javascript" src="/assets/jsqrcode/src/datamask.js"></script>
-<script type="text/javascript" src="/assets/jsqrcode/src/rsdecoder.js"></script>
-<script type="text/javascript" src="/assets/jsqrcode/src/gf256poly.js"></script>
-<script type="text/javascript" src="/assets/jsqrcode/src/gf256.js"></script>
-<script type="text/javascript" src="/assets/jsqrcode/src/decoder.js"></script>
-<script type="text/javascript" src="/assets/jsqrcode/src/qrcode.js"></script>
-<script type="text/javascript" src="/assets/jsqrcode/src/findpat.js"></script>
-<script type="text/javascript" src="/assets/jsqrcode/src/alignpat.js"></script>
-<script type="text/javascript" src="/assets/jsqrcode/src/databr.js"></script>
-<!-- End QR Code Reader -->
-
-<script src="./3rdparty/fastclick.js"></script>  <!-- Remove 300ms touch/click delay -->
-<script src="./3rdparty/bitcoinjs.js"></script>  <!-- Validate addresses clientside -->
-<script src="./3rdparty/jquery.watermarkinput.js"></script>  <!-- INPUT field hints -->
-
-<script src="index.js"></script>
-<link rel="stylesheet" href="index.css" />
-
-</head>
-<body>
-
-
-<div id="START-PAGE">
-  <img class="bitcoin-logo" src="media/bitcoin.png" width="300" height="300" />
-  <div class="bitcoin-atm">Bitcoin ATM</div>
-  <div class="btn-large-success" id="btn-buy-bitcoin">Buy some Bitcoin</div>
-</div>
-
-<div id="QRSCAN-PAGE">
-  <div class="video-box"><video id="video" width="480" height="360"></video></div>
-  <div class="instructions">Please hold up your<br />bitcoin QR code</div>
-  <div class="btn-large-fail" id="btn-scan-cancel">Cancel</div>
-  <canvas id="qr-canvas"><!-- JSQRCODE --></canvas>
-</div>
-
-<div id="DEPOSIT-PAGE">
-  <div class="instructions">Insert a bill</div>
-  <div class="low-funds-warning"><b>Bitcoin funds low:</b> Do not insert bills larger than <b id="low-funds-amount"></b></div>
-  <div class="no-funds-error"><b>Bitcoin funds empty:</b> Do not insert any more bills.</div>
-  <div class="totals-box">
-    <div class="cash-deposited-label">cash deposited</div>
-    <div class="cash-deposited"><b id="cash-deposited-amount">$0</b> CAD</div>
-    <div class="divider">&#8659;</div>
-    <div class="bitcoin-purchased-label">bitcoin purchased</div>
-    <div class="bitcoin-purchased"><b id="bitcoin-purchased-amount">0.00000000</b> BTC</div>
-  </div>
-  <div class="bitcoin-sent-to-label">Bitcoin will be sent to:</div>
-  <div class="bitcoin-sent-to"></div>
-  <div class="btn-large-fail" id="btn-buy-cancel" style="display:none">Cancel</div>
-  <div class="btn-large-success" id="btn-send-bitcoin" style="display:none">Send Bitcoin</div>
-</div>
-
-<div id="RECEIPT-PAGE">
-  <div class="thanks">Thanks!</div>
-  <div class="bitcoin-sent"><b id="bitcoin-sent-amount">0.00000000</b> BTC</div>
-  <div class="bitcoin-sent-to-label">has just been sent to</div>
-  <div class="bitcoin-sent-to"></div>
-  <div class="btn-large-info" id="btn-done">Done</div>
-</div>
-
-<div id="ERROR-PAGE">
-  <div class="header">A transaction error has occurred.</div>
-  <div class="info">
-    This transaction has been logged and the operator notified for manual processing.
-  </div>
-  <div class="email-address">
-    <input type="text" id="email-address" />
-  </div>
-  <div class="instructions">
-    You may enter your email address so that the operator may notify you when this issue is resolved.
-  </div>
-  <div class="btn-large-info" id="btn-error-done">Done</div>
-</div>
-
-
-<div id="NETWORK-ERROR-PAGE">
-  <div class="header">Network Unreachable</div>
-  <div class="instructions">If the problem persists, please contact the operator.</div>
-  <div class="contact-info">TODO: Operator Info Here.<br />More Operator info here.</div>
-</div>
-
+<?php
+$title = 'Project Skyhook';
+//$styles = ['/assets/css/skyhook.css'];
+$styles = ['/assets/css/index.css'];
+$classes = ['app'];
+include 'head.phtml';
+include 'start.phtml';
+include 'account.phtml';
+include 'purchase.phtml';
+include 'receipt.phtml';
+include 'error.phtml';
+include 'network-out.phtml';
+?>
 
 <!-- modular blocks re-used on multiple pages -->
 <div style="display:none">
-
-  <div id="bitcoin-price-box">
-    <div id="bitcoin-price-box-in">
-      Currently <span id="bitcoin-price">$---.--</span> per Bitcoin
-    </div>
-  </div>
-
-
+	<div id="bitcoin-price-box">
+		<div id="bitcoin-price-box-in">
+			Currently <span id="bitcoin-price">$---.--</span> per Bitcoin
+		</div>
+	</div>
 </div>
 
-</body>
-
-<script>
-$(function() {
-    FastClick.attach(document.body);
-});
-PageManager.viewPage(PageIds.START);
-</script>
-<script src="/assets/js/loading.js"></script>
-</html>
+<?
+$scripts = [
+	'/settings.js',
+	'/assets/jQuery/jquery.min.js',
+	'/assets/js/Comet.js',
+	'/assets/jsqrcode/src/grid.js',
+	'/assets/jsqrcode/src/version.js',
+	'/assets/jsqrcode/src/detector.js',
+	'/assets/jsqrcode/src/formatinf.js',
+	'/assets/jsqrcode/src/errorlevel.js',
+	'/assets/jsqrcode/src/bitmat.js',
+	'/assets/jsqrcode/src/datablock.js',
+	'/assets/jsqrcode/src/bmparser.js',
+	'/assets/jsqrcode/src/datamask.js',
+	'/assets/jsqrcode/src/rsdecoder.js',
+	'/assets/jsqrcode/src/gf256poly.js',
+	'/assets/jsqrcode/src/gf256.js',
+	'/assets/jsqrcode/src/decoder.js',
+	'/assets/jsqrcode/src/qrcode.js',
+	'/assets/jsqrcode/src/findpat.js',
+	'/assets/jsqrcode/src/alignpat.js',
+	'/assets/jsqrcode/src/databr.js',
+	'/assets/thirdparty/fastclick.js',
+	'/assets/thirdparty/bitcoinjs.js',
+	'/assets/thirdparty/jquery.watermarkinput.js',
+	'/assets/js/loading.js',
+	'/assets/js/index.js',
+];
+include 'foot.phtml';

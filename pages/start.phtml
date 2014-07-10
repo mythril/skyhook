@@ -1,38 +1,5 @@
-<?php
-$title = 'Project Skyhook';
-$styles = ['/assets/css/skyhook.css'];
-$classes = ['start'];
-include 'head.phtml';
-?>
-<style type="text/css">
-	html.start body{
-		background-image: url('<?= Localization::url('images/Bitcoin-Logo.png') ?>');
-	}
-</style>
-<a href="#" id="language-selector" class="button">
-	<img src="<?= Localization::flagURL() ?>" alt="" />
-</a>
-<div id="help-panel">
-	<?= file_get_contents(Localization::path("help.html")); ?>
-	<a href="#" class="closer button">&times;</a>
+<div id="START-PAGE">
+  <img class="bitcoin-logo" src="/assets/images/bitcoin.png" width="300" height="300" />
+  <div class="bitcoin-atm">Bitcoin ATM</div>
+  <div class="btn-large-success" id="btn-buy-bitcoin">Buy some Bitcoin</div>
 </div>
-<div class="price">
-	<div class="crypto-amount">1 <?= $i18n->_('bitcoin') ?></div>
-	<div class="fiat-amount"><?= $i18n->_('...') ?></div>
-</div>
-<div id="footer">
-	<a href="" id="help" class="button">?</a>
-</div>
-<?php
-$scripts = [
-	'/assets/cookies/dist/cookies.min.js',
-	'/assets/gettext/Gettext.js',
-	'/settings.js',
-	'/assets/jQuery/jquery.min.js',
-	'/assets/js/helper.js',
-	'/assets/js/Comet.js',
-	'/assets/js/HelpPanel.js',
-	'/assets/js/start.js',
-	'/assets/js/NetworkTest.js',
-];
-include 'foot.phtml';

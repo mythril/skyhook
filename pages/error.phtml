@@ -1,65 +1,13 @@
-<?php
-$title = 'Project Skyhook&trade; Bitcoin ATM';
-$styles = [
-	'/assets/Messi/messi.css',
-	'/assets/css/skyhook.css',
-];
-$classes = ['error'];
-if (!isset($nothanks)) {
-	$nothanks = '/start';
-}
-include 'head.phtml';
-?>
-<div id="help-panel">
-	<?= file_get_contents(Localization::path("help.html")); ?>
-	<a href="#" class="closer button">&times;</a>
+<div id="ERROR-PAGE">
+  <div class="header">A transaction error has occurred.</div>
+  <div class="info">
+    This transaction has been logged and the operator notified for manual processing.
+  </div>
+  <div class="email-address">
+    <input type="text" id="email-address" />
+  </div>
+  <div class="instructions">
+    You may enter your email address so that the operator may notify you when this issue is resolved.
+  </div>
+  <div class="btn-large-info" id="btn-error-done">Done</div>
 </div>
-<div class="error-content">
-	<input
-		type="hidden"
-		name="ticket"
-		id="ticket"
-		value="<?= $ticket ?>"
-	/>
-	<h1><?= $i18n->_('A trans&shy;act&shy;ion error has occured') ?></h1>
-	<div class="inputgroup">
-		<label for="email"><?= $i18n->_('Email Address') ?>:</label>
-		<input
-			type="email"
-			name="name"
-			id="email"
-			autocomplete="off"
-			spellcheck="false"
-			autocorrect="off"
-			autocapitalize="off"
-		/>
-	</div>
-	<div class="button-wrapper">
-		<button id="save">
-			<?= $i18n->_('notify me') ?>
-		</button>
-		<a href="<?= $nothanks ?>" class="button">
-			<?= $i18n->_('no thanks') ?>
-		</a>
-	</div>
-	<p>
-		<?= $i18n->_('This transaction has been logged and the operator notified for manual processing.') ?>
-	</p>
-	<p>
-		<?= $i18n->_('Please enter your email address so that the operator may notify you when this issue is resolved.') ?>
-	</p>
-</div>
-<div id="footer">
-	<a href="" id="help" class="button">?</a>
-</div>
-<?php
-$scripts = [
-	'/assets/gettext/Gettext.js',
-	'/assets/jQuery/jquery.min.js',
-	'/assets/js/helper.js',
-	'/assets/Messi/messi.min.js',
-	'/assets/js/HelpPanel.js',
-	'/assets/js/error.js',
-	'/assets/js/timeout.js',
-];
-include 'foot.phtml';

@@ -1,61 +1,6 @@
-<?php
-$title = 'Project Skyhook&trade; Bitcoin ATM';
-$styles = [
-	'/assets/Messi/messi.css',
-	'/assets/css/skyhook.css',
-];
-$classes = ['account'];
-include 'head.phtml';
-?>
-<a href="/start" id="canceler" class="button">
-	&times;
-</a>
-<div id="help-panel">
-	<?= file_get_contents(Localization::path("help.html")); ?>
-	<a href="#" class="closer button">&times;</a>
+<div id="QRSCAN-PAGE">
+  <div class="video-box"><video id="video" width="480" height="360"></video></div>
+  <div class="instructions">Please hold up your<br />bitcoin QR code</div>
+  <div class="btn-large-fail" id="btn-scan-cancel">Cancel</div>
+  <canvas id="qr-canvas"><!-- JSQRCODE --></canvas>
 </div>
-<div class="price">
-	<div class="crypto-amount">1 <?= $i18n->_('bitcoin') ?></div>
-	<div class="fiat-amount"><?= $i18n->_('...') ?></div>
-</div>
-<div id="qr-scanner">
-	<video id="video" width="480" height="360"></video>
-	<canvas id="qr-canvas"></canvas>
-</div>
-<div id="qr-message">
-	<img src="<?= Localization::url('images/scan-qr-code.png') ?>" alt="Scan QR Code" />
-</div>
-<div id="footer">
-	<a href="" id="help" class="button">?</a>
-</div>
-<?php
-$scripts = [
-	'/assets/gettext/Gettext.js',
-	'/settings.js',
-	'/assets/jQuery/jquery.min.js',
-	'/assets/js/helper.js',
-	'/assets/js/Comet.js',
-	'/assets/jsqrcode/src/grid.js',
-	'/assets/jsqrcode/src/version.js',
-	'/assets/jsqrcode/src/detector.js',
-	'/assets/jsqrcode/src/formatinf.js',
-	'/assets/jsqrcode/src/errorlevel.js',
-	'/assets/jsqrcode/src/bitmat.js',
-	'/assets/jsqrcode/src/datablock.js',
-	'/assets/jsqrcode/src/bmparser.js',
-	'/assets/jsqrcode/src/datamask.js',
-	'/assets/jsqrcode/src/rsdecoder.js',
-	'/assets/jsqrcode/src/gf256poly.js',
-	'/assets/jsqrcode/src/gf256.js',
-	'/assets/jsqrcode/src/decoder.js',
-	'/assets/jsqrcode/src/qrcode.js',
-	'/assets/jsqrcode/src/findpat.js',
-	'/assets/jsqrcode/src/alignpat.js',
-	'/assets/jsqrcode/src/databr.js',
-	'/assets/Messi/messi.min.js',
-	'/assets/js/HelpPanel.js',
-	'/assets/js/NetworkTest.js',
-	'/assets/js/account.js',
-	'/assets/js/timeout.js',
-];
-include 'foot.phtml';
