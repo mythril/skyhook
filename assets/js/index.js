@@ -202,19 +202,21 @@ PageManager.addPage( PageIds.QRSCAN,
       // if we do it after requesting /purchase. Strange.
       Comet.close("/price");
 
-      $.get("/purchase/" + address, function(data) {
-        // Hacky. Scraping the data from the returned HTML. Works for now.
-        // TODO: Implement proper JSON data call handler on server
-        var items = data.match(/data\["([^"]+)","([^"]+)"\]/);
-        if (!items || items.length != 3) {
+      $.getJSON("/start-purchase/" + address, function(data) {
+        if (data.error) {
           // TODO: Show an error msg here
-          console.log("Invalid data when querying /purchase");
+          console.log("Error starting purchase:", data.error);
           return PageManager.viewPage(PageIds.START);
         }
 
         Loading.hide();
 
-        var extra = { "address" : address, "ticketId" : items[1], "price" : items[2] };
+        var extra = {
+          "address" : data.address,
+          "ticketId" : data.ticketId,
+          "price" : data.price.formatted,
+          "priceExtra" : data.price
+        };
         PageManager.viewPage(PageIds.DEPOSIT, extra);
       });
     }
