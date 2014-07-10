@@ -530,3 +530,8 @@ PageManager.addPage( PageIds.NETWORKERROR,
   function ENTER(context) { NetworkMonitor.start() },
   function EXIT(context) { NetworkMonitor.stop() }
 );
+
+$(function() {
+    FastClick.attach(document.body);
+});
+PageManager.viewPage(PageIds.START);
