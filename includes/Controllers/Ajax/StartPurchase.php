@@ -43,6 +43,7 @@ class StartPurchase implements Controller {
 			'ticketId' => $ticket->getId(),
 			'price' => [
 				'value' => $price->get(),
+				'address' => $addr->get(),
 				'formatted' => $cfg->getCurrencyMeta()->format($price, true),
 			],
 		];
