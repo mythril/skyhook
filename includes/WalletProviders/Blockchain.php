@@ -61,6 +61,9 @@ class Blockchain implements \WalletProvider {
 		try {
 			$get = SimpleHTTP::get($request);
 		} catch (Exception $e) {
+			if (strtolower($e->getMessage()) === "no free outputs to spend") {
+				return new Amount("0");
+			}
 			throw new Exception("There was a network error while processing the request.");
 		}
 		
