@@ -105,6 +105,7 @@ $result = $router->resolve(
 		['', Container::dispense('Controllers\ConfigChecker')],
 		['/check-balance', Router::lazyLoad('Controllers\CheckBalance')],
 		
+		['/bill-acceptor/disable$', Router::lazyLoad('Controllers\ScannerStopper')],
 		['/finalize/:ticket$', Router::lazyLoad('Controllers\Ajax\FinalizePurchase')],
 		['/validate/:address$', Router::lazyLoad('Controllers\Ajax\ValidateBitcoinAddress')],
 		['/add-email-to-ticket/:ticket', Router::lazyLoad('Controllers\Ajax\AddEmailToTicket')],
