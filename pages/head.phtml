@@ -25,12 +25,6 @@ if (!isset($errorClass)) {
 	<? foreach ($styles as $href): ?>
 		<link rel="stylesheet" href="<?= $html->escape($href); ?>" />
 	<? endforeach; ?>
-	<style>
-		.hidden {
-			display: none !important;
-			visibility: hidden;
-		}
-	</style>
 	<title><?= $html->escape($title) ?></title>
 </head>
 <body>
