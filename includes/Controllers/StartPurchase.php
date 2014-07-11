@@ -27,7 +27,8 @@ class StartPurchase implements Controller {
 		$wallet = $cfg->getWalletProvider();
 		
 		$i18n = Localization::getTranslator();
-		$balance = $wallet->getBalance()->multiplyBy($ticket->getBitcoinPrice());
+		$btcBalance = $wallet->getBalance();
+		$balance = $btcBalance->multiplyBy($ticket->getBitcoinPrice());
 		
 		$threshhold = Math::max([
 			$cfg->getMaxTransactionValue(),
@@ -38,7 +39,7 @@ class StartPurchase implements Controller {
 			MachineStatusEmail::reportError(
 				$cfg,
 				$db,
-				$i18n->_('Low balance: ') . $balance->get() . ' ' . $i18n->_('bitcoin')
+				$i18n->_('Low balance: ') . $btcBalance->get() . ' ' . $i18n->_('bitcoin')
 			);
 		}
 		
