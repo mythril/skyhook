@@ -284,4 +284,7 @@ body {
   border-radius:40px;
 }
 
-
+.hidden {
+	display: none !important;
+	visibility: hidden;
+}
