@@ -212,10 +212,9 @@ PageManager.addPage( PageIds.QRSCAN,
         Loading.hide();
 
         var extra = {
-          "address" : data.address,
           "ticketId" : data.ticketId,
-          "price" : data.price.formatted,
-          "priceExtra" : data.price
+          "address" : data.address,
+          "price" : data.price
         };
         PageManager.viewPage(PageIds.DEPOSIT, extra);
       });
