@@ -6,11 +6,7 @@ var Language = (function (globals) {
 	};
 	
 	function load(lang) {
-		gt = null;
-		$('link[rel=gettext]').remove();
-		$('<link rel="gettext" href="/locales/' + lang + '/LC_MESSAGES/secondary.po" />')
-			.appendTo(document.body);
-		gt = new Gettext({domain: 'secondary'});
+		gt.try_load_lang_po('/locales/' + lang + '/LC_MESSAGES/secondary.po');
 	}
 	
 	return {
