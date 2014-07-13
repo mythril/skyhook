@@ -8,7 +8,7 @@ body {
   padding:0;
 }
 
-#START-PAGE, #QRSCAN-PAGE, #DEPOSIT-PAGE, #RECEIPT-PAGE, #ERROR-PAGE, #NETWORK-ERROR-PAGE {
+#START-PAGE, #QRSCAN-PAGE, #DEPOSIT-PAGE, #RECEIPT-PAGE, #HELP-PAGE, #LANG-PAGE, #ERROR-PAGE, #NETWORK-ERROR-PAGE {
   display:none;
   position: absolute;
   left:0;
@@ -20,17 +20,27 @@ body {
 
 #START-PAGE #btn-buy-bitcoin {
   width: 55%;
-  margin-top: 125px;
+  margin-top: 110px;
 }
 
 #START-PAGE .bitcoin-logo {
   margin-top:125px;
-  margin-bottom:30px;
+  margin-bottom:25px;
 }
 
 #START-PAGE .bitcoin-atm {
   color:#555;
   font-size: 56px;
+}
+
+#START-PAGE .options-box {
+  text-align:center;
+  margin-top: 35px;
+}
+
+#START-PAGE #btn-help, #START-PAGE #btn-lang {
+  opacity:0.75;
+  margin:0 25px;
 }
 
 #QRSCAN-PAGE .video-box {
