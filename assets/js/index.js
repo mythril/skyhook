@@ -73,6 +73,8 @@ var PageIds = {
   "QRSCAN" : "QRSCAN-PAGE",
   "DEPOSIT" : "DEPOSIT-PAGE",
   "RECEIPT" : "RECEIPT-PAGE",
+  "HELP" : "HELP-PAGE",
+  "LANG" : "LANG-PAGE",
   "ERROR" : "ERROR-PAGE",
   "NETWORKERROR" : "NETWORK-ERROR-PAGE"
 };
@@ -140,8 +142,14 @@ var PageManager = (function() {
 PageManager.addPage( PageIds.START,
 
   function INIT(context) {
-    $("#" + PageIds.START).on("click", function() {
+    $("#btn-buy-bitcoin").on("click", function() {
       PageManager.viewPage(PageIds.QRSCAN);
+    });
+    $("#btn-help").on("click", function() {
+      PageManager.viewPage(PageIds.HELP);
+    });
+    $("#btn-lang").on("click", function() {
+      PageManager.viewPage(PageIds.LANG);
     });
   },
 
@@ -463,6 +471,22 @@ PageManager.addPage( PageIds.RECEIPT,
   function EXIT(context) {
     IdleTimeout.stop();
   }
+);
+
+/* Help Page */
+PageManager.addPage( PageIds.HELP,
+  
+  function INIT(context) { },
+  function ENTER(context) { },
+  function EXIT(context) { }
+);
+
+/* Language Page */
+PageManager.addPage( PageIds.LANG,
+  
+  function INIT(context) { },
+  function ENTER(context) { },
+  function EXIT(context) { }
 );
 
 /* Error Page */
