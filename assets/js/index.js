@@ -476,8 +476,26 @@ PageManager.addPage( PageIds.RECEIPT,
 /* Help Page */
 PageManager.addPage( PageIds.HELP,
   
-  function INIT(context) { },
-  function ENTER(context) { },
+  function INIT(context) {
+    $(".qa-box").on("click", function(e) {
+      $(".qa-box").removeClass("selected");
+      $(e.delegateTarget).addClass("selected");
+      $(".main-box").addClass("selected");
+    });
+  
+    $(".btn-back").on("click", function(e) {
+      if ($(".main-box").hasClass("selected")) {
+        $(".qa-box").removeClass("selected");
+        $(".main-box").removeClass("selected");
+      } else {
+        PageManager.viewPage(PageIds.START);
+      }
+    });
+  },
+  function ENTER(context) {
+    $(".qa-box").removeClass("selected");
+    $(".main-box").removeClass("selected");
+  },
   function EXIT(context) { }
 );
 
