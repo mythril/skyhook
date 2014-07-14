@@ -24,8 +24,8 @@ body {
 }
 
 #START-PAGE .bitcoin-logo {
-  margin-top:125px;
-  margin-bottom:25px;
+  margin-top:40px;
+  margin-bottom:45px;
 }
 
 #START-PAGE .bitcoin-atm {
@@ -34,13 +34,16 @@ body {
 }
 
 #START-PAGE .options-box {
-  text-align:center;
-  margin-top: 35px;
+  text-align:left;
 }
 
 #START-PAGE #btn-help, #START-PAGE #btn-lang {
-  opacity:0.75;
-  margin:0 25px;
+  opacity:0.4;
+  margin:15px;
+}
+
+#START-PAGE #btn-lang {
+  float:right;
 }
 
 #QRSCAN-PAGE .video-box {
