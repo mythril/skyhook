@@ -7,6 +7,16 @@ var SkyhookUtils = (function(){
   }
 })();
 
+var CurrentPriceUIWrapper = (function(id) {
+  return {
+    updatePrice : function(price) {
+      $("#" + id + "-value").text(_("Currently %1 per Bitcoin", [price]));
+    },
+    displayOnPage : function(pageId) {
+      $("#" + pageId)[0].appendChild($("#" + id + "-box")[0]);
+    }
+  } 
+})("bitcoin-price");
 
 function timeoutAction() {
   console.log("Timeout reached...");
@@ -98,14 +108,18 @@ var PageManager = (function() {
     // addPage() - Add a page to be managed by the PageManager.
     //   id - ID if the container DIV for the page
     //   onInit - func called only once when this page is first entered
+    //   onL10n - func called once after every language change for Localization
     //   onEnter - func called each time upon entering the page
     //   onExit - func called each time before leaving the page
-    addPage : function(id, onInit, onEnter, onExit) {
+    addPage : function(id, onInit, onL10n, onEnter, onExit) {
       pageMap[id] = {
         "context" : { "id" : id },
         "id" : id,
+        "hashid" : "#" + id,  
         "inited" : false,
+        "lastL10n" : 0,
         "onInit"  : getLoggedHandler("PageManager:onInit:"+id, onInit),
+        "onL10n"  : getLoggedHandler("PageManager:onL10n:"+id, onL10n),
         "onEnter" : getLoggedHandler("PageManager:onEnter:"+id, onEnter),
         "onExit"  : getLoggedHandler("PageManager:onExit:"+id, onExit)
       }
@@ -116,17 +130,26 @@ var PageManager = (function() {
     //   extra - object of extra data to pass to the page about to be viewed
     viewPage : function(id, extra) {
       if (!id || !pageMap[id]) return;
+
       if (currentPage) {
-        pageMap[currentPage].onExit(pageMap[currentPage].context, currentPage);
+        pageMap[currentPage].onExit(pageMap[currentPage].context);
         $("#" + currentPage).hide();
       }
+
       currentPage = id;
       if (!pageMap[currentPage].inited) {
-        pageMap[currentPage].onInit(pageMap[currentPage].context, id);
+        pageMap[currentPage].onInit(pageMap[currentPage].context);
         pageMap[currentPage].inited = true;
       }
+
+      // Has the interface language been changed since we viewed this page?
+      if (pageMap[currentPage].lastL10n < Language.getLastLangChange()) {
+        pageMap[currentPage].onL10n(pageMap[currentPage].context);
+        pageMap[currentPage].lastL10n = Language.getLastLangChange();
+      }
+
       pageMap[currentPage].context.extra = extra;
-      pageMap[currentPage].onEnter(pageMap[currentPage].context, id);
+      pageMap[currentPage].onEnter(pageMap[currentPage].context);
       $("#" + currentPage).show();
     },
  
@@ -153,12 +176,19 @@ PageManager.addPage( PageIds.START,
     });
   },
 
+  function L10N(context) { 
+    $(".bitcoin-atm").text(_("Bitcoin ATM"));
+    $("#btn-buy-bitcoin").text(_("Buy some Bitcoin"));
+    CurrentPriceUIWrapper.updatePrice("...");
+  },
+
   function ENTER(context) {
     SkyhookUtils.disableBillAcceptor();
     Comet.open('/price', function (price) {
-      $('#bitcoin-price').text("$" + price);
+      // TODO: Localize the price we get via Comet
+      CurrentPriceUIWrapper.updatePrice("$" + price);
     });
-    $("#" + PageIds.START)[0].appendChild($("#bitcoin-price-box")[0]);
+    CurrentPriceUIWrapper.displayOnPage(PageIds.START);
     NetworkMonitor.start();
 
     // Force network connections to re-establish every 5 minutes
@@ -203,7 +233,7 @@ PageManager.addPage( PageIds.QRSCAN,
       }
  
       // Querying backend for TicketID takes a bit. Show loading overlay. 
-      Loading.text("Please wait...");
+      Loading.text(_("Please wait..."));
       Loading.show();
 
       // Need to close the price update here. Otherwise the scanner turns off
@@ -255,11 +285,16 @@ PageManager.addPage( PageIds.QRSCAN,
     }
   },
 
+  function L10N(context) { 
+    $(context.hashid + " .instructions").text(_("Please hold up your bitcoin QR code"));
+    $("#btn-scan-cancel").text(_("Cancel"));
+  },
+
   function ENTER(context) {
     Comet.open('/price', function (price) {
-      $('#bitcoin-price').text("$" + price);
+      CurrentPriceUIWrapper.updatePrice("$" + price);
     });
-    $("#" + PageIds.QRSCAN)[0].appendChild($("#bitcoin-price-box")[0]);
+    CurrentPriceUIWrapper.displayOnPage(PageIds.QRSCAN);
 
     IdleTimeout.start(60);
     NetworkMonitor.start();
@@ -357,6 +392,17 @@ PageManager.addPage( PageIds.DEPOSIT,
     $("#btn-send-bitcoin").on("click", finalizePurchase);
   },
 
+  function L10N(context) {
+    $(context.hashid + " .instructions").text(_("Insert a bill"));
+    $(context.hashid + " .no-funds-error").text(_("Bitcoin funds empty: Do not insert any more bills."));
+    $(context.hashid + " .cash-deposited-label").text(_("cash deposited"));
+    $(context.hashid + " .bitcoin-purchased-label").text(_("bitcoin purchased"));
+    $(context.hashid + " .cash-deposited-currency").text(CAD); // TODO: Get currency from config
+    $(context.hashid + " .bitcoin-sent-to-label").text(_("Bitcoin will be sent to:"));
+    $("#btn-buy-cancel").text(_("Cancel"));
+    $("#btn-send-bitcoin").text(_("Send Bitcoin"));
+  },
+
   function ENTER(context) {
     context.bills = 0;
     context.bitcoin = 0;
@@ -365,7 +411,7 @@ PageManager.addPage( PageIds.DEPOSIT,
     function billscanListener(data) {
       console.log(data.bills + ":" + data.btc + ":" + data.diff);
       if (parseFloat(data.bills) > 0 && context.bills == 0) {
-        // Money inserted. Remove CANCEL and clear the timeout.
+        // Money inserted. Enable SEND and remove CANCEL.
         $("#btn-buy-cancel").hide();
         $("#btn-send-bitcoin").show();
 
@@ -378,8 +424,8 @@ PageManager.addPage( PageIds.DEPOSIT,
         context.btc = data.btc;
 
         // TODO: Format the two amounts before displaying?
-        $('#cash-deposited-amount').text("$" + parseInt(context.bills));
-        $('#bitcoin-purchased-amount').text(context.btc);
+        $('#cash-deposited-value').text("$" + parseInt(context.bills));
+        $('#bitcoin-purchased-value').text(context.btc);
       }
 
       if (context.diff != data.diff) {
@@ -394,8 +440,8 @@ PageManager.addPage( PageIds.DEPOSIT,
           } else if (context.diff >= 5) {
             // Smallest CAD bill is $5. Treat smaller diffs as no-more-funds.
             $('.no-funds-error').hide();
+            $(context.hashid + " .low-funds-warning").text(_("Bitcoin funds low: Do not insert bills larger than %1", ["$" + context.diff]));
             $('.low-funds-warning').show();
-            $('#low-funds-amount').text("$" + context.diff);
           } else {
             // Refuse any more bills.
             SkyhookUtils.disableBillAcceptor();
@@ -419,8 +465,8 @@ PageManager.addPage( PageIds.DEPOSIT,
    
     IdleTimeout.start(60);
 
-    $("#" + PageIds.DEPOSIT)[0].appendChild($("#bitcoin-price-box")[0]);
-    $('#bitcoin-price').text(context.price);
+    CurrentPriceUIWrapper.displayOnPage(PageIds.DEPOSIT);
+    CurrentPriceUIWrapper.updatePrice(context.price);
     $('#bitcoin-purchased-amount').text("0.00000000");
     $('#cash-deposited-amount').text("$0");
     $('.bitcoin-sent-to').text(context.address);
@@ -449,6 +495,8 @@ PageManager.addPage( PageIds.RECEIPT,
     }); 
   },
 
+  function L10N(context) { },
+
   function ENTER(context) { 
     if (!context.extra) {
       console.log("No extra data found...");
@@ -459,8 +507,8 @@ PageManager.addPage( PageIds.RECEIPT,
     context.price = context.extra["price"];
     context.btc = context.extra["btc"];
 
-    $("#" + PageIds.RECEIPT)[0].appendChild($("#bitcoin-price-box")[0]);
-    $('#bitcoin-price').text(context.price);
+    CurrentPriceUIWrapper.displayOnPage(PageIds.RECEIPT);
+    CurrentPriceUIWrapper.updatePrice(context.price);
  
     $("#bitcoin-sent-amount").text(context.btc);
     $(".bitcoin-sent-to").text(context.address);
@@ -492,10 +540,14 @@ PageManager.addPage( PageIds.HELP,
       }
     });
   },
+
+  function L10N(context) { },
+
   function ENTER(context) {
     $(".qa-box").removeClass("selected");
     $(".main-box").removeClass("selected");
   },
+
   function EXIT(context) { }
 );
 
@@ -503,6 +555,7 @@ PageManager.addPage( PageIds.HELP,
 PageManager.addPage( PageIds.LANG,
   
   function INIT(context) { },
+  function L10N(context) { },
   function ENTER(context) { },
   function EXIT(context) { }
 );
@@ -546,6 +599,8 @@ PageManager.addPage( PageIds.ERROR,
     });
   },
 
+  function L10N(context) { },
+
   function ENTER(context) {
     if (!context.extra) {
       console.log("No extra data found...");
@@ -568,6 +623,7 @@ PageManager.addPage( PageIds.ERROR,
 /* Network Error Page */
 PageManager.addPage( PageIds.NETWORKERROR,
   function INIT(context) { },
+  function L10N(context) { },
   function ENTER(context) { NetworkMonitor.start() },
   function EXIT(context) { NetworkMonitor.stop() }
 );
