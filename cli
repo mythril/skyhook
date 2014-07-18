@@ -38,6 +38,7 @@ $router = Container::dispense("Router");
 $result = $router->resolve(
 	$argv[1],
 	[
+		['scanner-driver', Router::lazyLoad('CLIControllers\ScannerDriver')],
 		['do-jobs', Router::lazyLoad('CLIControllers\DoJobs')],
 		['install-currency', Router::lazyLoad('CLIControllers\InstallCurrency')],
 		['encrypt-config', Router::lazyLoad('CLIControllers\EncryptConfig')],

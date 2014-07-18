@@ -21,8 +21,8 @@ class JSON {
 		$depth = 512,
 		$options = JSON_BIGINT_AS_STRING
 	) {
-		if (version_compare(PHP_VERSION,'5.5', '>=')) {
-			$options = $options & ~JSON_BIGINT_AS_STRING;
+		if ($options & JSON_BIGINT_AS_STRING) {
+			$json = self::preserveBigInts($json);
 		}
 		$decoded = json_decode($json, $assoc, $depth, $options);
 		$lastError = json_last_error();

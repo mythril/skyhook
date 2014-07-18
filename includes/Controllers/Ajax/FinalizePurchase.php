@@ -13,15 +13,15 @@ use JSON;
 use Template;
 use DB;
 use BitcoinAddress;
-use BillScanner;
 use Purchase;
+use BillScannerDriver;
 
 class FinalizePurchase implements Controller {
 	public function execute(array $matches, $url, $rest) {
 		$admin = Admin::volatileLoad();
 		$cfg = $admin->getConfig();
 		$db = Container::dispense('DB');
-		$scanner = new BillScanner();
+		$scanner = new BillScannerDriver();
 		
 		$ticket = Purchase::load($cfg, $db, intval($matches['ticket']));
 		$response = [];
@@ -43,9 +43,7 @@ class FinalizePurchase implements Controller {
 			return true;
 		}
 		
-		if ($scanner->isRunning()) {
-			$scanner->stop();
-		}
+		$scanner->stop();
 		
 		try {
 			Purchase::completeTransaction($cfg, $db, $ticket);

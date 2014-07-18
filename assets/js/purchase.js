@@ -75,7 +75,9 @@ $(function () {
 	
 	$('#canceler').on(CLICK, confirmCancel);
 	
-	Comet.open('/billscan-balance/' + ticketId, function (data) {
+	var handlers = {};
+	
+	handlers.totalsUpdated = function (data) {
 		if (parseFloat(data.bills) > 0) {
 			$('#buy').removeAttr('disabled').prop('disabled', false);
 			$('#canceler').attr('disabled', 'disabled').prop('disabled', true);
@@ -84,6 +86,98 @@ $(function () {
 		
 		if (bills !== data.bills) {
 			updateTotal(data);
+		}
+	};
+	
+	var GENERIC_ERROR_TEXT = '<h1>Hardware Error:</h1>Please contact the operator.';
+	
+	var statusInfo = {
+		JAMMED: {
+			goodWhen: false,
+			recoverable: true,
+			text: '<h1>Acceptor Jammed:</h1>If you can not clear the acceptor, please contact the operator.'
+		},
+		FULL: {
+			goodWhen: false,
+			recoverable: false,
+			text: GENERIC_ERROR_TEXT
+		},
+		FAILURE: {
+			goodWhen: false,
+			recoverable: false,
+			text: GENERIC_ERROR_TEXT
+		},
+		CHEATED: {
+			goodWhen: false,
+			recoverable: true,
+			text: GENERIC_ERROR_TEXT
+		},
+		CASSETTE_PRESENT: {
+			goodWhen: true,
+			recoverable: false,
+			text: GENERIC_ERROR_TEXT
+		},
+		INVALID_COMMAND: {
+			goodWhen: false,
+			recoverable: true,
+			text: GENERIC_ERROR_TEXT
+		},
+	};
+	
+	var canRecover = true;
+	
+	var statusErrors = $('<div></div>');
+	
+	function recover() {
+		statusErrors.detach().empty();
+		$('#errorPage')
+			.addClass('hidden')
+			.removeClass('notnet');
+	}
+	
+	function displayError(messages) {
+		statusErrors.empty();
+		$.each(messages, function (msg) {
+			statusErrors.append('<div>' + msg + '</div>');
+		});
+		$('#errorPage')
+			.removeClass('hidden')
+			.addClass('notnet')
+			.prepend(statusErrors);
+	}
+	
+	handlers.stateChanged = function (data) {
+		var recoverAfter = false;
+		var messages = {};
+		var notifyError = false;
+		$.each(statusInfo, function (k, badStatus) {
+			var eventValue = data.states[k];
+			if (eventValue === undefined) {
+				return;
+			}
+			if (eventValue === badStatus.goodWhen && canRecover) {
+				recoverAfter = true;
+			} else {
+				if (!badStatus.recoverable) {
+					canRecover = false;
+				}
+				messages[badStatus.text] = true;
+				notifyError = true;
+			}
+		});
+		if (recoverAfter) {
+			recover();
+		}
+		if (notifyError) {
+			displayError(messages);
+		}
+	};
+	
+	Comet.open('/billscan-balance/' + ticketId, function (data) {
+		if (handlers[data.event]) {
+			handlers[data.event](data);
+		} else {
+			console.log(data);
 		}
 	});
 	

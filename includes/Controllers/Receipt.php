@@ -18,7 +18,7 @@ class Receipt implements Controller {
 			$matches['ticket']
 		);
 		
-		$scanner = Container::dispense('BillScanner');
+		$scanner = Container::dispense('BillScannerDriver');
 		$scanner->stop();
 		
 		$error = false;
