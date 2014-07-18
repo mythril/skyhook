@@ -146,6 +146,8 @@ class Currency {
 		'TND' => true,
 		'TOP' => true,
 		'TRY' => true,
+		// TRY is a PHP keyword...
+		'TRL' => true,
 		'TTD' => true,
 		'TWD' => true,
 		'TZS' => true,
@@ -161,7 +163,6 @@ class Currency {
 		'VND' => true,
 		'VUV' => true,
 		'WST' => true,
-		/*
 		// Not national currencies
 		'XAF' => true,
 		'XAG' => true,
@@ -179,7 +180,6 @@ class Currency {
 		'XPT' => true,
 		'XTS' => true,
 		'XXX' => true,
-		*/
 		'YER' => true,
 		'ZAR' => true,
 		'ZMW' => true,
