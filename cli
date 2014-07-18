@@ -43,6 +43,7 @@ $result = $router->resolve(
 		['encrypt-config', Router::lazyLoad('CLIControllers\EncryptConfig')],
 		['decrypt-config', Router::lazyLoad('CLIControllers\DecryptConfig')],
 		['handle-command', Router::lazyLoad('CLIControllers\HandleCommand')],
+		['pptest', Router::lazyLoad('CLIControllers\PPTest')],
 	]
 );
 
