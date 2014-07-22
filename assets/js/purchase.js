@@ -177,7 +177,7 @@ $(function () {
 	};
 	
 	Comet.open('/billscan-balance/' + ticketId, function (data) {
-		if (data.diff === 0) {
+		if (data.diff === 0 && data.bills === "0.00") {
 			window.location.replace('/admin/minimum-balance');
 			return;
 		}
