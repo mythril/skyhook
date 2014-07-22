@@ -150,11 +150,11 @@ $(function () {
 		var recoverAfter = false;
 		var messages = {};
 		var notifyError = false;
-		if (!data.states) {
-			return;
-		}
 		$.each(statusInfo, function (k, badStatus) {
-			var eventValue = data.states[k];
+			if (data.state === undefined) {
+				return;
+			}
+			var eventValue = data.state[k];
 			if (eventValue === undefined) {
 				return;
 			}
