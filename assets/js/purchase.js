@@ -150,6 +150,9 @@ $(function () {
 		var recoverAfter = false;
 		var messages = {};
 		var notifyError = false;
+		if (!data.states) {
+			return;
+		}
 		$.each(statusInfo, function (k, badStatus) {
 			var eventValue = data.states[k];
 			if (eventValue === undefined) {
@@ -174,10 +177,12 @@ $(function () {
 	};
 	
 	Comet.open('/billscan-balance/' + ticketId, function (data) {
+		if (data.diff === 0) {
+			window.location.replace('/admin/minimum-balance');
+			return;
+		}
 		if (handlers[data.event]) {
 			handlers[data.event](data);
-		} else {
-			console.log(data);
 		}
 	});
 	
