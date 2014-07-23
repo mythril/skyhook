@@ -1,11 +1,14 @@
 Comet.open('/price', function (price) {
 	$('.fiat-amount').text(CurrencyData.symbol + String(price));
 });
-
 $(function () {
 	var gt = new Gettext({domain: 'secondary'});
 	function _(msgid) { return gt.gettext(msgid); }
 	MBP.hideUrlBarOnLoad();
+	
+	$('img').on('contextmenu', function (e) {
+		return false;
+	});
 	
 	(function init() {
 		var video = $('#video')[0],
