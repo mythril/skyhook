@@ -25,6 +25,7 @@ trait Comet {
 
 		//disables php's script terminator
 		set_time_limit(0);
+		ignore_user_abort(true);
 
 		//flush headers
 		flush();
