@@ -234,7 +234,7 @@ class BillScannerDriver implements Observable {
 			
 			$billIndex = ($out[5] & 0x38) >> 3;
 			
-			if ($billIndex !== 0 && $oldBill !== $billIndex) {
+			if ($billIndex !== 0 && $oldBill !== $billIndex && $escrowed) {
 				$oldBill = $billIndex;
 				if (ord($out[3]) & 0x10) {
 					Debug::log("Notifying billInserted");
