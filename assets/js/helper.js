@@ -405,4 +405,4 @@
 })(document);
 jQuery.fx.off = true;
 MBP.preventScrolling();
-var CLICK = 'click';
+var CLICK = 'touchstart mousedown click';
