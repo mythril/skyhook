@@ -95,6 +95,10 @@ class Blockchain implements \WalletProvider {
 		);
 	}
 	
+	public function getWalletAddress() {
+		return $this->fromAddress;
+	}
+	
 	public function sendTransaction(BitcoinAddress $to, Amount $howMuch) {
 		if ($this->getBalance()->isLessThan($howMuch)) {
 			throw new InsufficientFundsException();
