@@ -12,6 +12,7 @@ use Environment\Arguments;
 use Exception;
 use SimpleHTTP as HTTP;
 use JSON;
+use Amount;
 
 class AddressMonitor implements Controller {
 	private static $cacheDir = '/home/pi/phplog/balanceCalc/';
@@ -68,29 +69,25 @@ class AddressMonitor implements Controller {
 		$dedup = [];
 		
 		foreach ($response['unspent_outputs'] as $txo) {
-			$dedup[$txo['tx_index']] = true;
+			$hash = implode('', array_reverse(str_split($txo['tx_hash'], 2)));
+			$dedup[$hash] = $txo['tx_index'];
 		}
 		
 		return $dedup;
 	}
 	
-	private function fetchTX($txid) {
+	private function fetchTX($hash) {
 		$response = JSON::decode(HTTP::get(
-			'http://blockchain.info/rawtx/' . urlencode($txid)
+			'http://blockchain.info/rawtx/' . urlencode($hash)
 		));
-		echo ".";
 		sleep(1);
 		return $response;
 	}
 	
 	private function buildCache() {
-		$this->unspentLookup = $this->getUnspent();
-		echo "\n";
-		foreach ($this->unspentLookup as $txIndex => $v) {
-			$this->txs[] = $this->fetchTX($txIndex);
-		}
-		echo "\n";
-		$this->saveCache();
+		$this->unspentLookup = [];
+		$this->txs = [];
+		$this->updateCache();
 	}
 	
 	private function loadCache() {
@@ -106,8 +103,29 @@ class AddressMonitor implements Controller {
 	}
 	
 	private function calculateBalance() {
-		//do not add to balance if input and output are to same address
-		stub();
+		$addr = $this->addr->get();
+		$balance = 0;
+		foreach ($this->txs as $tx) {
+			if ($tx['double_spend']) {
+				continue;
+			}
+			foreach ($tx['inputs'] as $in) {
+				if (count($in) < 1) {
+					break;
+				}
+				if ($in['prev_out']['addr'] === $addr) {
+					// continues outer loop also
+					continue 2;
+				}
+			}
+			foreach ($tx['out'] as $out) {
+				if ($out['addr'] !== $addr) {
+					continue;
+				}
+				$balance += $out['value'];
+			}
+		}
+		return Amount::fromSatoshis($balance);
 	}
 	
 	private function summarize() {
@@ -117,15 +135,14 @@ class AddressMonitor implements Controller {
 	private function desummarize($data) {
 		$this->txs = JSON::decode($data);
 		foreach ($this->txs as $tx) {
-			$this->unspentLookup[$tx['tx_index']] = true;
+			$this->unspentLookup[$tx['hash']] = $tx['tx_index'];
 		}
 	}
 	
 	private function updateCache() {
 		$newUnspent = $this->getUnspent();
-		
 		$this->txs = array_filter($this->txs, function ($tx) use (&$newUnspent) {
-			return isset($newUnspent[$tx['tx_index']]);
+			return isset($newUnspent[$tx['hash']]);
 		});
 		
 		$common = array_intersect_key($this->unspentLookup, $newUnspent);
@@ -136,9 +153,11 @@ class AddressMonitor implements Controller {
 			return;
 		}
 		
-		foreach ($toFetch as $txid => $_) {
-			$this->txs[] = $this->fetchTX($txid);
+		$txs = [];
+		foreach ($toFetch as $hash => $idx) {
+			$txs[$hash] = $this->fetchTX($hash);
 		}
+		$this->txs = array_values($txs);
 		
 		$this->saveCache();
 	}
@@ -149,10 +168,7 @@ class AddressMonitor implements Controller {
 		} else {
 			$this->loadCache();
 		}
-		
-		while (true) {
-			$this->updateCache();
-			sleep(60 * 5);
-		}
+		$this->updateCache();
+		echo $this->calculateBalance()->get(), "\n";
 	}
 }
