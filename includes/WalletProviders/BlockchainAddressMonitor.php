@@ -113,21 +113,21 @@ class BlockchainAddressMonitor {
 		}
 		$balance = 0;
 		foreach ($this->txs as $tx) {
-			if ($confirmations !== false) {
-				if (($tx['block_height'] + $confirmations) > $blockHeight) {
-					continue;
-				}
-			}
 			if ($tx['double_spend']) {
 				Debug::log('Double spend: ' . $tx['tx_index']);
 				continue;
 			}
 			foreach ($tx['inputs'] as $in) {
-				if (isset($in['prev_out']['addr'])
-				&& $in['prev_out']['addr'] === $addr) {
-					// continues outer loop also
-					Debug::log('Inputs from same address: ' . $tx['tx_index']);
-					continue 2;
+				if (isset($in['prev_out']['addr'])) {
+					if ($in['prev_out']['addr'] === $addr) {
+						// continues outer loop also
+						Debug::log('Inputs from same address: ' . $tx['tx_index']);
+						continue 2;
+					} elseif ($confirmations !== false) {
+						if (($tx['block_height'] + $confirmations) > $blockHeight) {
+							continue 2;
+						}
+					}
 				}
 			}
 			foreach ($tx['out'] as $out) {
