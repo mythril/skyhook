@@ -1,7 +1,6 @@
 <?php
 
-namespace CLIControllers;
-use Controllers\Controller;
+namespace WalletProviders;
 use Container;
 use Config;
 use Admin as AdminConfig;
@@ -14,7 +13,7 @@ use SimpleHTTP as HTTP;
 use JSON;
 use Amount;
 
-class AddressMonitor implements Controller {
+class BlockchainAddressMonitor {
 	private static $cacheDir = '/home/pi/phplog/balanceCalc/';
 	private $addr;
 	private $cacheFN;
@@ -22,20 +21,20 @@ class AddressMonitor implements Controller {
 	private $txs;
 	private $unspentLookup;
 	
-	public function __construct() {
-		$argv = Container::dispense('Environment\Arguments');
-		if (isset($argv[2])) {
-			$this->addr = new BitcoinAddress($argv[2]);
-		} else {
-			$this->addr = AdminConfig::volatileLoad()
-				->getConfig()
-				->getWalletProvider()
-				->getWalletAddress();
-		}
+	public function __construct(BitcoinAddress $addr, $blockingLoad = false) {
+		$this->addr = $addr;
+		$this->unspentLookup = [];
+		$this->txs = [];
 		if (!file_exists(self::$cacheDir)) {
 			mkdir(self::$cacheDir, 0700);
 		}
 		$this->cacheFN = self::$cacheDir . $this->addr->get() . '.json';
+		if (!is_writable($this->cacheFN)) {
+			throw new Exception('Cache file is not writable');
+		}
+		if ($this->isCached()) {
+			$this->loadCache($blockingLoad);
+		}
 	}
 	
 	private function isCached() {
@@ -48,7 +47,7 @@ class AddressMonitor implements Controller {
 	
 	private function saveCache() {
 		$fp = fopen($this->cacheFN, 'w+');
-		if (flock($fp, LOCK_EX | LOCK_NB)) {
+		if (flock($fp, LOCK_EX)) {
 			fwrite($fp, $this->summarize());
 			fflush($fp);
 			flock($fp, LOCK_UN);
@@ -57,6 +56,7 @@ class AddressMonitor implements Controller {
 			throw new Exception("Unable to acquire lock.");
 		}
 		fclose($fp);
+		return $this;
 	}
 	
 	private function getUnspent() {
@@ -77,6 +77,7 @@ class AddressMonitor implements Controller {
 	}
 	
 	private function fetchTX($hash) {
+		Debug::log('fetching: ' . $hash);
 		$response = JSON::decode(HTTP::get(
 			'http://blockchain.info/rawtx/' . urlencode($hash)
 		));
@@ -84,42 +85,54 @@ class AddressMonitor implements Controller {
 		return $response;
 	}
 	
-	private function buildCache() {
-		$this->unspentLookup = [];
-		$this->txs = [];
-		$this->updateCache();
-	}
-	
-	private function loadCache() {
+	private function loadCache($blocking = false) {
 		$fp = fopen($this->cacheFN, 'r');
-		if (flock($fp, LOCK_SH | LOCK_NB)) {
+		$lockOpts = LOCK_SH;
+		if (!$blocking) {
+			$lockOpts |= LOCK_NB;
+		}
+		if (flock($fp, $lockOpts)) {
 			$this->desummarize(fread($fp, filesize($this->cacheFN)));
 			flock($fp, LOCK_UN);
 		} else {
 			fclose($fp);
 			throw new Exception("Unable to acquire lock.");
 		}
+		Debug::log("tx count: " . count($this->txs));
 		fclose($fp);
+		return $this;
 	}
 	
-	private function calculateBalance() {
+	private function calculateBalance($confirmations = false) {
 		$addr = $this->addr->get();
+		$blockHeight = 0;
+		if ($confirmations !== false) {
+			$blockHeight = intval(HTTP::get(
+				'https://blockchain.info/q/getblockcount'
+			));
+		}
 		$balance = 0;
 		foreach ($this->txs as $tx) {
+			if ($confirmations !== false) {
+				if (($tx['block_height'] + $confirmations) > $blockHeight) {
+					continue;
+				}
+			}
 			if ($tx['double_spend']) {
+				Debug::log('Double spend: ' . $tx['tx_index']);
 				continue;
 			}
 			foreach ($tx['inputs'] as $in) {
-				if (count($in) < 1) {
-					break;
-				}
-				if ($in['prev_out']['addr'] === $addr) {
+				if (isset($in['prev_out']['addr'])
+				&& $in['prev_out']['addr'] === $addr) {
 					// continues outer loop also
+					Debug::log('Inputs from same address: ' . $tx['tx_index']);
 					continue 2;
 				}
 			}
 			foreach ($tx['out'] as $out) {
 				if ($out['addr'] !== $addr) {
+					//Debug::log('Outputs are not for this address: ' . $tx['tx_index']);
 					continue;
 				}
 				$balance += $out['value'];
@@ -137,9 +150,10 @@ class AddressMonitor implements Controller {
 		foreach ($this->txs as $tx) {
 			$this->unspentLookup[$tx['hash']] = $tx['tx_index'];
 		}
+		return $this;
 	}
 	
-	private function updateCache() {
+	public function updateCache() {
 		$newUnspent = $this->getUnspent();
 		$this->txs = array_filter($this->txs, function ($tx) use (&$newUnspent) {
 			return isset($newUnspent[$tx['hash']]);
@@ -153,22 +167,30 @@ class AddressMonitor implements Controller {
 			return;
 		}
 		
+		Debug::log("number of txs to fetch: " . count($toFetch)); 
+		
 		$txs = [];
+		
+		foreach ($this->txs as $tx) {
+			if (isset($common[$tx['hash']])) {
+				$txs[$tx['hash']] = $tx;
+			}
+		}
+		
 		foreach ($toFetch as $hash => $idx) {
 			$txs[$hash] = $this->fetchTX($hash);
 		}
 		$this->txs = array_values($txs);
 		
 		$this->saveCache();
+		return $this;
 	}
 	
-	public function execute(array $matches, $rest, $url) {
-		if (!$this->isCached()) {
-			$this->buildCache();
-		} else {
-			$this->loadCache();
-		}
-		$this->updateCache();
-		echo $this->calculateBalance()->get(), "\n";
+	public function getBalance($confirmations = false) {
+		return $this->calculateBalance($confirmations);
+	}
+	
+	public function getCachedData() {
+		return $this->txs;
 	}
 }
