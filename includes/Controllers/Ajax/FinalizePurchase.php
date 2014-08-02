@@ -17,6 +17,8 @@ use Purchase;
 use BillScannerDriver;
 
 class FinalizePurchase implements Controller {
+	use BalanceCacheUpdater;
+	
 	public function execute(array $matches, $url, $rest) {
 		$admin = Admin::volatileLoad();
 		$cfg = $admin->getConfig();
@@ -47,6 +49,7 @@ class FinalizePurchase implements Controller {
 		
 		try {
 			Purchase::completeTransaction($cfg, $db, $ticket);
+			$this->notifyBalanceChange();
 			$response['proceed'] = true;
 		} catch (Exception $e) {
 			if ($e instanceof InsufficientFundsException) {
@@ -63,6 +66,7 @@ class FinalizePurchase implements Controller {
 				'PurchaseError',
 				['purchase_id' => $ticket->getId()]
 			);
+			$this->notifyBalanceChange();
 		}
 		
 		echo JSON::encode($response);
