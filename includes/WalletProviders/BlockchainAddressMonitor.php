@@ -26,10 +26,13 @@ class BlockchainAddressMonitor {
 		$this->unspentLookup = [];
 		$this->txs = [];
 		if (!file_exists(self::$cacheDir)) {
-			mkdir(self::$cacheDir, 0700);
+			mkdir(self::$cacheDir, 0770);
+		} elseif (!is_writable(self::$cacheDir)) {
+			throw new Exception('Cache file is not writable');
 		}
 		$this->cacheFN = self::$cacheDir . $this->addr->get() . '.json';
-		if (!is_writable($this->cacheFN)) {
+		echo $this->cacheFN, "\n";
+		if (file_exists($this->cacheFN) && !is_writable($this->cacheFN)) {
 			throw new Exception('Cache file is not writable');
 		}
 		if ($this->isCached()) {
@@ -124,6 +127,11 @@ class BlockchainAddressMonitor {
 						Debug::log('Inputs from same address: ' . $tx['tx_index']);
 						continue 2;
 					} elseif ($confirmations !== false) {
+						if (!isset($tx['block_height'])) {
+							if ($confirmations !== 0) {
+								continue 2;
+							}
+						}
 						if (($tx['block_height'] + $confirmations) > $blockHeight) {
 							continue 2;
 						}
