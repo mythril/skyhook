@@ -15,6 +15,7 @@ use DB;
 use BitcoinAddress;
 use Purchase;
 use BillScannerDriver;
+use Controllers\BalanceCacheUpdater;
 
 class FinalizePurchase implements Controller {
 	use BalanceCacheUpdater;
