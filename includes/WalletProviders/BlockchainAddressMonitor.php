@@ -114,6 +114,7 @@ class BlockchainAddressMonitor {
 				'https://blockchain.info/q/getblockcount'
 			));
 		}
+		Debug::log('Block height: ' . $blockHeight);
 		$balance = 0;
 		foreach ($this->txs as $tx) {
 			if ($tx['double_spend']) {
@@ -128,7 +129,8 @@ class BlockchainAddressMonitor {
 								continue 2;
 							}
 						}
-						if (($tx['block_height'] + $confirmations) > $blockHeight) {
+						$blockReq = $tx['block_height'] + $confirmations;
+						if ($blockReq > $blockHeight) {
 							continue 2;
 						}
 					}
@@ -136,7 +138,6 @@ class BlockchainAddressMonitor {
 			}
 			foreach ($tx['out'] as $out) {
 				if ($out['addr'] !== $addr) {
-					//Debug::log('Outputs are not for this address: ' . $tx['tx_index']);
 					continue;
 				}
 				$balance += $out['value'];
@@ -146,12 +147,21 @@ class BlockchainAddressMonitor {
 	}
 	
 	private function summarize() {
-		return JSON::encode($this->txs);
+		$txs = [];
+		foreach ($this->txs as $tx) {
+			if (isset($tx['block_height'])) {
+				$txs[] = $tx;
+			}
+		}
+		return JSON::encode($txs);
 	}
 	
 	private function desummarize($data) {
 		$this->txs = JSON::decode($data);
 		foreach ($this->txs as $tx) {
+			if (!isset($tx['block_height'])) {
+				continue;
+			}
 			$this->unspentLookup[$tx['hash']] = $tx['tx_index'];
 		}
 		return $this;
