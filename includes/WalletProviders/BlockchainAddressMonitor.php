@@ -31,7 +31,7 @@ class BlockchainAddressMonitor {
 			throw new Exception('Cache file is not writable');
 		}
 		$this->cacheFN = self::$cacheDir . $this->addr->get() . '.json';
-		echo $this->cacheFN, "\n";
+		
 		if (file_exists($this->cacheFN) && !is_writable($this->cacheFN)) {
 			throw new Exception('Cache file is not writable');
 		}
@@ -122,11 +122,7 @@ class BlockchainAddressMonitor {
 			}
 			foreach ($tx['inputs'] as $in) {
 				if (isset($in['prev_out']['addr'])) {
-					if ($in['prev_out']['addr'] === $addr) {
-						// continues outer loop also
-						Debug::log('Inputs from same address: ' . $tx['tx_index']);
-						continue 2;
-					} elseif ($confirmations !== false) {
+					if ($confirmations !== false) {
 						if (!isset($tx['block_height'])) {
 							if ($confirmations !== 0) {
 								continue 2;
