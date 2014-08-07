@@ -2,7 +2,10 @@
 $(function () {
 	var gt = new Gettext({domain: 'secondary'});
 	function _(msgid) { return gt.gettext(msgid); }
-
+	
+	Loading.text(_('Balance query in progress.'));
+	Loading.show();
+	
 	var ticketId = String(window.location.href).split('/').pop();
 	var bills,
 		bitcoin;
@@ -179,6 +182,7 @@ $(function () {
 	handlers.stateChanged = function (data) {};
 	
 	Comet.open('/billscan-balance/' + ticketId, function (data) {
+		Loading.hide();
 		if (data.diff === 0 && data.bills === "0.00") {
 			window.location.replace('/admin/minimum-balance');
 			return;
