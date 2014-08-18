@@ -41,12 +41,6 @@ class BillScannerBalance implements Controller {
 		$this->threshhold = $this->largest->multiplyBy(new Amount("2"));
 		$this->lowest = Math::min($this->denoms);
 		$this->balance = new Amount("0");
-		$maxTransaction = $this->config->getMaxTransactionValue();
-		if ($maxTransaction->isGreaterThan(new Amount('0'))) {
-			if ($maxTransaction->isLessThan($this->maxFiat)) {
-				$this->maxFiat = $maxTransaction;
-			}
-		}
 	}
 	
 	private function disableBills(Amount $max) {
@@ -169,6 +163,12 @@ class BillScannerBalance implements Controller {
 		$this->start();
 		
 		$this->maxFiat = $this->getWalletBalance();
+		$maxTransaction = $this->config->getMaxTransactionValue();
+		if ($maxTransaction->isGreaterThan(new Amount('0'))) {
+			if ($maxTransaction->isLessThan($this->maxFiat)) {
+				$this->maxFiat = $maxTransaction;
+			}
+		}
 		
 		$this->send($this->getTotals());
 		$lastTime = time();
