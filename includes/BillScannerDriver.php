@@ -134,7 +134,7 @@ class BillScannerDriver implements Observable {
 	private $lastTime;
 	
 	private function pause() {
-		usleep(0.1 * 1000000);
+		usleep(0.1 * 500000);
 	}
 	
 	public function isAlreadyLocked() {
@@ -215,6 +215,7 @@ class BillScannerDriver implements Observable {
 			
 			if (!$this->isResponseValid($out)) {
 				error_log('Invalid response: ' . $this->binout($out));
+				echo "\n" .'Invalid response: ' . $this->binout($out) . "\n";
 				$this->notifyObservers('invalidResponse', ['bytes' => $out]);
 				continue;
 			}
@@ -230,17 +231,15 @@ class BillScannerDriver implements Observable {
 				$statusText = $tmp;
 			}
 			
-			$escrowed = (ord($out[3]) & 4) ? true : false;
-			$stacked = (ord($out[3]) & (1<<3)) ? true : false;
+			$escrowed = ($out[3] & 4) ? true : false;
+			$stacked = ($out[3] & 16) ? true : false;
 			
 			$billIndex = ($out[5] & 0x38) >> 3;
 			
 			if ($billIndex !== 0 && $oldBill !== $billIndex && $stacked) {
 				$oldBill = $billIndex;
-				if (ord($out[3]) & 0x10) {
-					Debug::log("Notifying billInserted");
-					$this->notifyObservers('billInserted', ['billIndex' => $billIndex]);
-				}
+				Debug::log("Notifying billInserted");
+				$this->notifyObservers('billInserted', ['billIndex' => $billIndex]);
 			}
 			
 			if ($status['IDLING'] === true) {
