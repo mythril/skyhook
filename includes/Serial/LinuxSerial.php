@@ -53,6 +53,7 @@ class LinuxSerial implements Serial {
 			throw new Exception('-icanon could not be set.');
 		}
 		foreach ([
+			'raw',
 			'-icrnl',
 			'-opost',
 			'-isig',
